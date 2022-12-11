@@ -1,4 +1,4 @@
-package com.woodpecker.woodpecker.error.repository;
+package com.woodpecker.woodpecker.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

@@ -1,4 +1,4 @@
-package com.woodpecker.woodpecker.error.repository;
+package com.woodpecker.woodpecker.repository;
 
 
 import com.woodpecker.woodpecker.model.User;

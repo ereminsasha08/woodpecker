@@ -1,7 +1,7 @@
 package com.woodpecker.woodpecker.web.user;
 
 import com.woodpecker.woodpecker.HasIdAndEmail;
-import com.woodpecker.woodpecker.error.repository.UserRepository;
+import com.woodpecker.woodpecker.repository.UserRepository;
 import com.woodpecker.woodpecker.web.SecurityUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.lang.NonNull;
