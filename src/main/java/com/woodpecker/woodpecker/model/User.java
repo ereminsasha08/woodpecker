@@ -56,7 +56,7 @@ public class User extends NamedEntity implements HasIdAndEmail, Serializable {
     private Date registered = new Date();
 
     @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "user_role",
+    @CollectionTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "role"}, name = "uk_user_role"))
     @Column(name = "role")

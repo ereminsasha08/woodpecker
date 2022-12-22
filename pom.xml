@@ -15,6 +15,11 @@
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
+		<webjars-bootstrap.version>4.6.1</webjars-bootstrap.version>
+		<webjars-jquery.version>3.6.0</webjars-jquery.version>
+		<webjars-datetimepicker.version>2.5.20-1</webjars-datetimepicker.version>
+		<webjars-noty.version>3.1.4</webjars-noty.version>
+		<webjars-datatables.version>1.11.4</webjars-datatables.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -41,10 +46,11 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -66,11 +72,55 @@
 			<artifactId>jsoup</artifactId>
 			<version>1.15.1</version>
 		</dependency>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>2.1.214</version>
-        </dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>jquery</artifactId>
+			<version>${webjars-jquery.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>bootstrap</artifactId>
+			<version>${webjars-bootstrap.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.webjars</groupId>
+					<artifactId>jquery</artifactId>
+				</exclusion>
+				<exclusion>
+					<!--                https://getbootstrap.com/docs/4.5/components/popovers         -->
+					<groupId>org.webjars</groupId>
+					<artifactId>popper.js</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>datatables</artifactId>
+			<version>${webjars-datatables.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.webjars</groupId>
+					<artifactId>jquery</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>datetimepicker</artifactId>
+			<version>${webjars-datetimepicker.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.bower</groupId>
+			<artifactId>noty</artifactId>
+			<version>${webjars-noty.version}</version>
+		</dependency>
     </dependencies>
 
 	<build>

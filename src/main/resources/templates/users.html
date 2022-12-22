@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+    <link th:href="@{/css/style.css?v=2}" rel="stylesheet">
+    <link rel="stylesheet" href="webjars/bootstrap/4.6.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="webjars/noty/3.1.4/demo/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="webjars/datatables/1.11.4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="webjars/noty/3.1.4/lib/noty.css"/>
+    <link rel="shortcut icon" href="/images/wd.jpg">
+
+    <%--http://stackoverflow.com/a/24070373/548473--%>
+    <script src="webjars/jquery/3.6.0/jquery.min.js" defer></script>
+    <script src="webjars/bootstrap/4.6.1/js/bootstrap.min.js" defer></script>
+    <script src="webjars/datatables/1.11.4/js/jquery.dataTables.min.js" defer></script>
+    <script src="webjars/datatables/1.11.4/js/dataTables.bootstrap4.min.js" defer></script>
+    <script src="webjars/noty/3.1.4/lib/noty.min.js" defer></script>
+
+    <script th:src="@{/js/woodpecker.common.js}" type="text/javascript"></script>
+    <script th:src="@{/js/woodpecker.common.js}" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="jumbotron pt-4" th:switch="${users}">
+    <div class="container">
+        <h3 class="text-center">Пользователи</h3>
+        <button class="btn btn-primary" onclick="add()">
+            <span class="fa fa-plus"></span>
+            Добавить
+        </button>
+        <table class="table table-striped" id="datatable">
+            <thead>
+            <tr>
+                <th>Имя</th>
+                <th>Mail</th>
+                <th>Права</th>
+                <th>Блокировка</th>
+                <th>Дата регестрации</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tr th:each="user : ${users}" data-user-enabled="${user.enabled}">
+                <td th:text="${user.name}"></td>
+                <td th:text="${user.email}"></td>
+                <td th:text="${user.roles}"></td>
+                <td><input type="checkbox" checked onclick="enable($(this), ${user.id})"/></td>
+                <td th:text="${user.registered}"></td>
+                <td><a onclick=updateRow(${user.id})><span class="fa fa-pencil"></span></a></td>
+                <td><a onclick="deleteRow(${user.id})"><span class="fa fa-remove"></span></a></td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>
