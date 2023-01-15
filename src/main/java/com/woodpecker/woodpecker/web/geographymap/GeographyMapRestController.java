@@ -6,10 +6,12 @@ import com.woodpecker.woodpecker.web.AuthUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.lang.Nullable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -37,6 +39,19 @@ public class GeographyMapRestController {
         geographyMap.setManager(authUser.getUser());
         repository.save(geographyMap);
 
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable int id) {
+        repository.delete(id);
+    }
+
+    @GetMapping("/filter")
+    public List<GeographyMap> getFiltered(@RequestParam @Nullable LocalDateTime startDate,
+                                          @RequestParam @Nullable LocalDateTime endDate,
+                                          @RequestParam @Nullable int conditionMapFilter) {
+        return repository.getByDateTimeBetweenAndConditionMapAfterOrderById(startDate, endDate, conditionMapFilter - 1);
     }
 
 }
