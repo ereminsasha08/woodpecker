@@ -1,5 +1,5 @@
-const mapsAjaxUrl = "maps/";
-const filter = "maps/filter";
+const mapsAjaxUrl = "rest/maps/";
+const filter = "rest/maps/filter";
 // https://stackoverflow.com/a/5064235/548473
 const ctx = {
     ajaxUrl: mapsAjaxUrl,
@@ -19,61 +19,123 @@ function clearFilter() {
 
 // $(document).ready(function () {
 $(function () {
-    makeEditable(
-        $("#datatable").DataTable({
-            "info": true,
-            "columns": [
-                {
-                    "data": "id"
-                },
-                {
-                    "data": "dateTime"
-                },
-                {
-                    "data": "typeMap"
-                },
-                {
-                    "data": "size"
-                },
-                {
-                    "data": "language"
-                },
-                {
-                    "data": "state"
-                },
-                {
-                    "data": "multiLevel"
-                },
-                {
-                    "data": "color"
-                },
-                {
-                    "data": "description"
-                },
-                {
-                    "data": "conditionMap"
-                },
-                {
-                    "data": "prise"
-                },
-                {
-                    "defaultContent": "Edit",
-                    "orderable": false
-                },
-                {
-                    "defaultContent": "Delete",
-                    "orderable": false
-                }
-            ],
+    makeEditable({
 
-            "order": [
-                [
-                    0,
-                    "desc"
-                ]
+        "columns": [
+            {
+                "data": "id"
+            },
+            {
+                "data": "dateTime",
+                "render": function (date, type, row) {
+                    if (type === "display") {
+                        return date.substring(0, 10).replace("-", ".");
+                    }
+                    return date;
+                }
+            },
+            {
+                "data": "typeMap"
+            },
+            {
+                "data": "size"
+            },
+            {
+                "data": "language",
+                "render": function (date, type, row) {
+                    var s = "EN";
+                    if ("Русский" === date) {
+                        s = "RU";
+                    }
+                    return s;
+                }
+            },
+            {
+                "data": "isState",
+                "render": function (date, type, row) {
+                    if (date) {
+                        return "ШТ"
+                    }
+                    return "Без ШТ";
+                }
+            },
+            {
+                "data": "isMultiLevel",
+                "render": function (date, type, row) {
+                    if (date) {
+                        return "Многоур."
+                    }
+                    return "Одноур.";
+                }
+            },
+            {
+                "data": "color",
+                "render": function (date, type, row) {
+                    var ref = "<a href=\"javascript:void(0);\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"" + date + "\">"
+                    if (date.length > 10) {
+                        date = date.substring(0, 7) + "...";
+                    }
+                    return ref + date + "</a>";
+                }
+            },
+            {
+                "data": "description",
+                "render": function (date, type, row) {
+                    var ref = "<a href=\"javascript:void(0);\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"" + date + "\">"
+                    if (date.length > 10) {
+                        date = date.substring(0, 7) + "...";
+                    }
+                    return ref + date + "</a>";
+                }
+            },
+            {
+                "data": "conditionMap",
+                "render": function (date, type, row) {
+                    switch (date) {
+                        case 0:
+                            return "Новый заказ";
+                        case 2:
+                            return "Пилится";
+                        case 4:
+                            return "Выпилен";
+                        case 6:
+                            return "Красится";
+                        case 8:
+                            return "Покрашен";
+                        case 10:
+                            return "На приклейки";
+                        case 12:
+                            return "На запаковке";
+                        case 14:
+                            return "Готов к отправке";
+                        case 16:
+                            return "Неизвестно";
+
+                    }
+                }
+            },
+            {
+                "data": "price"
+            },
+            {
+                "orderable": false,
+                "defaultContent": "",
+                "render": renderEditBtn
+            },
+            {
+                "orderable": false,
+                "defaultContent": "",
+                "render": renderDeleteBtn
+            }
+        ],
+
+        "order": [
+            [
+                0,
+                "desc"
             ]
-        })
-    );
+        ],
+    });
 });
 
 function add() {

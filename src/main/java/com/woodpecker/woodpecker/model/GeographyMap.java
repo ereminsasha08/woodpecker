@@ -2,25 +2,28 @@ package com.woodpecker.woodpecker.model;
 
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "maps")
+@NoArgsConstructor
 public class GeographyMap extends Product {
 
     @Column(name = "type_map", nullable = false)
     @NotNull
     private String typeMap;
-
-    @Column(name = "condition_map", nullable = false)
+    @Column(name = "condition_map")
     @NotNull
     private int conditionMap;
 
@@ -40,20 +43,14 @@ public class GeographyMap extends Product {
     @NotNull
     private String color;
 
-
     @Column(name = "description", nullable = false)
     @NotBlank
-    @Size(min = 1, max = 500)
     private String description;
 
     @Column(name = "date_time", nullable = false)
     @NotNull
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime dateTime;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-//    @NotNull
-    private User user;
 
     @Column(name = "is_state", nullable = false)
     @NotNull
@@ -63,34 +60,7 @@ public class GeographyMap extends Product {
     @NotNull
     private String light;
 
-
     @Column(name = "additional", nullable = false)
-    @NotNull
     private String additional;
-
-
-    public GeographyMap() {
-    }
-
-    public GeographyMap(String typeMap, int conditionMap, int size,
-                        String language, boolean isMultiLevel, boolean isState,
-                        String color, String description, LocalDateTime dateTime) {
-        this.typeMap = typeMap;
-        this.conditionMap = conditionMap;
-        this.size = size;
-        this.language = language;
-        this.isState = isState;
-        this.isMultiLevel = isMultiLevel;
-        this.color = color;
-        this.description = description;
-        this.dateTime = dateTime;
-    }
-
-    public GeographyMap(String typeMap, LocalDateTime dateTime) {
-        this.typeMap = typeMap;
-
-        this.dateTime = dateTime;
-    }
-
 
 }

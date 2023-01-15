@@ -8,15 +8,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/u")
+@RequestMapping("/users")
 @AllArgsConstructor
 public class UserUI {
 
     private final UserRepository repository;
 
     @GetMapping
-    public String get(Model model){
-        model.addAttribute("users", repository.findAll());
+    public String get(){
         return "users";
     }
 }

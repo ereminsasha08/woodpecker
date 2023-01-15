@@ -13,9 +13,11 @@ spring:
         default_batch_fetch_size: 20
         # https://stackoverflow.com/questions/21257819/what-is-the-difference-between-hibernate-jdbc-fetch-size-and-hibernate-jdbc-batc
         jdbc.batch_size: 20
+    hibernate:
+      ddl-auto: update
 
   datasource:
-    url: jdbc:postgresql://localhost:5433/postgres
+    url: jdbc:postgresql://localhost:5433/woodpecker
     username: user
     password: password
 
@@ -33,9 +35,9 @@ spring:
 
 logging:
   level:
-    root: WARN
-    ru.javaops.bootjava: DEBUG
-    org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: DEBUG
+    root: INFO
+    com.woodpecker.woodpecker: DEBUG
+    org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: INFO
 
 server.servlet:
   encoding:

@@ -11,10 +11,10 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 public class AppConfig {
 
-
     @Autowired
     void configureAndStoreObjectMapper(ObjectMapper objectMapper) {
         objectMapper.registerModule(new Hibernate5Module());
         JsonUtil.setMapper(objectMapper);
     }
+
 }

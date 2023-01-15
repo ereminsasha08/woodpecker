@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -43,8 +44,8 @@ public class AdminUserController extends AbstractUserController {
         return repository.findAll(Sort.by(Sort.Direction.ASC, "name", "email"));
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> createWithLocation(@Valid @RequestBody User user) {
+    @PostMapping
+    public ResponseEntity<User> createWithLocation(@Validated User user) {
         log.info("create {}", user);
         checkNew(user);
         User created = prepareAndSave(user);

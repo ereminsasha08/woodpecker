@@ -1,8 +1,8 @@
 package com.woodpecker.woodpecker.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import com.woodpecker.woodpecker.HasIdAndEmail;
+import com.woodpecker.woodpecker.util.validation.NoHtml;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,16 +10,12 @@ import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.util.CollectionUtils;
-import com.woodpecker.woodpecker.util.validation.NoHtml;
-
-
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
@@ -56,7 +52,7 @@ public class User extends NamedEntity implements HasIdAndEmail, Serializable {
     private Date registered = new Date();
 
     @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "user_roles",
+    @CollectionTable(name = "role",
             joinColumns = @JoinColumn(name = "user_id"),
             uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "role"}, name = "uk_user_role"))
     @Column(name = "role")

@@ -1,14 +1,19 @@
 let form;
 
-function makeEditable(datatableApi) {
-    ctx.datatableApi = datatableApi;
+function makeEditable(datatableOpts) {
+    ctx.datatableApi = $("#datatable").DataTable(
+        // https://api.jquery.com/jquery.extend/#jQuery-extend-deep-target-object1-objectN
+        $.extend(true, datatableOpts,
+            {
+                "ajax": {
+                    "url": ctx.ajaxUrl,
+                    "dataSrc": ""
+                },
+                "paging": true,
+                "info": true
+            }
+        ));
     form = $('#detailsForm');
-
-    $(".delete").click(function () {
-        if (confirm('Are you sure?')) {
-            deleteRow($(this).closest('tr').attr("id"));
-        }
-    });
 
     $(document).ajaxError(function (event, jqXHR, options, jsExc) {
         failNoty(jqXHR);
@@ -16,27 +21,46 @@ function makeEditable(datatableApi) {
 
     // solve problem with cache in IE: https://stackoverflow.com/a/4303862/548473
     $.ajaxSetup({cache: false});
+    //
+    // var token = $("meta[name='_csrf']").attr("content");
+    // var header = $("meta[name='_csrf_header']").attr("content");
+    //
+    // $(document).ajaxSend(function (e, xhr, options) {
+    //     xhr.setRequestHeader(header, token);
+    // });
 }
 
+function add() {
+    $("#modalTitle").html("addTitle");
+    form.find(":input").val("");
+    $("#editRow").modal();
+}
 
 function updateRow(id) {
     form.find(":input").val("");
+    $("#modalTitle").html("editTitle");
+    // document.getElementById("state").value = true;
+
     $.get(ctx.ajaxUrl + id, function (data) {
         $.each(data, function (key, value) {
-            form.find("input[name='" + key + "']").val(value);
+            if (value != null)
+                document.getElementById(key).value = value;
+
+            // debugger;
         });
         $('#editRow').modal();
     });
 }
 
 function deleteRow(id) {
-    if (confirm('Are you sure?')) {
+
+    if (confirm('common.confirm')) {
         $.ajax({
             url: ctx.ajaxUrl + id,
             type: "DELETE"
         }).done(function () {
             ctx.updateTable();
-            successNoty("Deleted");
+            successNoty("common.deleted");
         });
     }
 }
@@ -53,7 +77,7 @@ function save() {
     }).done(function () {
         $("#editRow").modal("hide");
         ctx.updateTable();
-        successNoty("Saved");
+        successNoty("Сохранено");
     });
 }
 
@@ -66,26 +90,35 @@ function closeNoty() {
     }
 }
 
-function successNoty(text) {
+function successNoty(key) {
     closeNoty();
     new Noty({
-        text: "<span class='fa fa-lg fa-check'></span> &nbsp;" + text,
+        text: "<span class='fa fa-lg fa-check'></span> &nbsp;",
         type: 'success',
         layout: "bottomRight",
         timeout: 1000
     }).show();
 }
 
+function renderEditBtn(data, type, row) {
+    if (type === "display") {
+        return "<a onclick='updateRow(" + row.id + ");'><span class='fa fa-pencil'></span></a>";
+    }
+}
+
+function renderDeleteBtn(data, type, row) {
+    if (type === "display") {
+        return "<a onclick='deleteRow(" + row.id + ");'><span class='fa fa-remove'></span></a>";
+    }
+}
+
 function failNoty(jqXHR) {
     closeNoty();
+    var errorInfo = jqXHR.responseJSON;
     failedNote = new Noty({
-        text: "<span class='fa fa-lg fa-exclamation-circle'></span> &nbsp;Error status: " + jqXHR.status,
+        text: "<span class='fa fa-lg fa-exclamation-circle'></span> &nbsp;" + errorInfo.typeMessage + "<br>" + errorInfo.details.join("<br>"),
         type: "error",
         layout: "bottomRight"
     });
     failedNote.show()
 }
-
-$(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-})
