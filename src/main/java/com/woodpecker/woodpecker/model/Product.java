@@ -21,6 +21,7 @@ public abstract class Product extends BaseEntity {
     @JoinColumn(name = "user_id", nullable = false)
 //    @NotNull
     private User manager;
+
     @Column(name = "contact", nullable = false)
     String contact;
 

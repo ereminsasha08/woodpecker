@@ -29,7 +29,7 @@ $(function () {
                 "data": "dateTime",
                 "render": function (date, type, row) {
                     if (type === "display") {
-                        return date.substring(0, 10).replace("-", ".");
+                        return date.substring(0, 10);
                     }
                     return date;
                 }
@@ -92,6 +92,8 @@ $(function () {
                 "data": "conditionMap",
                 "render": function (date, type, row) {
                     switch (date) {
+                        case -1:
+                            return "Неизвестно";
                         case 0:
                             return "Новый заказ";
                         case 2:
@@ -109,7 +111,7 @@ $(function () {
                         case 14:
                             return "Готов к отправке";
                         case 16:
-                            return "Неизвестно";
+                            return "Отправлен";
 
                     }
                 }
@@ -141,6 +143,5 @@ $(function () {
 function add() {
     form.find(":input").val("");
     $("#editRow").modal();
-    let select = document.getElementById('conditionMap');
-    select.value = '0';
+    document.getElementById('conditionMap').value = "0";
 }

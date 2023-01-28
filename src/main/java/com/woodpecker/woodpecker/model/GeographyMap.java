@@ -23,7 +23,7 @@ public class GeographyMap extends Product {
     @Column(name = "type_map", nullable = false)
     @NotNull
     private String typeMap;
-    @Column(name = "condition_map")
+    @Column(name = "condition_map", nullable = false)
     @NotNull
     private int conditionMap;
 
@@ -43,7 +43,7 @@ public class GeographyMap extends Product {
     @NotNull
     private String color;
 
-    @Column(name = "description", nullable = false)
+    @Column(name = "description", nullable = false, length = 800)
     @NotBlank
     private String description;
 
@@ -60,7 +60,8 @@ public class GeographyMap extends Product {
     @NotNull
     private String light;
 
-    @Column(name = "additional", nullable = false)
+    @Column(name = "additional", nullable = false, length = 800)
     private String additional;
+
 
 }

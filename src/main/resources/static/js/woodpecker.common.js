@@ -36,17 +36,15 @@ function add() {
     $("#editRow").modal();
 }
 
+
+
 function updateRow(id) {
     form.find(":input").val("");
     $("#modalTitle").html("editTitle");
-    // document.getElementById("state").value = true;
-
     $.get(ctx.ajaxUrl + id, function (data) {
         $.each(data, function (key, value) {
             if (value != null)
                 document.getElementById(key).value = value;
-
-            // debugger;
         });
         $('#editRow').modal();
     });

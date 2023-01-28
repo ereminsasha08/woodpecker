@@ -13,17 +13,17 @@
             <div class="row">
                 <div class="col">
                     <label for="startDate">С даты:</label>
-                    <input class="form-control" type="date" name="startDate" id="startDate">
+                    <input class="form-control" type="datetime-local" name="startDate" id="startDate">
                 </div>
                 <div class="col">
                     <label for="endDate">по:</label>
-                    <input class="form-control" type="date" name="endDate" id="endDate">
+                    <input class="form-control" type="datetime-local" name="endDate" id="endDate">
                 </div>
 
                 <div class="col">
                     <label for="conditionMapFilter" x-placement="">Состояние:</label>
                     <select class="form-control" type="number" id="conditionMapFilter" name="conditionMapFilter">
-                        <option value="-1" selected></option>
+                        <option value="-1">Неизвестно</option>
                         <option value="0">Новый заказ</option>
                         <option value="2">Пилится</option>
                         <option value="4">Выпилен</option>
@@ -32,7 +32,7 @@
                         <option value="10">На приклейки</option>
                         <option value="12">На запаковке</option>
                         <option value="14">Готов к отправке</option>
-                        <option value="16">Неизвестно</option>
+                        <option value="16">Отправлен</option>
                     </select>
                 </div>
             </div>
@@ -126,7 +126,7 @@
                     <div class="row">
                         <div class="form-group col">
                             <label for="language" class="col-form-label">Язык</label>
-                            <input type="language" class="form-control" id="language" name="language"
+                            <input type="text" class="form-control" id="language" name="language"
                                    list="languageOption"
                                    placeholder="Язык">
                             <datalist id="languageOption">
@@ -154,7 +154,7 @@
                     <div class="row">
                         <div class="form-group col">
                             <label for="light" class="col-form-label">Подсветка</label>
-                            <input type="light" class="form-control" id="light" name="light"
+                            <input type="text" class="form-control" id="light" name="light"
                                    list="lightOption"
                                    placeholder="Подсветка">
                             <datalist id="lightOption">
@@ -200,7 +200,8 @@
                     <div class="form-group col">
                         <label for="conditionMap" class="col-form-label">Состояние</label>
                         <select class="form-control" type="number" id="conditionMap" name="conditionMap">
-                            <option value="0" selected>Новый заказ</option>
+                            <option value="-1">Неизвестно</option>
+                            <option value="0">Новый заказ</option>
                             <option value="2">Пилится</option>
                             <option value="4">Выпилен</option>
                             <option value="6">Красится</option>
@@ -208,7 +209,7 @@
                             <option value="10">На приклейки</option>
                             <option value="12">На запаковке</option>
                             <option value="14">Готов к отправке</option>
-                            <option value="16">Неизвестно</option>
+                            <option value="16">Отправлен</option>
                         </select>
                     </div>
                 </form>

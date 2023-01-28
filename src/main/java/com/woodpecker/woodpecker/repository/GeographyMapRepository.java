@@ -12,14 +12,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Transactional(readOnly = true)
-public interface CrudGeographyMapRepository extends JpaRepository<GeographyMap, Integer> {
+public interface GeographyMapRepository extends JpaRepository<GeographyMap, Integer> {
 
     @Transactional
     @Modifying
     @Query("DELETE FROM GeographyMap gm WHERE gm.id=:id")
     int delete(@Param("id") int id);
-
-    List<GeographyMap> findByIdAfterOrderByIdDesc(int id);
 
     List<GeographyMap> findByManager(User user);
 
