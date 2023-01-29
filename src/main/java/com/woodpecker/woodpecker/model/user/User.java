@@ -1,7 +1,8 @@
-package com.woodpecker.woodpecker.model;
+package com.woodpecker.woodpecker.model.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.woodpecker.woodpecker.HasIdAndEmail;
+import com.woodpecker.woodpecker.model.abstractentity.NamedEntity;
 import com.woodpecker.woodpecker.util.validation.NoHtml;
 import lombok.AccessLevel;
 import lombok.Getter;

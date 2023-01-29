@@ -1,4 +1,4 @@
-package com.woodpecker.woodpecker.model;
+package com.woodpecker.woodpecker.model.user;
 
 import org.springframework.security.core.GrantedAuthority;
 

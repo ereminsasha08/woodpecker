@@ -1,6 +1,6 @@
 package com.woodpecker.woodpecker.web.user;
 
-import com.woodpecker.woodpecker.model.User;
+import com.woodpecker.woodpecker.model.user.User;
 import com.woodpecker.woodpecker.to.UserTo;
 import com.woodpecker.woodpecker.util.UserUtil;
 import com.woodpecker.woodpecker.web.AuthUser;

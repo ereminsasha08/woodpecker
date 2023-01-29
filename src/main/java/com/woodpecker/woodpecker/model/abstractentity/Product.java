@@ -1,7 +1,10 @@
-package com.woodpecker.woodpecker.model;
+package com.woodpecker.woodpecker.model.abstractentity;
 
+import com.woodpecker.woodpecker.model.user.User;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -19,6 +22,7 @@ public abstract class Product extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
+    @Fetch(FetchMode.JOIN)
 //    @NotNull
     private User manager;
 

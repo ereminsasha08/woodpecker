@@ -1,7 +1,7 @@
 package com.woodpecker.woodpecker.repository;
 
 
-import com.woodpecker.woodpecker.model.User;
+import com.woodpecker.woodpecker.model.user.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 

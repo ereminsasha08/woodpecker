@@ -1,4 +1,4 @@
-package com.woodpecker.woodpecker.model;
+package com.woodpecker.woodpecker.model.map;
 
 public enum ConditionMap {
     НОВЫЙ_ЗАКАЗ,

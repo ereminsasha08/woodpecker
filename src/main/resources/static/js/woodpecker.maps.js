@@ -28,10 +28,7 @@ $(function () {
             {
                 "data": "dateTime",
                 "render": function (date, type, row) {
-                    if (type === "display") {
-                        return date.substring(0, 10);
-                    }
-                    return date;
+                    return date.substring(0, 10).replaceAll("-", ".");
                 }
             },
             {
@@ -95,7 +92,7 @@ $(function () {
                         case -1:
                             return "Неизвестно";
                         case 0:
-                            return "Новый заказ";
+                            return { }
                         case 2:
                             return "Пилится";
                         case 4:

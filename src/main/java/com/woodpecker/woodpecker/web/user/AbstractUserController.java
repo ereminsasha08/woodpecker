@@ -1,7 +1,7 @@
 package com.woodpecker.woodpecker.web.user;
 
 import com.woodpecker.woodpecker.repository.UserRepository;
-import com.woodpecker.woodpecker.model.User;
+import com.woodpecker.woodpecker.model.user.User;
 import com.woodpecker.woodpecker.util.UserUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

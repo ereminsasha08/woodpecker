@@ -5,6 +5,7 @@ const ctx = {
     updateTable: function () {
         $.ajax({
             type: 'GET',
+            url: mapsAjaxUrl,
         }).done(updateTableByData);
     }
 }
@@ -12,12 +13,12 @@ const ctx = {
 // $(document).ready(function () {
 $(function () {
     makeEditable({
-
+        "order": false,
         "columns": [
             {
                 "data": "id",
                 "render": function (date, type, row) {
-                    var ref = "<a onclick='get(" + date + ");' data-toggle=\"tooltip\" data-placement=\"top\" title=\"" + date + "\">";
+                    let ref = "<button class='btn btn-info' onclick='get(" + date + ");' data-placement=\"top\" title=\"" + date + "\">";
                     return ref + date + "</a>";
                 }
             },
@@ -25,9 +26,10 @@ $(function () {
                 "data": "orderTerm",
                 "render": function (date, type, row) {
                     if (type === "display") {
-                        return date.substring(0, 10).replace("-", ".");
+                        return date.substring(0, 10).replaceAll("-", ".");
                     }
                     return date;
+
                 }
             },
             {
@@ -39,7 +41,7 @@ $(function () {
             {
                 "data": "geographyMap.language",
                 "render": function (date, type, row) {
-                    var s = "EN";
+                    let s = "EN";
                     if ("Русский" === date) {
                         s = "RU";
                     }
@@ -67,13 +69,23 @@ $(function () {
             {
                 "data": "geographyMap.color",
                 "render": function (date, type, row) {
-                    var ref = "<a href=\"javascript:void(0);\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"" + date + "\">"
+                    let ref = "<a href=\"javascript:void(0);\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"" + date + "\">"
                     if (date.length > 10) {
                         date = date.substring(0, 7) + "...";
                     }
                     return ref + date + "</a>";
                 }
-            }
+            },
+            {
+                "data": "laser",
+                "render": function (date, type, row) {
+                    if (date != null) {
+                        return "<button class='btn btn-warning' onclick='getInfoCut(" + row.id + ");'>" + date + "</button>";
+                    } else {
+                        return "<button class='btn btn-secondary' onclick='setLaser(" + row.id + ");'>Начать</button>";
+                    }
+                }
+            },
             //     {
             //         "data": "description",
             //         "render": function (date, type, row) {
@@ -115,23 +127,12 @@ $(function () {
             //     {
             //         "data": "price"
             //     },
-            //     {
-            //         "orderable": false,
-            //         "defaultContent": "",
-            //         "render": renderEditBtn
-            //     },
+
             //     {
             //         "orderable": false,
             //         "defaultContent": "",
             //         "render": renderDeleteBtn
             //     }
-        ],
-
-        "order": [
-            [
-                0,
-                "desc"
-            ]
         ],
     });
 });
@@ -142,7 +143,7 @@ function get(id) {
         $.each(data, function (key, value) {
             if (value != null)
                 if (key === "geographyMap") {
-                    $.each(data[key], function (key, value){
+                    $.each(data[key], function (key, value) {
                         let elementById = document.getElementById(key);
                         if (elementById != null) {
                             elementById.innerText += value;
@@ -153,4 +154,24 @@ function get(id) {
         });
         $('#orderInfo').modal();
     });
+}
+
+
+function setLaser(id) {
+    $.ajax({
+        type: "PATCH",
+        url: ctx.ajaxUrl + id,
+    }).done(function () {
+        ctx.updateTable();
+        successNoty("Лазер установлен");
+    });
+}
+
+function getInfoCut(id) {
+    $("#info-cut").modal();
+    $.get(ctx.ajaxUrl + "infocut/" + id,
+        function (data) {
+            document.getElementById("info").innerText = data
+            $('#info-cut').modal();
+        });
 }

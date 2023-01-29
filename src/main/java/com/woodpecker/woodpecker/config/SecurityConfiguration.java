@@ -1,7 +1,6 @@
 package com.woodpecker.woodpecker.config;
 
-import com.woodpecker.woodpecker.model.Role;
-import com.woodpecker.woodpecker.model.User;
+import com.woodpecker.woodpecker.model.user.User;
 import com.woodpecker.woodpecker.repository.UserRepository;
 import com.woodpecker.woodpecker.web.AuthUser;
 import lombok.AllArgsConstructor;

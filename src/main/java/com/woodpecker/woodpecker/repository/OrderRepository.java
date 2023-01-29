@@ -1,8 +1,12 @@
 package com.woodpecker.woodpecker.repository;
 
-import com.woodpecker.woodpecker.model.OrderMap;
-import org.springframework.transaction.annotation.Transactional;
+import com.woodpecker.woodpecker.model.map.OrderMap;
+import org.springframework.data.jpa.repository.EntityGraph;
 
-@Transactional(readOnly = true)
-public interface OrderRepository extends BaseRepository<OrderMap>{
+import java.util.List;
+
+
+public interface OrderRepository extends BaseRepository<OrderMap> {
+    @EntityGraph(attributePaths = {"geographyMap"})
+    List<OrderMap> findAll();
 }

@@ -1,7 +1,7 @@
 package com.woodpecker.woodpecker.util;
 
-import com.woodpecker.woodpecker.model.Role;
-import com.woodpecker.woodpecker.model.User;
+import com.woodpecker.woodpecker.model.user.Role;
+import com.woodpecker.woodpecker.model.user.User;
 import com.woodpecker.woodpecker.to.UserTo;
 import lombok.experimental.UtilityClass;
 

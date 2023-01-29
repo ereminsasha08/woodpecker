@@ -1,4 +1,4 @@
-package com.woodpecker.woodpecker.model;
+package com.woodpecker.woodpecker.model.abstractentity;
 
 import com.woodpecker.woodpecker.HasId;
 import lombok.*;
