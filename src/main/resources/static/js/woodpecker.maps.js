@@ -92,7 +92,9 @@ $(function () {
                         case -1:
                             return "Неизвестно";
                         case 0:
-                            return { }
+                            return "<button class='btn btn-secondary' onclick='createOrder(" + row.id + ");'>Начать</button>";
+                        case 1:
+                            return "В очереди"
                         case 2:
                             return "Пилится";
                         case 4:
@@ -141,4 +143,22 @@ function add() {
     form.find(":input").val("");
     $("#editRow").modal();
     document.getElementById('conditionMap').value = "0";
+}
+
+
+function createOrder(id){
+    form.find(":input").val("");
+    $("#createOrder").modal();
+    document.getElementById('order-Id').value = id;
+
+}
+function saveOrder(){
+    $.ajax({
+        type: "POST",
+        url: "rest/orders/",
+        data: $('#orderForm').serialize()
+    }).done(function () {
+        ctx.updateTable();
+        successNoty("Заказ создан");
+    });
 }

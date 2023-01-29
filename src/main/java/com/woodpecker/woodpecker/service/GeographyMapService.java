@@ -25,9 +25,11 @@ public class GeographyMapService {
         } else {
             GeographyMap byId = geographyMapRepository.findById(geographyMap.getId()).get();
             if (byId.getManager().id() == authUser.getUser().id()) {
-                geographyMapRepository.save(byId);
+                geographyMap.setManager(authUser.getUser());
             } else throw new IllegalArgumentException("Изменять можно только свои заказы");
         }
+        geographyMapRepository.save(geographyMap);
 
     }
+
 }

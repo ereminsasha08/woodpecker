@@ -37,14 +37,16 @@ function add() {
 }
 
 
-
 function updateRow(id) {
     form.find(":input").val("");
     $("#modalTitle").html("editTitle");
     $.get(ctx.ajaxUrl + id, function (data) {
         $.each(data, function (key, value) {
-            if (value != null)
-                document.getElementById(key).value = value;
+            if (value != null) {
+                let elementById = document.getElementById(key);
+                if (elementById != null)
+                    elementById.value = value;
+            }
         });
         $('#editRow').modal();
     });

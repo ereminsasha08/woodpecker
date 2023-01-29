@@ -28,6 +28,9 @@ public class OrderMap {
     @NotNull
     @Column(name = "completed")
     private Boolean completed;
+    @Column(name = "is_color_plywood")
+    private Boolean isColorPlyWood;
+
 
     @OneToOne
     @MapsId
@@ -73,7 +76,7 @@ public class OrderMap {
     public OrderMap(LocalDateTime orderTerm, GeographyMap geographyMap, Boolean marketPlace) {
         this.orderTerm = orderTerm;
         this.geographyMap = geographyMap;
-        this.completed = false;
         this.marketPlace = marketPlace;
+        this.completed = false;
     }
 }

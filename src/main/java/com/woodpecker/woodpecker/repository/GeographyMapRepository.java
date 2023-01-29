@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface GeographyMapRepository extends JpaRepository<GeographyMap, Integer> {
+public interface GeographyMapRepository extends BaseRepository<GeographyMap> {
 
     @Modifying
     @Query("DELETE FROM GeographyMap gm WHERE gm.id=:id")

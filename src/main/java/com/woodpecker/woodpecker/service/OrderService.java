@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -37,6 +38,8 @@ public class OrderService {
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     public OrderMap create(Integer id, LocalDateTime orderTerm, boolean marketPlace) {
         GeographyMap map = geographyMapService.getById(id);
+        map.setConditionMap(1);
+        orderTerm = Objects.isNull(orderTerm)? map.getDateTime().plusWeeks(2).plusDays(3): orderTerm;
         OrderMap orderMap = new OrderMap(orderTerm, map, marketPlace);
         return orderRepository.save(orderMap);
     }
@@ -58,6 +61,7 @@ public class OrderService {
     public void setLaser(Integer id) {
         OrderMap orderMap = orderRepository.findById(id).orElseThrow();
         chooseLaser(orderMap);
+        orderMap.getGeographyMap().setConditionMap(2);
         orderMap.setCut_begin(LocalDateTime.now());
     }
 
@@ -90,5 +94,14 @@ public class OrderService {
             }
         }
         return plywoodList;
+    }
+
+    public List<OrderMap> getPaint() {
+       return getAll().stream()
+                .filter(map -> (map.getGeographyMap().getConditionMap() == 3 || map.getGeographyMap().getConditionMap() == 4) && !map.getIsColorPlyWood())
+                .filter(map -> !map.getCompleted())
+                .sorted(Comparator.comparing(OrderMap::getMarketPlace).reversed()
+                        .thenComparing(OrderMap::getOrderTerm))
+                .toList();
     }
 }

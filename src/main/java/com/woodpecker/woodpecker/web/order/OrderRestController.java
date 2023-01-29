@@ -4,6 +4,7 @@ import com.woodpecker.woodpecker.model.map.OrderMap;
 import com.woodpecker.woodpecker.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
@@ -23,8 +24,10 @@ public class OrderRestController {
         return orderService.getOrdersWithSortedCut();    }
 
     @PostMapping
-    public OrderMap create(@RequestBody Integer id, @RequestBody @DateTimeFormat() LocalDateTime orderTerm, @RequestBody Boolean marketPlace) {
-        return orderService.create(id, orderTerm, marketPlace);
+    public OrderMap create(@NotNull @RequestParam Integer orderId,
+                           @Nullable @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime orderTerm,
+                           @RequestParam Boolean isMarketPlace) {
+        return orderService.create(orderId, orderTerm, isMarketPlace);
     }
 
     @GetMapping("/{id}")
