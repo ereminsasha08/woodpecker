@@ -7,26 +7,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import java.util.Set;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 public class Laser extends NamedEntity {
-    @ElementCollection
-    @CollectionTable(name = "permission_size")
-    private Set<Integer> permissionSize;
+    @Column(name = "max_size")
+    private Integer maxSize;
     @Column(name = "capacity")
     private Integer capacity;
 
-    public void setCapacity(GeographyMap geographyMap) {
+        public void setCapacity(GeographyMap geographyMap, Integer coefficient) {
 
-        Integer addedCapacity = 1;
+        Integer addedCapacity = coefficient;
 
         if (geographyMap.getIsState())
             addedCapacity *= 2;

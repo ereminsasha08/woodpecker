@@ -138,6 +138,8 @@ $(function () {
 });
 
 function get(id) {
+    form = $('#orderInfo');
+    form.find(":input").val("");
     $("#orderInfo").modal();
     $.get(ctx.ajaxUrl + id, function (data) {
         $.each(data, function (key, value) {
@@ -171,7 +173,43 @@ function getInfoCut(id) {
     $("#info-cut").modal();
     $.get(ctx.ajaxUrl + "infocut/" + id,
         function (data) {
-            document.getElementById("info").innerText = data
+            let listSelect = "";
+            $.each(data, function (index, value) {
+                // listSelect += '<p id ="' + index + '">"' + value + '"</p>' +
+                //     "<input type='checkbox' " + (value.endsWith("Готов") ? "checked" : "") + " onclick='enable($(this)," + id + ");" +
+                //     "'/>";
+                // +'<br>'
+                listSelect += '<div className="row">' +
+                    '<form>' +
+                    '<div className="col">' +
+                    ' <span id ="' + index + '">"' + value + '"</span>' +
+                    '</div>' +
+                    '  <div className="col">' +
+                    "<input type='checkbox'" + ' id="' + index + '"' + (value.endsWith("Готов") ? "checked" : "") + " onclick='enable($(this)," + id + "," + index + ");'/>" +
+                    ' </div>' +
+                    ' </form>' +
+                    ' </div>'
+            });
+            document.getElementById("info").innerHTML = listSelect;
             $('#info-cut').modal();
         });
+}
+
+
+function enable(chkbox, id, index) {
+    var enabled = chkbox.is(":checked");
+//  https://stackoverflow.com/a/22213543/548473
+    $.ajax({
+        url: ctx.ajaxUrl + "infocut/" + id,
+        type: "POST",
+        data: {
+            listIsComplete: enabled,
+            numberList: index
+        }
+    }).done(function () {
+        // chkbox.closest("tr").attr("data-user-enabled", enabled);
+        successNoty(enabled ? "common.enabled" : "common.disabled");
+    }).fail(function () {
+        $(chkbox).prop("checked", !enabled);
+    });
 }

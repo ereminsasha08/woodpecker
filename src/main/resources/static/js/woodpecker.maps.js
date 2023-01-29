@@ -97,8 +97,11 @@ $(function () {
                             return "В очереди"
                         case 2:
                             return "Пилится";
+
                         case 4:
                             return "Выпилен";
+                        case 5:
+                            return "На покраске";
                         case 6:
                             return "Красится";
                         case 8:
@@ -158,6 +161,7 @@ function saveOrder(){
         url: "rest/orders/",
         data: $('#orderForm').serialize()
     }).done(function () {
+        $("#createOrder").modal("hide");
         ctx.updateTable();
         successNoty("Заказ создан");
     });

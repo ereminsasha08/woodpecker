@@ -26,13 +26,14 @@ public class OrderRestController {
     @PostMapping
     public OrderMap create(@NotNull @RequestParam Integer orderId,
                            @Nullable @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime orderTerm,
-                           @RequestParam Boolean isMarketPlace) {
-        return orderService.create(orderId, orderTerm, isMarketPlace);
+                           @RequestParam Boolean isMarketPlace,
+                           @RequestParam Boolean isColorPlywood) {
+        return orderService.create(orderId, orderTerm, isMarketPlace, isColorPlywood);
     }
 
     @GetMapping("/{id}")
     public OrderMap get(@PathVariable Integer id) {
-        return orderService.get(id);
+        return orderService.findOrderById(id);
     }
     @GetMapping("/cut")
     public List<OrderMap> getCut(){
@@ -48,5 +49,10 @@ public class OrderRestController {
     @GetMapping("/infocut/{id}")
     public List<String> infoCut(@PathVariable Integer id){
        return orderService.infoCut(id);
+    }
+
+    @PostMapping("/infocut/{id}")
+    public void infoCut(@PathVariable Integer id, @RequestParam Boolean listIsComplete, @RequestParam Integer numberList){
+         orderService.cutComplete(id, listIsComplete, numberList);
     }
 }

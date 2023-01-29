@@ -62,5 +62,7 @@ public class GeographyMap extends Product {
     @Column(name = "additional", length = 800)
     private String additional;
 
+    @Column(name = "is_color_plywood")
+    private Boolean isColorPlywood;
 
 }

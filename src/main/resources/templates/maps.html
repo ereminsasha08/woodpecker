@@ -28,6 +28,7 @@
                         <option value="1">В очереди на резку</option>
                         <option value="2">Пилится</option>
                         <option value="4">Выпилен</option>
+                        <option value="5">На покраске</option>
                         <option value="6">Красится</option>
                         <option value="8">Покрашен</option>
                         <option value="10">На приклейки</option>
@@ -89,7 +90,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content ">
             <div class="modal-header">
-                <h4 class="modal-title">Добавить</h4>
+                <h4 class="modal-title">Добавить карту</h4>
                 <button type="button" class="close" data-dismiss="modal" onclick="closeNoty()">&times;</button>
             </div>
             <div class="modal-body container-fluid">
@@ -212,6 +213,7 @@
                             <option value="0">Новый заказ</option>
                             <option value="2">Пилится</option>
                             <option value="4">Выпилен</option>
+                            <option value="5">На покраске</option>
                             <option value="6">Красится</option>
                             <option value="8">Покрашен</option>
                             <option value="10">На приклейки</option>
@@ -259,8 +261,13 @@
                                 <option value="false">Обычный заказ</option>
                             </select>
                         </div>
-
-
+                        <div class="form-group col">
+                            <label for="isColorPlywood" class="col-form-label">Способ производства</label>
+                            <select class="form-control" id="isColorPlywood" name="isColorPlywood">
+                                <option value="true">Цветные доски</option>
+                                <option value="false">Ручная покраска</option>
+                            </select>
+                        </div>
                     </div>
                 </form>
             </div>

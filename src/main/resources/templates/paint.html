@@ -9,7 +9,7 @@
 
 <div class="jumbotron pt-2 ">
   <div class="container">
-    <h3 class="text-center">Карты</h3>
+    <h3 class="text-center">Покраска</h3>
     <table class="table table-striped table-bordered" id="datatable">
       <thead>
       <tr>
@@ -22,6 +22,8 @@
         <th>Многур</th>
         <th>Цвет</th>
         <th>Лазер</th>
+        <th>Художник</th>
+        <th>Состояние</th>
       </tr>
       </thead>
     </table>
@@ -55,22 +57,31 @@
 </div>
 
 
-<div class="modal fade" tabindex="-1" id="info-cut">
+<div class="modal fade" tabindex="-1" id="modalNamePainter">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="modalTitle1"></h4>
+        <h4 class="modal-title" id="modalTitle1">Назначить художника</h4>
         <button type="button" class="close" data-dismiss="modal" onclick="closeNoty()">&times;</button>
       </div>
       <div class="modal-body">
-        <p id="info"></p>
+        <form id="formNamePainter">
+          <input type="hidden" id="id" name="id">
+          <div class="row">
+            <div class="col">
+              <label for="namePainter" class="col-form-label">Имя Художника</label>
+              <input type="text" class="form-control" id="namePainter" name="namePainter"
+                     placeholder="Имя художника">
+            </div>
+          </div>
+        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeNoty()">
           <span class="fa fa-close"></span>
           Отмена
         </button>
-        <button type="button" class="btn btn-primary" onclick="save()">
+        <button type="button" class="btn btn-primary" onclick="savePainter()">
           <span class="fa fa-check"></span>
           Сохранить
         </button>

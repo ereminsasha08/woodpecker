@@ -1,11 +1,11 @@
-const mapsAjaxUrl = "rest/paints/";
+const paintAjaxUrl = "rest/paints/";
 // https://stackoverflow.com/a/5064235/548473
 const ctx = {
-    ajaxUrl: mapsAjaxUrl,
+    ajaxUrl: paintAjaxUrl,
     updateTable: function () {
         $.ajax({
             type: 'GET',
-            url: mapsAjaxUrl,
+            url: paintAjaxUrl,
         }).done(updateTableByData);
     }
 }
@@ -80,12 +80,31 @@ $(function () {
                 "data": "laser",
                 "render": function (date, type, row) {
                     if (date != null) {
-                        return "<button class='btn btn-warning' onclick='getInfoCut(" + row.id + ");'>" + date + "</button>";
+                        return date;
                     } else {
-                        return "<button class='btn btn-secondary' onclick='setLaser(" + row.id + ");'>Начать</button>";
+                        return "<button class='btn btn-secondary' onclick='setIsColorPlywood(" + row.id + ");'>Покрасить доски?</button>";
                     }
                 }
             },
+            {
+                "data": "namePainter",
+                "render": function (date, type, row) {
+                    if (date != null)
+                        return date;
+                    return "Не назначен";
+                }
+            },
+            {
+                "data": "geographyMap.conditionMap",
+                "render": function (date, type, row) {
+                    if (date === 5)
+                        return "<button class='btn btn-secondary' onclick='setIsColorPlywood(" + row.id + ");'>Покраненно!</button>";
+                    if (date === 4)
+                        return "<button class='btn btn-secondary' onclick='setPainter(" + row.id + ");'>Назначить художника</button>";
+                }
+            },
+
+
             //     {
             //         "data": "description",
             //         "render": function (date, type, row) {
@@ -157,21 +176,31 @@ function get(id) {
 }
 
 
-function setLaser(id) {
+function setIsColorPlywood(id) {
     $.ajax({
         type: "PATCH",
         url: ctx.ajaxUrl + id,
     }).done(function () {
         ctx.updateTable();
-        successNoty("Лазер установлен");
+        successNoty("Покрашенно");
     });
 }
 
-function getInfoCut(id) {
-    $("#info-cut").modal();
-    $.get(ctx.ajaxUrl + "infocut/" + id,
-        function (data) {
-            document.getElementById("info").innerText = data
-            $('#info-cut').modal();
-        });
+function setPainter(id) {
+    form = $('#formNamePainter');
+    form.find(":input").val("");
+    document.getElementById('id').value = id;
+    $("#modalNamePainter").modal();
+}
+function savePainter(){
+    form = $('#formNamePainter');
+    $.ajax({
+        type: "POST",
+        url: ctx.ajaxUrl + "painter/",
+        data: form.serialize()
+    }).done(function () {
+        $("#modalNamePainter").modal("hide");
+        ctx.updateTable();
+        successNoty("Художник назначен");
+    });
 }

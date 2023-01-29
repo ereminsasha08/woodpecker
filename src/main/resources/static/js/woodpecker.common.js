@@ -93,7 +93,7 @@ function closeNoty() {
 function successNoty(key) {
     closeNoty();
     new Noty({
-        text: "<span class='fa fa-lg fa-check'></span> &nbsp;",
+        text: "<span class='fa fa-lg fa-check'></span> &nbsp;" + key,
         type: 'success',
         layout: "bottomRight",
         timeout: 1000

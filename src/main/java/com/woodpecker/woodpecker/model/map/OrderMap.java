@@ -72,11 +72,16 @@ public class OrderMap {
     @CollectionTable(name = "plywood_list_for_map")
     private List<String> plywoodList;
 
+    @Column(name = "painter")
+    private String namePainter;
 
-    public OrderMap(LocalDateTime orderTerm, GeographyMap geographyMap, Boolean marketPlace) {
+
+    public OrderMap(LocalDateTime orderTerm, GeographyMap geographyMap, Boolean marketPlace, Boolean isColorPlyWood) {
+        geographyMap.setIsColorPlywood(isColorPlyWood);
         this.orderTerm = orderTerm;
         this.geographyMap = geographyMap;
         this.marketPlace = marketPlace;
+        this.isColorPlyWood = isColorPlyWood;
         this.completed = false;
     }
 }
