@@ -1,7 +1,7 @@
-package com.woodpecker.woodpecker.web.geographymap;
+package com.woodpecker.woodpecker.web.map;
 
 import com.woodpecker.woodpecker.model.map.GeographyMap;
-import com.woodpecker.woodpecker.service.GeographyMapService;
+import com.woodpecker.woodpecker.service.map.GeographyMapService;
 import com.woodpecker.woodpecker.web.AuthUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;

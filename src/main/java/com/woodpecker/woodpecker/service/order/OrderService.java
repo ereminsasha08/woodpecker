@@ -1,9 +1,10 @@
-package com.woodpecker.woodpecker.service;
+package com.woodpecker.woodpecker.service.order;
 
 import com.woodpecker.woodpecker.model.map.GeographyMap;
 import com.woodpecker.woodpecker.model.map.OrderMap;
 import com.woodpecker.woodpecker.model.map.Stage;
 import com.woodpecker.woodpecker.repository.OrderRepository;
+import com.woodpecker.woodpecker.service.map.GeographyMapService;
 import com.woodpecker.woodpecker.util.exception.ApplicationException;
 import com.woodpecker.woodpecker.util.exception.ErrorType;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +41,5 @@ public class OrderService {
         map.setOrderMap(orderMap);
         return orderRepository.save(orderMap);
     }
-
-
 
 }

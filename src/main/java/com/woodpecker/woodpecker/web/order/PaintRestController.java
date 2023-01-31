@@ -1,7 +1,7 @@
 package com.woodpecker.woodpecker.web.order;
 
 import com.woodpecker.woodpecker.model.map.OrderMap;
-import com.woodpecker.woodpecker.service.PainterService;
+import com.woodpecker.woodpecker.service.order.PainterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +28,7 @@ public class PaintRestController {
     }
 
     @PatchMapping("stage/{id}")
-    public void setStagePain(@PathVariable Integer id) {
+    public void setEndPainting(@PathVariable Integer id) {
         painterService.setStage(id);
     }
 

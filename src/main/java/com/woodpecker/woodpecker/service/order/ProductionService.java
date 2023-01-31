@@ -1,4 +1,4 @@
-package com.woodpecker.woodpecker.service;
+package com.woodpecker.woodpecker.service.order;
 
 import com.woodpecker.woodpecker.model.map.OrderMap;
 import com.woodpecker.woodpecker.model.map.Stage;
@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 
@@ -31,15 +32,19 @@ public class ProductionService {
     }
 
     @Transactional
-    public void setConditionForMap(Integer id, Integer conditionMap) {
+    public void updateConditionOrder(Integer id, Integer conditionMap) {
         if (conditionMap < Stage.ЖДЕТ_ПРИКЛЕЙКИ.ordinal())
             throw new ApplicationException("Нельзя менять состояния заказа до покраски", ErrorType.WRONG_REQUEST);
-
-        int newCondition = ++conditionMap;
         OrderMap orderMap = orderRepository.findById(id)
                 .orElseThrow(() -> new ApplicationException("Карта не найдена", ErrorType.DATA_NOT_FOUND));
+        int newCondition = ++conditionMap;
         orderMap.setStage(newCondition);
+        if(newCondition == Stage.ДОДЕЛЫВАЕТСЯ.ordinal())
+            orderMap.setGluing_end(LocalDateTime.now());
+        if(newCondition == Stage.ЗАПАКОВЫВАЕТСЯ.ordinal())
+            orderMap.setPacked_end(LocalDateTime.now());
         if (newCondition == Stage.ОТПРАВЛЕН.ordinal()) {
+            orderMap.setPost_end(LocalDateTime.now());
             orderMap.setCompleted(true);
         }
     }

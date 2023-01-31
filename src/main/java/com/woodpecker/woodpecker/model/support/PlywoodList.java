@@ -9,7 +9,6 @@ import java.util.List;
 @Table(name = "plywood_list")
 @Getter
 public class PlywoodList {
-
     @Id
     private Integer id;
 

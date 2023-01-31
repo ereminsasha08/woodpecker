@@ -1,7 +1,7 @@
 package com.woodpecker.woodpecker.web.order;
 
 import com.woodpecker.woodpecker.model.map.OrderMap;
-import com.woodpecker.woodpecker.service.ProductionService;
+import com.woodpecker.woodpecker.service.order.ProductionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +22,7 @@ public class ProductionRestController {
 
 
     @PatchMapping("/{id}")
-    public void setCondition(@PathVariable Integer id, @RequestParam Integer conditionMap) {
-        productionService.setConditionForMap(id, conditionMap);
+    public void updateCondition(@PathVariable Integer id, @RequestParam Integer conditionMap) {
+        productionService.updateConditionOrder(id, conditionMap);
     }
 }

@@ -49,11 +49,17 @@ public class OrderMap {
     @Column(name = "cut_end")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime cut_end;
-
+    @Column(name = "painting_begin")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime painting_begin;
 
     @Column(name = "painting_end")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime painting_end;
+
+    @Column(name = "gluing_end")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime gluing_end;
 
 
     @Column(name = "packed_end")

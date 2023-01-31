@@ -1,4 +1,4 @@
-package com.woodpecker.woodpecker.service;
+package com.woodpecker.woodpecker.service.map;
 
 import com.woodpecker.woodpecker.model.map.GeographyMap;
 import com.woodpecker.woodpecker.model.user.User;
@@ -52,7 +52,7 @@ public class GeographyMapService {
         geographyMapRepository.save(geographyMap);
 
     }
-
+@Transactional
     public void delete(int id) {
         geographyMapRepository.delete(id);
     }
