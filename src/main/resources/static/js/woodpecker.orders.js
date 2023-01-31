@@ -82,63 +82,16 @@ $(function () {
                     if (date != null) {
                         return "<button class='btn btn-warning' onclick='getInfoCut(" + row.id + ");'>" + date + "</button>";
                     } else {
-                        return "<button class='btn btn-secondary' onclick='setLaser(" + row.id + ");'>Начать</button>";
+                        return "<button class='btn btn-danger' onclick='setLaser(" + row.id + ");'>Пилить</button>";
                     }
                 }
             },
-            //     {
-            //         "data": "description",
-            //         "render": function (date, type, row) {
-            //             var ref = "<a href=\"javascript:void(0);\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"" + date + "\">"
-            //             if (date.length > 10) {
-            //                 date = date.substring(0, 7) + "...";
-            //             }
-            //             return ref + date + "</a>";
-            //         }
-            //     },
-            //     {
-            //         "data": "conditionMap",
-            //         "render": function (date, type, row) {
-            //             switch (date) {
-            //                 case -1:
-            //                     return "Неизвестно";
-            //                 case 0:
-            //                     return "Новый заказ";
-            //                 case 2:
-            //                     return "Пилится";
-            //                 case 4:
-            //                     return "Выпилен";
-            //                 case 6:
-            //                     return "Красится";
-            //                 case 8:
-            //                     return "Покрашен";
-            //                 case 10:
-            //                     return "На приклейки";
-            //                 case 12:
-            //                     return "На запаковке";
-            //                 case 14:
-            //                     return "Готов к отправке";
-            //                 case 16:
-            //                     return "Отправлен";
-            //
-            //             }
-            //         }
-            //     },
-            //     {
-            //         "data": "price"
-            //     },
-
-            //     {
-            //         "orderable": false,
-            //         "defaultContent": "",
-            //         "render": renderDeleteBtn
-            //     }
         ],
     });
 });
 
 function get(id) {
-    form = $('#orderInfo');
+    const form = $('#orderInfo');
     form.find(":input").val("");
     $("#orderInfo").modal();
     $.get(ctx.ajaxUrl + id, function (data) {
@@ -154,7 +107,6 @@ function get(id) {
                 }
 
         });
-        $('#orderInfo').modal();
     });
 }
 
@@ -197,7 +149,7 @@ function getInfoCut(id) {
 
 
 function enable(chkbox, id, index) {
-    var enabled = chkbox.is(":checked");
+    const enabled = chkbox.is(":checked");
 //  https://stackoverflow.com/a/22213543/548473
     $.ajax({
         url: ctx.ajaxUrl + "infocut/" + id,
@@ -208,7 +160,7 @@ function enable(chkbox, id, index) {
         }
     }).done(function () {
         // chkbox.closest("tr").attr("data-user-enabled", enabled);
-        successNoty(enabled ? "common.enabled" : "common.disabled");
+        successNoty(enabled ? "Выпилена" : "Отмена");
     }).fail(function () {
         $(chkbox).prop("checked", !enabled);
     });

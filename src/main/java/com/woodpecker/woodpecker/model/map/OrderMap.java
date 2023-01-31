@@ -82,6 +82,6 @@ public class OrderMap {
         this.geographyMap = geographyMap;
         this.marketPlace = marketPlace;
         this.isColorPlyWood = isColorPlyWood;
-        this.completed = false;
+       this.completed = false;
     }
 }

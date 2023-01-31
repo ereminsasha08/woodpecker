@@ -88,34 +88,11 @@ $(function () {
             {
                 "data": "conditionMap",
                 "render": function (date, type, row) {
-                    switch (date) {
-                        case -1:
-                            return "Неизвестно";
-                        case 0:
-                            return "<button class='btn btn-secondary' onclick='createOrder(" + row.id + ");'>Начать</button>";
-                        case 1:
-                            return "В очереди"
-                        case 2:
-                            return "Пилится";
+                    if (date !== 0)
+                        return getCondition(date)
+                     else
+                        return "<button class='btn btn-secondary' onclick='createOrder(" + row.id + ");'>Начать</button>";
 
-                        case 4:
-                            return "Выпилен";
-                        case 5:
-                            return "На покраске";
-                        case 6:
-                            return "Красится";
-                        case 8:
-                            return "Покрашен";
-                        case 10:
-                            return "На приклейки";
-                        case 12:
-                            return "На запаковке";
-                        case 14:
-                            return "Готов к отправке";
-                        case 16:
-                            return "Отправлен";
-
-                    }
                 }
             },
             {
@@ -149,13 +126,14 @@ function add() {
 }
 
 
-function createOrder(id){
+function createOrder(id) {
     form.find(":input").val("");
     $("#createOrder").modal();
     document.getElementById('order-Id').value = id;
 
 }
-function saveOrder(){
+
+function saveOrder() {
     $.ajax({
         type: "POST",
         url: "rest/orders/",

@@ -114,11 +114,41 @@ function renderDeleteBtn(data, type, row) {
 
 function failNoty(jqXHR) {
     closeNoty();
-    var errorInfo = jqXHR.responseJSON;
+    let errorInfo = jqXHR.responseJSON;
     failedNote = new Noty({
         text: "<span class='fa fa-lg fa-exclamation-circle'></span> &nbsp;" + errorInfo.typeMessage + "<br>" + errorInfo.details.join("<br>"),
         type: "error",
         layout: "bottomRight"
     });
     failedNote.show()
+}
+
+
+function getCondition(date) {
+    switch (date) {
+        case -1:
+            return "Неизвестно";
+        case 0:
+            return "Новый заказ";
+        case 1:
+            return "В очереди на резку";
+        case 2:
+            return "Пилится";
+        case 4:
+            return "Выпилен";
+        case 5:
+            return "На покраске";
+        case 6:
+            return "Красится";
+        case 8:
+            return "Ждёт приклейки";
+        case 10:
+            return "На приклейки";
+        case 12:
+            return "На запаковке";
+        case 14:
+            return "Готов к отправке";
+        case 16:
+            return "Отправлен";
+    }
 }

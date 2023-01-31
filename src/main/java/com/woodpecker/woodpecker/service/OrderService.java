@@ -75,10 +75,8 @@ public class OrderService {
                 .stream()
                 .filter(laser -> laser.getMaxSize() >= order.getGeographyMap().getSize())
                 .min(Comparator.comparing(Laser::getCapacity))
-                .get();
-        System.out.println(minCapasityLaser);
+                .orElseThrow(() -> new ApplicationException("Нет потходящего лазер", ErrorType.DATA_NOT_FOUND));
         minCapasityLaser.setCapacity(order.getGeographyMap(), 1);
-        System.out.println(minCapasityLaser);
         order.setLaser(minCapasityLaser.getName());
     }
 
@@ -118,7 +116,7 @@ public class OrderService {
     public void setColorPlywood(Integer id) {
         OrderMap orderMap = orderRepository.findById(id).get();
         orderMap.setIsColorPlyWood(false);
-        if (orderMap.getGeographyMap().getConditionMap() >= 5 && orderMap.getGeographyMap().getConditionMap() <= 7) {
+        if (orderMap.getGeographyMap().getConditionMap() >= 5 && orderMap.getGeographyMap().getConditionMap() <= 7 && !orderMap.getIsColorPlyWood()) {
             orderMap.getGeographyMap().setConditionMap(8);
         }
     }
@@ -126,6 +124,8 @@ public class OrderService {
     @Transactional
     public void cutComplete(Integer id, Boolean listIsComplete, Integer numberList) {
         OrderMap orderById = findOrderById(id);
+        if (orderById.getGeographyMap().getConditionMap() >= 4)
+            throw new ApplicationException("Карта выпиленна, обновите страницу", ErrorType.APP_ERROR);
         List<String> plywoodList = orderById.getPlywoodList();
         String element = plywoodList.get(numberList);
         if (listIsComplete) {

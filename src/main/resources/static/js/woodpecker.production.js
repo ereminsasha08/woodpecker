@@ -1,4 +1,4 @@
-const mapsAjaxUrl = "rest/orders/";
+const mapsAjaxUrl = "rest/production/";
 // https://stackoverflow.com/a/5064235/548473
 const ctx = {
     ajaxUrl: mapsAjaxUrl,
@@ -82,96 +82,50 @@ $(function () {
                     if (date != null) {
                         return "<button class='btn btn-warning' onclick='getInfoCut(" + row.id + ");'>" + date + "</button>";
                     } else {
-                        return "<button class='btn btn-secondary' onclick='setLaser(" + row.id + ");'>Начать</button>";
+                        return "<button class='btn btn-info small' onclick='setLaser(" + row.id + ");'>Нет</button>";
                     }
                 }
             },
-            //     {
-            //         "data": "description",
-            //         "render": function (date, type, row) {
-            //             var ref = "<a href=\"javascript:void(0);\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"" + date + "\">"
-            //             if (date.length > 10) {
-            //                 date = date.substring(0, 7) + "...";
-            //             }
-            //             return ref + date + "</a>";
-            //         }
-            //     },
-            //     {
-            //         "data": "conditionMap",
-            //         "render": function (date, type, row) {
-            //             switch (date) {
-            //                 case -1:
-            //                     return "Неизвестно";
-            //                 case 0:
-            //                     return "Новый заказ";
-            //                 case 2:
-            //                     return "Пилится";
-            //                 case 4:
-            //                     return "Выпилен";
-            //                 case 6:
-            //                     return "Красится";
-            //                 case 8:
-            //                     return "Покрашен";
-            //                 case 10:
-            //                     return "На приклейки";
-            //                 case 12:
-            //                     return "На запаковке";
-            //                 case 14:
-            //                     return "Готов к отправке";
-            //                 case 16:
-            //                     return "Отправлен";
-            //
-            //             }
-            //         }
-            //     },
-            //     {
-            //         "data": "price"
-            //     },
-
-            //     {
-            //         "orderable": false,
-            //         "defaultContent": "",
-            //         "render": renderDeleteBtn
-            //     }
+            {
+                "data": "geographyMap.conditionMap",
+                "render": function (date, type, row) {
+                    if (date >= 8) {
+                        return "<button class='btn btn-info small' onclick='setCondition(" + row.id + "," + date + ");'>" + getCondition(date) + "</button>";
+                    } else {
+                        return getCondition(date)
+                    }
+                }
+            },
         ],
     });
 });
 
-function get(id) {
-    $("#orderInfo").modal();
-    $.get(ctx.ajaxUrl + id, function (data) {
-        $.each(data, function (key, value) {
-            if (value != null)
-                if (key === "geographyMap") {
-                    $.each(data[key], function (key, value) {
-                        let elementById = document.getElementById(key);
-                        if (elementById != null) {
-                            elementById.innerText += value;
-                        }
-                    });
-                }
-
-        });
-        $('#orderInfo').modal();
-    });
-}
-
-
-function setLaser(id) {
+function setCondition(id, conditionMap) {
     $.ajax({
         type: "PATCH",
         url: ctx.ajaxUrl + id,
+        data: {
+            conditionMap: conditionMap
+        }
     }).done(function () {
         ctx.updateTable();
-        successNoty("Лазер установлен");
+        successNoty(getCondition(conditionMap + 2));
     });
 }
 
 function getInfoCut(id) {
     $("#info-cut").modal();
-    $.get(ctx.ajaxUrl + "infocut/" + id,
+    $.get("rest/orders/infocut/" + id,
         function (data) {
-            document.getElementById("info").innerText = data
+            let listSelect = "";
+            $.each(data, function (index, value) {
+                listSelect += '<div className="row">' +
+                    '<div className="col">' +
+                    ' <span id ="' + index + '">"' + value + '"</span>' +
+                    '</div>' +
+                    ' </div>'
+            });
+            document.getElementById("info").innerHTML = listSelect;
             $('#info-cut').modal();
         });
 }

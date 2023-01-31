@@ -82,7 +82,7 @@ $(function () {
                     if (date != null) {
                         return date;
                     } else {
-                        return "<button class='btn btn-secondary' onclick='setIsColorPlywood(" + row.id + ");'>Покрасить доски?</button>";
+                        return "<button class='btn btn-danger' onclick='setIsColorPlywood(" + row.id + ");'>Покрасить доски</button>";
                     }
                 }
             },
@@ -98,60 +98,12 @@ $(function () {
                 "data": "geographyMap.conditionMap",
                 "render": function (date, type, row) {
                     if (date === 5)
-                        return "<button class='btn btn-secondary' onclick='setIsColorPlywood(" + row.id + ");'>Покраненно!</button>";
+                        return "<button class='btn btn-danger' onclick='setIsColorPlywood(" + row.id + ");'>Покраненно!</button>";
                     if (date === 4)
                         return "<button class='btn btn-secondary' onclick='setPainter(" + row.id + ");'>Назначить художника</button>";
+                    return "Ждет доски";
                 }
             },
-
-
-            //     {
-            //         "data": "description",
-            //         "render": function (date, type, row) {
-            //             var ref = "<a href=\"javascript:void(0);\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"" + date + "\">"
-            //             if (date.length > 10) {
-            //                 date = date.substring(0, 7) + "...";
-            //             }
-            //             return ref + date + "</a>";
-            //         }
-            //     },
-            //     {
-            //         "data": "conditionMap",
-            //         "render": function (date, type, row) {
-            //             switch (date) {
-            //                 case -1:
-            //                     return "Неизвестно";
-            //                 case 0:
-            //                     return "Новый заказ";
-            //                 case 2:
-            //                     return "Пилится";
-            //                 case 4:
-            //                     return "Выпилен";
-            //                 case 6:
-            //                     return "Красится";
-            //                 case 8:
-            //                     return "Покрашен";
-            //                 case 10:
-            //                     return "На приклейки";
-            //                 case 12:
-            //                     return "На запаковке";
-            //                 case 14:
-            //                     return "Готов к отправке";
-            //                 case 16:
-            //                     return "Отправлен";
-            //
-            //             }
-            //         }
-            //     },
-            //     {
-            //         "data": "price"
-            //     },
-
-            //     {
-            //         "orderable": false,
-            //         "defaultContent": "",
-            //         "render": renderDeleteBtn
-            //     }
         ],
     });
 });

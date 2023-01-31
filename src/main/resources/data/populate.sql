@@ -13,6 +13,12 @@ VALUES ('USER', 2),
        ('USER', 3),
        ('USER', 4);
 
+INSERT INTO laser(name, capacity, max_size)
+VALUES ('1л', 0, 160),
+       ('2л', 0, 160),
+       ('3л', 0, 200),
+       ('4л', 0, 200);
+
 INSERT INTO maps (USER_ID, ID, SIZE, PRICE, DATE_TIME, LANGUAGE_MAP, TYPE_MAP, IS_STATE, LIGHT, IS_MULTI_LEVEL, COLOR, ADDITIONAL, CONTACT, DESCRIPTION, condition_map)
 VALUES(2, 2135, 160, 14000, '2019-01-01', 'Английский', 'Мир', 'false', 'Без подсветки', 'true', 'темный орех', 'касатки-5, корабли - 5', 'вотсап', 'если получится быстрее сделать', 0),
       (2, 2136, 140, 9000, '2019-01-01', 'Английский', 'Мир', 'false', 'Без подсветки', 'true', 'однот орех', 'Без допов', 'вотсап', 'срочно', 0),
