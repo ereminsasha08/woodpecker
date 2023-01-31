@@ -180,7 +180,7 @@ function savePainter() {
 
 function getInfoCut(id) {
     $("#info-cut").modal();
-    $.get("rest/orders/infocut/" + id,
+    $.get("rest/cut/info/" + id,
         function (data) {
             let listSelect = "";
             $.each(data, function (index, value) {

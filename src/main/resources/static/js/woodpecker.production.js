@@ -109,13 +109,12 @@ function setCondition(id, conditionMap) {
         }
     }).done(function () {
         ctx.updateTable();
-        successNoty(getCondition(conditionMap + 2));
+        successNoty(getCondition(conditionMap));
     });
 }
-
 function getInfoCut(id) {
     $("#info-cut").modal();
-    $.get("rest/orders/infocut/" + id,
+    $.get("rest/cut/info/" + id,
         function (data) {
             let listSelect = "";
             $.each(data, function (index, value) {

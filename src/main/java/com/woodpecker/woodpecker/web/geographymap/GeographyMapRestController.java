@@ -23,7 +23,6 @@ public class GeographyMapRestController {
 
     private final GeographyMapService mapService;
 
-
     @GetMapping
     public List<GeographyMap> userOrderMaps(@AuthenticationPrincipal AuthUser authUser) {
         return mapService.findByManager(authUser.getUser());

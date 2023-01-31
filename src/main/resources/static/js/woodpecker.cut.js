@@ -1,11 +1,12 @@
-const mapsAjaxUrl = "rest/orders/";
+const orderAjaxUrl = "rest/order/";
+const cutAjaxUrl = "rest/cut/"
 // https://stackoverflow.com/a/5064235/548473
 const ctx = {
-    ajaxUrl: mapsAjaxUrl,
+    ajaxUrl: cutAjaxUrl,
     updateTable: function () {
         $.ajax({
             type: 'GET',
-            url: mapsAjaxUrl,
+            url: cutAjaxUrl,
         }).done(updateTableByData);
     }
 }
@@ -114,7 +115,7 @@ function get(id) {
 function setLaser(id) {
     $.ajax({
         type: "PATCH",
-        url: ctx.ajaxUrl + id,
+        url: cutAjaxUrl + id,
     }).done(function () {
         ctx.updateTable();
         successNoty("Лазер установлен");
@@ -123,7 +124,7 @@ function setLaser(id) {
 
 function getInfoCut(id, isColorPlywood) {
     $("#info-cut").modal();
-    $.get(ctx.ajaxUrl + "infocut/" + id,
+    $.get(cutAjaxUrl + "info/" + id,
         function (data) {
             let listSelect = "";
             if (isColorPlywood)
@@ -139,7 +140,7 @@ function getInfoCut(id, isColorPlywood) {
                     ' <span id ="' + index + '">"' + value + '"</span>' +
                     '</div>' +
                     '  <div className="col">' +
-                    "<input type='checkbox'" + ' id="' + index + '"' + (value.endsWith("Готов") ? "checked" : "") + " onclick='enable($(this)," + id + "," + index + ");'/>" +
+                    "<input type='checkbox'" + ' id="' + index + '"' + (value.endsWith("Готов") ? "checked" : "") + " onclick='updateInfoAboutCut($(this)," + id + "," + index + ");'/>" +
                     ' </div>' +
                     ' </form>' +
                     ' </div>'
@@ -150,11 +151,11 @@ function getInfoCut(id, isColorPlywood) {
 }
 
 
-function enable(chkbox, id, index) {
+function updateInfoAboutCut(chkbox, id, index) {
     const enabled = chkbox.is(":checked");
 //  https://stackoverflow.com/a/22213543/548473
     $.ajax({
-        url: ctx.ajaxUrl + "infocut/" + id,
+        url: cutAjaxUrl + "info/" + id,
         type: "POST",
         data: {
             listIsComplete: enabled,

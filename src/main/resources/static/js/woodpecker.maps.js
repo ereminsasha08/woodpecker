@@ -1,4 +1,5 @@
 const mapsAjaxUrl = "rest/maps/";
+const ordersAjaxUrl = "rest/orders/"
 const filter = "rest/maps/filter";
 // https://stackoverflow.com/a/5064235/548473
 const ctx = {
@@ -136,7 +137,7 @@ function createOrder(id) {
 function saveOrder() {
     $.ajax({
         type: "POST",
-        url: "rest/orders/",
+        url: ordersAjaxUrl,
         data: $('#orderForm').serialize()
     }).done(function () {
         $("#createOrder").modal("hide");
