@@ -54,13 +54,13 @@ function updateRow(id) {
 
 function deleteRow(id) {
 
-    if (confirm('common.confirm')) {
+    if (confirm('Вы уверенны?')) {
         $.ajax({
             url: ctx.ajaxUrl + id,
             type: "DELETE"
         }).done(function () {
             ctx.updateTable();
-            successNoty("common.deleted");
+            successNoty("Удаленно");
         });
     }
 }
@@ -126,29 +126,30 @@ function failNoty(jqXHR) {
 
 function getCondition(date) {
     switch (date) {
-        case -1:
-            return "Неизвестно";
         case 0:
-            return "Новый заказ";
+            return "Неизвестно";
         case 1:
-            return "В очереди на резку";
+            return "Новый заказ";
         case 2:
+            return "В очереди на резку";
+        case 3:
             return "Пилится";
         case 4:
-            return "Выпилен";
-        case 5:
             return "На покраске";
-        case 6:
+        case 5:
             return "Красится";
-        case 8:
+        case 6:
             return "Ждёт приклейки";
+        case 7:
+            return "Приклеивается";
+        case 8:
+            return "Доделывается"
+        case 9:
+            return "Запаковывается";
         case 10:
-            return "На приклейки";
-        case 12:
-            return "На запаковке";
-        case 14:
             return "Готов к отправке";
-        case 16:
+        case 11:
             return "Отправлен";
     }
+
 }

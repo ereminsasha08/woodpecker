@@ -1,5 +1,6 @@
 package com.woodpecker.woodpecker.model.map;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,13 +30,14 @@ public class OrderMap {
     @Column(name = "completed")
     private Boolean completed;
     @Column(name = "is_color_plywood")
-    private Boolean isColorPlyWood;
+    private Boolean isColorPlywood;
 
 
     @OneToOne
     @MapsId
     @JoinColumn(name = "id")
     @NotNull
+    @JsonIgnoreProperties("orderMap")
     private GeographyMap geographyMap;
 
 
@@ -75,13 +77,18 @@ public class OrderMap {
     @Column(name = "painter")
     private String namePainter;
 
+    @Column(name = "stage", nullable = false)
+    @NotNull
+    private Integer stage;
 
-    public OrderMap(LocalDateTime orderTerm, GeographyMap geographyMap, Boolean marketPlace, Boolean isColorPlyWood) {
-        geographyMap.setIsColorPlywood(isColorPlyWood);
+
+    public OrderMap(LocalDateTime orderTerm, GeographyMap geographyMap, Boolean marketPlace, Boolean isColorPlywood, Integer stage) {
+        geographyMap.setIsColorPlywood(isColorPlywood);
         this.orderTerm = orderTerm;
         this.geographyMap = geographyMap;
         this.marketPlace = marketPlace;
-        this.isColorPlyWood = isColorPlyWood;
-       this.completed = false;
+        this.isColorPlywood = isColorPlywood;
+        this.stage = stage;
+        this.completed = false;
     }
 }

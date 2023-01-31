@@ -14,6 +14,7 @@ public class PlywoodList {
     private Integer id;
 
     @ElementCollection
-    @CollectionTable(name = "list")
+    @CollectionTable(name = "lists")
+    @Column(name = "list")
     private List<String> lists;
 }

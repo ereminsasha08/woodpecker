@@ -86,13 +86,13 @@ $(function () {
                 }
             },
             {
-                "data": "conditionMap",
+                "data": "orderMap",
                 "render": function (date, type, row) {
-                    if (date !== 0)
-                        return getCondition(date)
-                     else
+                    if (date === null)
                         return "<button class='btn btn-secondary' onclick='createOrder(" + row.id + ");'>Начать</button>";
-
+                    else {
+                        return getCondition(date.stage)
+                    }
                 }
             },
             {

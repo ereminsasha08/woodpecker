@@ -80,7 +80,7 @@ $(function () {
                 "data": "laser",
                 "render": function (date, type, row) {
                     if (date != null) {
-                        return "<button class='btn btn-warning' onclick='getInfoCut(" + row.id + ");'>" + date + "</button>";
+                        return "<button class='btn btn-warning' onclick='getInfoCut(" + row.id + "," + row.geographyMap.isColorPlywood + ");'>" + date + "</button>";
                     } else {
                         return "<button class='btn btn-danger' onclick='setLaser(" + row.id + ");'>Пилить</button>";
                     }
@@ -121,16 +121,18 @@ function setLaser(id) {
     });
 }
 
-function getInfoCut(id) {
+function getInfoCut(id, isColorPlywood) {
     $("#info-cut").modal();
     $.get(ctx.ajaxUrl + "infocut/" + id,
         function (data) {
             let listSelect = "";
+            if (isColorPlywood)
+                listSelect = '<div>' +
+                    '  <span>' +
+                    'Карта из покрашенных досок' +
+                    '  </span>' +
+                    '</div>'
             $.each(data, function (index, value) {
-                // listSelect += '<p id ="' + index + '">"' + value + '"</p>' +
-                //     "<input type='checkbox' " + (value.endsWith("Готов") ? "checked" : "") + " onclick='enable($(this)," + id + ");" +
-                //     "'/>";
-                // +'<br>'
                 listSelect += '<div className="row">' +
                     '<form>' +
                     '<div className="col">' +

@@ -16,12 +16,13 @@ public class ProductionRestController {
     private final ProductionService productionService;
 
     @GetMapping
-    public List<OrderMap> getOrderForProduction(){
+    public List<OrderMap> getOrderForProduction() {
         return productionService.getOrderForProduction();
     }
 
+
     @PatchMapping("/{id}")
-    public void setCondition(@PathVariable Integer id, @RequestParam Integer conditionMap){
+    public void setCondition(@PathVariable Integer id, @RequestParam Integer conditionMap) {
         productionService.setConditionForMap(id, conditionMap);
     }
 }

@@ -21,7 +21,7 @@ public class OrderRestController {
     public final static String REST_URL = "rest/orders";
     @GetMapping
     public List<OrderMap> all() {
-        return orderService.getOrdersWithSortedCut();    }
+        return orderService.getOrdersWithSortedForCut();    }
 
     @PostMapping
     public OrderMap create(@NotNull @RequestParam Integer orderId,
@@ -37,7 +37,7 @@ public class OrderRestController {
     }
     @GetMapping("/cut")
     public List<OrderMap> getCut(){
-        return orderService.getOrdersWithSortedCut();
+        return orderService.getOrdersWithSortedForCut();
     }
 
     @PatchMapping("/{id}")

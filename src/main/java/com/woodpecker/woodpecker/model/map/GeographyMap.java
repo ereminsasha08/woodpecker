@@ -1,15 +1,14 @@
 package com.woodpecker.woodpecker.model.map;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.woodpecker.woodpecker.model.abstractentity.Product;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
@@ -23,9 +22,6 @@ public class GeographyMap extends Product {
     @Column(name = "type_map", nullable = false)
     @NotNull
     private String typeMap;
-    @Column(name = "condition_map", nullable = false)
-    @NotNull
-    private int conditionMap;
 
     @Column(name = "size", nullable = false)
     @NotNull
@@ -64,5 +60,9 @@ public class GeographyMap extends Product {
 
     @Column(name = "is_color_plywood")
     private Boolean isColorPlywood;
+    @OneToOne
+    @JoinColumn(name = "order_map_id", referencedColumnName = "id")
+    @JsonIgnoreProperties("geographyMap")
+    private OrderMap orderMap;
 
 }

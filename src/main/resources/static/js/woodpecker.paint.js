@@ -80,10 +80,16 @@ $(function () {
                 "data": "laser",
                 "render": function (date, type, row) {
                     if (date != null) {
-                        return date;
+                        if (row.isColorPlywood) {
+                            return "<button class='btn btn-danger' onclick='getInfoCut(" + row.id + ");'>" + date + "</button>";
+
+                        } else {
+                            return "<button class='btn btn-warning' onclick='getInfoCut(" + row.id + ");'>" + date + "</button>";
+                        }
                     } else {
-                        return "<button class='btn btn-danger' onclick='setIsColorPlywood(" + row.id + ");'>Покрасить доски</button>";
+                        return "<button class='btn btn-info small' onclick='setLaser(" + row.id + ");'>Нет</button>";
                     }
+
                 }
             },
             {
@@ -95,13 +101,15 @@ $(function () {
                 }
             },
             {
-                "data": "geographyMap.conditionMap",
+                "data": "stage",
                 "render": function (date, type, row) {
                     if (date === 5)
-                        return "<button class='btn btn-danger' onclick='setIsColorPlywood(" + row.id + ");'>Покраненно!</button>";
+                        return "<button class='btn btn-danger' onclick='setStagePaint(" + row.id + ");'>Покраненно!</button>";
                     if (date === 4)
                         return "<button class='btn btn-secondary' onclick='setPainter(" + row.id + ");'>Назначить художника</button>";
-                    return "Ждет доски";
+                    else
+                        return "Ждет покраску досок";
+
                 }
             },
         ],
@@ -135,6 +143,18 @@ function setIsColorPlywood(id) {
     }).done(function () {
         ctx.updateTable();
         successNoty("Покрашенно");
+        $('#info-cut').modal("hide");
+    });
+}
+
+function setStagePaint(id) {
+    $.ajax({
+        type: "PATCH",
+        url: ctx.ajaxUrl + "stage/"+ id,
+    }).done(function () {
+        ctx.updateTable();
+        successNoty("Покрашенно");
+        $('#info-cut').modal("hide");
     });
 }
 
@@ -144,7 +164,8 @@ function setPainter(id) {
     document.getElementById('id').value = id;
     $("#modalNamePainter").modal();
 }
-function savePainter(){
+
+function savePainter() {
     form = $('#formNamePainter');
     $.ajax({
         type: "POST",
@@ -155,4 +176,23 @@ function savePainter(){
         ctx.updateTable();
         successNoty("Художник назначен");
     });
+}
+
+function getInfoCut(id) {
+    $("#info-cut").modal();
+    $.get("rest/orders/infocut/" + id,
+        function (data) {
+            let listSelect = "";
+            $.each(data, function (index, value) {
+                listSelect += '<div class="row">' +
+                    '<div class="col">' +
+                    ' <span id ="' + index + '">"' + value + '"</span>' +
+                    '</div>' +
+                    ' </div>'
+            });
+            document.getElementById("info").innerHTML = listSelect;
+            document.getElementById("infoButton").innerHTML =
+                "  <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" onclick=\"closeNoty()\"><span class=\"fa fa-close\"></span>Отмена</button>" +
+                "<button class=\'btn btn-danger\' onclick=\'setIsColorPlywood(" + id + ");\'>Покрасить доски</button>";
+        });
 }

@@ -2,6 +2,7 @@ package com.woodpecker.woodpecker.service;
 
 import com.woodpecker.woodpecker.model.map.GeographyMap;
 import com.woodpecker.woodpecker.model.map.OrderMap;
+import com.woodpecker.woodpecker.model.map.Stage;
 import com.woodpecker.woodpecker.model.support.Laser;
 import com.woodpecker.woodpecker.model.support.PlywoodList;
 import com.woodpecker.woodpecker.repository.LaserRepository;
@@ -40,20 +41,20 @@ public class OrderService {
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     public OrderMap create(Integer id, LocalDateTime orderTerm, boolean marketPlace, boolean isColorPlyWood) {
         GeographyMap map = geographyMapService.getById(id);
-        map.setConditionMap(1);
         orderTerm = Objects.isNull(orderTerm) ? map.getDateTime().plusWeeks(2).plusDays(3) : orderTerm;
-        OrderMap orderMap = new OrderMap(orderTerm, map, marketPlace, isColorPlyWood);
+        OrderMap orderMap = new OrderMap(orderTerm, map, marketPlace, isColorPlyWood, Stage.В_ОЧЕРЕДИ_НА_РЕЗКУ.ordinal());
+        map.setOrderMap(orderMap);
         return orderRepository.save(orderMap);
     }
 
     public OrderMap findOrderById(Integer id) {
-        return orderRepository.findById(id).orElseThrow();
+        return orderRepository.findById(id).orElseThrow(() -> new ApplicationException("Карта не найдена", ErrorType.DATA_ERROR));
     }
 
-    public List<OrderMap> getOrdersWithSortedCut() {
+    public List<OrderMap> getOrdersWithSortedForCut() {
         return getAll()
                 .stream()
-                .filter(map -> !map.getCompleted() && map.getGeographyMap().getConditionMap() >= 1 && map.getGeographyMap().getConditionMap() < 4)
+                .filter(order -> !order.getCompleted() && order.getStage() >= Stage.НОВЫЙ_ЗАКАЗ.ordinal() && order.getStage() < Stage.ЖДЕТ_ПОКРАСКИ.ordinal())
                 .sorted(Comparator.comparing(OrderMap::getMarketPlace).reversed()
                         .thenComparing(OrderMap::getOrderTerm))
                 .toList();
@@ -62,10 +63,8 @@ public class OrderService {
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     public void setLaser(Integer id) {
         OrderMap orderMap = findOrderById(id);
-        if (orderMap.getIsColorPlyWood())
-            throw new ApplicationException("Нужны покрашенные доски", ErrorType.APP_ERROR);
         chooseLaser(orderMap);
-        orderMap.getGeographyMap().setConditionMap(2);
+        orderMap.setStage(Stage.ПИЛИТСЯ.ordinal());
         orderMap.setCut_begin(LocalDateTime.now());
     }
 
@@ -85,46 +84,28 @@ public class OrderService {
         OrderMap orderMap = findOrderById(id);
         List<String> plywoodList = orderMap.getPlywoodList();
         if (plywoodList.isEmpty()) {
-            String typeMap = orderMap.getGeographyMap().getTypeMap();
-            int calculationId = orderMap.getGeographyMap().getSize();
-            calculationId += "мир".equalsIgnoreCase(typeMap) ? 1 : 2;
-            calculationId *= orderMap.getGeographyMap().getIsMultiLevel() ? 1 : 10;
-            Optional<PlywoodList> byId = plywoodListRepository.findById(calculationId);
-            if (byId.isPresent()) {
-                plywoodList.addAll(byId.get().getLists());
-                orderMap.setPlywoodList(plywoodList);
-            }
+            serListsForMap(orderMap, plywoodList);
         }
         return plywoodList;
     }
 
-    public List<OrderMap> getPaint() {
-        return getAll().stream()
-                .filter(map -> {
-                    int conditionMap = map.getGeographyMap().getConditionMap();
-                    if ((conditionMap == 4 || conditionMap == 5) || (map.getIsColorPlyWood() && conditionMap == 1))
-                        return true;
-                    else return false;
-                })
-                .filter(map -> !map.getCompleted())
-                .sorted(Comparator.comparing(OrderMap::getMarketPlace).reversed()
-                        .thenComparing(OrderMap::getOrderTerm))
-                .toList();
-    }
-
-    @Transactional
-    public void setColorPlywood(Integer id) {
-        OrderMap orderMap = orderRepository.findById(id).get();
-        orderMap.setIsColorPlyWood(false);
-        if (orderMap.getGeographyMap().getConditionMap() >= 5 && orderMap.getGeographyMap().getConditionMap() <= 7 && !orderMap.getIsColorPlyWood()) {
-            orderMap.getGeographyMap().setConditionMap(8);
+    private void serListsForMap(OrderMap orderMap, List<String> plywoodList) {
+        String typeMap = orderMap.getGeographyMap().getTypeMap();
+        int calculationId = orderMap.getGeographyMap().getSize();
+        calculationId += "мир".equalsIgnoreCase(typeMap) ? 1 : 2;
+        calculationId *= orderMap.getGeographyMap().getIsMultiLevel() ? 1 : 10;
+        Optional<PlywoodList> byId = plywoodListRepository.findById(calculationId);
+        if (byId.isPresent()) {
+            plywoodList.addAll(byId.get().getLists());
+            orderMap.setPlywoodList(plywoodList);
         }
     }
+
 
     @Transactional
     public void cutComplete(Integer id, Boolean listIsComplete, Integer numberList) {
         OrderMap orderById = findOrderById(id);
-        if (orderById.getGeographyMap().getConditionMap() >= 4)
+        if (orderById.getStage() >= Stage.ЖДЕТ_ПОКРАСКИ.ordinal())
             throw new ApplicationException("Карта выпиленна, обновите страницу", ErrorType.APP_ERROR);
         List<String> plywoodList = orderById.getPlywoodList();
         String element = plywoodList.get(numberList);
@@ -136,10 +117,11 @@ public class OrderService {
         }
         if (checkAllPlywoodList(plywoodList)) {
             if (orderById.getGeographyMap().getIsColorPlywood()) {
-                orderById.getGeographyMap().setConditionMap(6);
+                orderById.setStage(Stage.ЖДЕТ_ПРИКЛЕЙКИ.ordinal());
             } else {
-                orderById.getGeographyMap().setConditionMap(4);
+                orderById.setStage(Stage.ЖДЕТ_ПОКРАСКИ.ordinal());
             }
+            orderById.setCut_end(LocalDateTime.now());
             refreshCapacity(orderById);
         }
     }
@@ -156,10 +138,5 @@ public class OrderService {
                 .allMatch(s -> s.endsWith("Готов"));
     }
 
-    @Transactional
-    public void setPainter(Integer id, String namePainter) {
-        OrderMap orderById = findOrderById(id);
-        orderById.setNamePainter(namePainter);
-        orderById.getGeographyMap().setConditionMap(5);
-    }
+
 }
