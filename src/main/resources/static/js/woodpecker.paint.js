@@ -81,10 +81,10 @@ $(function () {
                 "render": function (date, type, row) {
                     if (date != null) {
                         if (row.isColorPlywood) {
-                            return "<button class='btn btn-danger' onclick='getInfoCut(" + row.id + ");'>" + date + "</button>";
+                            return "<button class='btn btn-danger' onclick='getInfoCut(" + row.id + "," + row.isColorPlywood + ");'>" + date + "</button>";
 
                         } else {
-                            return "<button class='btn btn-warning' onclick='getInfoCut(" + row.id + ");'>" + date + "</button>";
+                            return "<button class='btn btn-warning' onclick='getInfoCut(" + row.id + "," + row.isColorPlywood + ");'>" + date + "</button>";
                         }
                     } else {
                         return "<button class='btn btn-info small' onclick='setLaser(" + row.id + ");'>Нет</button>";
@@ -150,7 +150,7 @@ function setIsColorPlywood(id) {
 function setStagePaint(id) {
     $.ajax({
         type: "PATCH",
-        url: ctx.ajaxUrl + "stage/"+ id,
+        url: ctx.ajaxUrl + "stage/" + id,
     }).done(function () {
         ctx.updateTable();
         successNoty("Покрашенно");
@@ -178,7 +178,7 @@ function savePainter() {
     });
 }
 
-function getInfoCut(id) {
+function getInfoCut(id, isColor) {
     $("#info-cut").modal();
     $.get("rest/cut/info/" + id,
         function (data) {
@@ -191,8 +191,11 @@ function getInfoCut(id) {
                     ' </div>'
             });
             document.getElementById("info").innerHTML = listSelect;
-            document.getElementById("infoButton").innerHTML =
-                "  <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" onclick=\"closeNoty()\"><span class=\"fa fa-close\"></span>Отмена</button>" +
-                "<button class=\'btn btn-danger\' onclick=\'setIsColorPlywood(" + id + ");\'>Покрасить доски</button>";
+            let cancel = "<button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" onclick=\"closeNoty()\"><span class=\"fa fa-close\"></span>Отмена</button>";
+            let paint = "<button class=\'btn btn-danger\' onclick=\'setIsColorPlywood(" + id + ");\'>Покрасить доски</button>";
+            if (isColor)
+                cancel += paint;
+            document.getElementById("infoButton").innerHTML = cancel;
+
         });
 }

@@ -1,0 +1,32 @@
+version: '3.1'
+services:
+  db_woodpecker:
+    image: postgres:13
+    container_name: "db_woodpecker"
+    ports:
+      - "5432:5432"
+    networks:
+      - woodpecker_network
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+  woodpecker:
+    image: sashaeremin/mywood:0.0.1
+    container_name: "woodpecker_app"
+    restart: always
+    ports:
+      - "8080:8080"
+    networks:
+      - woodpecker_network
+    environment:
+      - spring.datasource.url=jdbc:postgresql://db_woodpecker:5432/postgres
+networks:
+  woodpecker_network:
+
+
+
+
+
+
+
+

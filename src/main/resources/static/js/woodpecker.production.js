@@ -90,7 +90,7 @@ $(function () {
                 "data": "stage",
                 "render": function (date, type, row) {
                     if (date >= 6) {
-                        return "<button class='btn btn-info small' onclick='setCondition(" + row.id + "," + date + ");'>" + getCondition(date) + "</button>";
+                        return "<button class='btn btn-danger' onclick='setCondition(" + row.id + "," + date + ");'>" + getCondition(date) + "</button>";
                     } else {
                         return getCondition(date)
                     }

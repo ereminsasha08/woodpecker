@@ -140,20 +140,19 @@ function getInfoCut(id, isColorPlywood) {
                     ' <span id ="' + index + '">"' + value + '"</span>' +
                     '</div>' +
                     '  <div className="col">' +
-                    "<input type='checkbox'" + ' id="' + index + '"' + (value.endsWith("Готов") ? "checked" : "") + " onclick='updateInfoAboutCut($(this)," + id + "," + index + ");'/>" +
+                    '<label htmlFor="' + id + '" className="col-form-label">"' + (value.endsWith("Загравирован") || value.endsWith("Готов") ? "Выпилен?" : "Загравирован?") + '"</label>' +
+                    "<input type='checkbox'" + ' id="' + index + '"' + (value.endsWith("Готов") ? "checked" : "") + " onclick='updateInfoAboutCut($(this)," + id + "," + index + "," + isColorPlywood + ");'/>" +
                     ' </div>' +
                     ' </form>' +
                     ' </div>'
             });
             document.getElementById("info").innerHTML = listSelect;
-            $('#info-cut').modal();
         });
 }
 
 
-function updateInfoAboutCut(chkbox, id, index) {
+function updateInfoAboutCut(chkbox, id, index, isColorPlywood) {
     const enabled = chkbox.is(":checked");
-//  https://stackoverflow.com/a/22213543/548473
     $.ajax({
         url: cutAjaxUrl + "info/" + id,
         type: "POST",
@@ -163,8 +162,10 @@ function updateInfoAboutCut(chkbox, id, index) {
         }
     }).done(function () {
         // chkbox.closest("tr").attr("data-user-enabled", enabled);
-        successNoty(enabled ? "Выпилена" : "Отмена");
+        successNoty(enabled ? "Ствтус изменен" : "Отмена");
     }).fail(function () {
         $(chkbox).prop("checked", !enabled);
     });
+    setTimeout(()=>getInfoCut(id, isColorPlywood), 400)
+
 }

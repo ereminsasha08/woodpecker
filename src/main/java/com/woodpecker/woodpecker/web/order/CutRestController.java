@@ -35,4 +35,5 @@ public class CutRestController {
     public void updateInfoCut(@PathVariable Integer id, @RequestParam Boolean listIsComplete, @RequestParam Integer numberList) {
         cutService.cutComplete(id, listIsComplete, numberList);
     }
+
 }

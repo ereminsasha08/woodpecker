@@ -1,5 +1,8 @@
 #  https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 spring:
+  sql:
+    init:
+      mode: always
   jpa:
     show-sql: true
     open-in-view: false
@@ -14,13 +17,13 @@ spring:
         jdbc.batch_size: 20
         show_sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
 
 
-  datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: user
-    password: password
+#  datasource:
+#    url: jdbc:://localhost:5432/postgres
+#    username: user
+#    password: password
 
   # Jackson Serialization Issue Resolver
   jackson.visibility:
@@ -30,6 +33,7 @@ spring:
     is-getter: none
 
   # https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#common-application-properties-cache
+
 #  cache:
 #    cache-names: users
 #    caffeine.spec: maximumSize=5000,expireAfterAccess=60s

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 @AllArgsConstructor
 public class UniqueMailValidator implements org.springframework.validation.Validator {
-    public static final String EXCEPTION_DUPLICATE_EMAIL = "User with this email already exists";
+    public static final String EXCEPTION_DUPLICATE_EMAIL = "email";
 
     private final UserRepository repository;
     private final HttpServletRequest request;

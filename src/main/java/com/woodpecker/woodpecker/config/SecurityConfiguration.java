@@ -48,8 +48,8 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/profile").anonymous()
-                .antMatchers("/maps").authenticated()
-                .antMatchers("/users").hasRole("ADMIN")
+                .antMatchers("**/users").hasRole("ADMIN")
+                .anyRequest().authenticated()
                 .and().httpBasic()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().csrf().disable();

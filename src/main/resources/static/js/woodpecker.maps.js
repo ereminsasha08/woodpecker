@@ -8,7 +8,6 @@ const ctx = {
         $.ajax({
             type: 'GET',
             url: filter,
-            data: $("#filter").serialize()
         }).done(updateTableByData);
     }
 }

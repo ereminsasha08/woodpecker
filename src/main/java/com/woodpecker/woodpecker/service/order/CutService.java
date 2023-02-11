@@ -56,7 +56,7 @@ public class CutService {
         order.setLaser(minCapasityLaser.getName());
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     public List<String> infoCut(Integer id) {
         OrderMap orderMap = orderService.findOrderById(id);
         List<String> plywoodList = orderMap.getPlywoodList();
@@ -68,16 +68,30 @@ public class CutService {
 
     private void serListsForMap(OrderMap orderMap, List<String> plywoodList) {
         String typeMap = orderMap.getGeographyMap().getTypeMap();
-        int calculationId = orderMap.getGeographyMap().getSize();
-        calculationId += "мир".equalsIgnoreCase(typeMap) ? 1 : 2;
+        int calculationId = 0;
+        calculationId += "мир".equalsIgnoreCase(typeMap) ? 1 : 0;
+        calculationId += "россия".equalsIgnoreCase(typeMap) ? 2 : 0;
+        if (calculationId == 0) {
+            plywoodList.addAll(List.of("1", "2", "3", "4", "5", "6", "7", "8"));
+            orderMap.setPlywoodList(plywoodList);
+            return;
+        }
+        calculationId += orderMap.getGeographyMap().getSize();
         calculationId *= orderMap.getGeographyMap().getIsMultiLevel() ? 1 : 10;
+        if (orderMap.getGeographyMap().getIsColorPlywood() && !"росиия".equalsIgnoreCase(typeMap)) {
+            calculationId *= calculationId;
+        }
         Optional<PlywoodList> byId = plywoodListRepository.findById(calculationId);
         if (byId.isPresent()) {
             plywoodList.addAll(byId.get().getLists());
             orderMap.setPlywoodList(plywoodList);
+        } else {
+            plywoodList.addAll(List.of("1", "2", "3", "4", "5", "6", "7", "8"));
+            orderMap.setPlywoodList(plywoodList);
         }
     }
-    @Transactional
+
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     public void cutComplete(Integer id, Boolean listIsComplete, Integer numberList) {
         OrderMap orderById = orderService.findOrderById(id);
         if (orderById.getStage() >= Stage.ЖДЕТ_ПОКРАСКИ.ordinal())
@@ -85,8 +99,14 @@ public class CutService {
         List<String> plywoodList = orderById.getPlywoodList();
         String element = plywoodList.get(numberList);
         if (listIsComplete) {
-            String s = element + " Готов";
-            plywoodList.set(numberList, s);
+            String s;
+            if (element.endsWith("Загравирован")) {
+                s = element.replace("Загравирован", "Готов");
+                plywoodList.set(numberList, s);
+            } else if (!element.endsWith("Готов")) {
+                s = element + " Загравирован";
+                plywoodList.set(numberList, s);
+            }
         } else {
             plywoodList.set(numberList, element.substring(0, element.length() - 6).trim());
         }
@@ -112,6 +132,5 @@ public class CutService {
                 .stream()
                 .allMatch(s -> s.endsWith("Готов"));
     }
-
 
 }
