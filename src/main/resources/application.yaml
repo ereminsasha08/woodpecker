@@ -17,7 +17,7 @@ spring:
         jdbc.batch_size: 20
         show_sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
 
 
 #  datasource:

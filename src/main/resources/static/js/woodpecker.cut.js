@@ -19,7 +19,7 @@ $(function () {
             {
                 "data": "id",
                 "render": function (date, type, row) {
-                    let ref = "<button class='btn btn-info' onclick='get(" + date + ");' data-placement=\"top\" title=\"" + date + "\">";
+                    let ref = "<button class='btn btn-info' onclick='getInfoMap(" + date + ");' data-placement=\"top\" title=\"" + date + "\">";
                     return ref + date + "</a>";
                 }
             },
@@ -87,30 +87,11 @@ $(function () {
                     }
                 }
             },
+
         ],
+
     });
 });
-
-function get(id) {
-    const form = $('#orderInfo');
-    form.find(":input").val("");
-    $("#orderInfo").modal();
-    $.get(ctx.ajaxUrl + id, function (data) {
-        $.each(data, function (key, value) {
-            if (value != null)
-                if (key === "geographyMap") {
-                    $.each(data[key], function (key, value) {
-                        let elementById = document.getElementById(key);
-                        if (elementById != null) {
-                            elementById.innerText += value;
-                        }
-                    });
-                }
-
-        });
-    });
-}
-
 
 function setLaser(id) {
     $.ajax({
@@ -123,7 +104,7 @@ function setLaser(id) {
 }
 
 function getInfoCut(id, isColorPlywood) {
-    $("#info-cut").modal();
+    $("#infoListCut").modal();
     $.get(cutAjaxUrl + "info/" + id,
         function (data) {
             let listSelect = "";
@@ -140,13 +121,13 @@ function getInfoCut(id, isColorPlywood) {
                     ' <span id ="' + index + '">"' + value + '"</span>' +
                     '</div>' +
                     '  <div className="col">' +
-                    '<label htmlFor="' + id + '" className="col-form-label">"' + (value.endsWith("Загравирован") || value.endsWith("Готов") ? "Выпилен?" : "Загравирован?") + '"</label>' +
-                    "<input type='checkbox'" + ' id="' + index + '"' + (value.endsWith("Готов") ? "checked" : "") + " onclick='updateInfoAboutCut($(this)," + id + "," + index + "," + isColorPlywood + ");'/>" +
+                    '<label htmlFor="' + id + '" className="col-form-label">"' + (value.endsWith("Лист загравирован") || value.endsWith("Лист готов") ? "Выпилен?" : "Загравирован?") + '"</label>' +
+                    "<input type='checkbox'" + ' id="' + index + '"' + (value.endsWith("Лист готов") ? "checked" : "") + " onclick='updateInfoAboutCut($(this)," + id + "," + index + "," + isColorPlywood + ");'/>" +
                     ' </div>' +
                     ' </form>' +
                     ' </div>'
             });
-            document.getElementById("info").innerHTML = listSelect;
+            document.getElementById("infoList").innerHTML = listSelect;
         });
 }
 
@@ -166,6 +147,6 @@ function updateInfoAboutCut(chkbox, id, index, isColorPlywood) {
     }).fail(function () {
         $(chkbox).prop("checked", !enabled);
     });
-    setTimeout(()=>getInfoCut(id, isColorPlywood), 400)
+    setTimeout(() => getInfoCut(id, isColorPlywood), 400)
 
 }

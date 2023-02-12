@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:insert="~{header}"></div>
+<body>
+<script th:src="@{/js/woodpecker.common.js}" type="text/javascript" defer></script>
+<script th:src="@{/js/woodpecker.availability.js}" type="text/javascript" defer></script>
+
+<div th:insert="~{bodyheader}"></div>
+
+<div class="jumbotron pt-2 ">
+  <div class="container">
+    <h3 class="text-center">Наличие</h3>
+    <table class="hover" style="width:100%" id="datatable">
+      <thead>
+      <tr>
+        <th>Номер</th>
+        <th>Дата отправки</th>
+        <th>Тип</th>
+        <th>Размер</th>
+        <th>Язык</th>
+        <th>Штаты</th>
+        <th>Многур</th>
+        <th>Цвет</th>
+        <th>Лазер</th>
+        <th>Cостояние</th>
+      </tr>
+      </thead>
+    </table>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="info-cut">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modalTitle1"></h4>
+        <button type="button" class="close" data-dismiss="modal" onclick="closeNoty()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p id="info"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeNoty()">
+          <span class="fa fa-close"></span>
+          Отмена
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" tabindex="-1" id="editRow">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Создать заказ</h4>
+        <button type="button" class="close" data-dismiss="modal" onclick="closeNoty()">&times;</button>
+      </div>
+      <div class="modal-body container-fluid">
+        <form id="detailsForm">
+          <input type="hidden" id="id" name="id">
+          <div class="row">
+            <div class="form-group col">
+              <label for="dateTime" class="col-form-label">Дата отправки</label>
+              <input type="datetime-local" class="form-control" id="dateTime" name="dateTime"
+                     placeholder="Время">
+            </div>
+
+          </div>
+          <div class="row">
+          </div>
+          <div class="row">
+            <div class="form-group col">
+              <label for="light" class="col-form-label">Подсветка</label>
+              <input type="text" class="form-control" id="light" name="light"
+                     list="lightOption"
+                     placeholder="Подсветка">
+              <datalist id="lightOption">
+                <option>Без подсветки</option>
+                <option>Холодная подсветка</option>
+                <option>Нейтральная подсветка</option>
+                <option>Тёплая подсветка</option>
+                <option>Беспроводная подсветка</option>
+                <option>RGB подсветка</option>
+              </datalist>
+            </div>
+          </div>
+
+          <div class="form-group col">
+            <label for="additional" class="col-form-label">Дополнения</label>
+            <input type="text" class="form-control" id="additional" name="additional"
+                   placeholder="Дополнения">
+          </div>
+
+          <div class="form-group col">
+            <label for="description" class="col-form-label">Описание</label>
+            <input type="text" class="form-control" id="description" name="description"
+                   placeholder="Описание">
+          </div>
+
+          <div class="form-group col">
+            <label for="contact" class="col-form-label">Контактные данные. Адресс</label>
+            <input type="text" class="form-control" id="contact" name="contact"
+                   placeholder="Контактные данные. Адресс">
+          </div>
+
+          <div class="form-group col">
+            <label for="price" class="col-form-label">Цена</label>
+            <input type="number" class="form-control" id="price" name="price"
+                   placeholder="Цена">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeNoty()">
+          <span class="fa fa-close"></span>
+          Отмена
+        </button>
+        <button type="button" class="btn btn-primary" onclick="save()">
+          <span class="fa fa-check"></span>
+          Сохранить
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

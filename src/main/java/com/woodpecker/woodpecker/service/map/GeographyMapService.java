@@ -1,6 +1,7 @@
 package com.woodpecker.woodpecker.service.map;
 
 import com.woodpecker.woodpecker.model.map.GeographyMap;
+import com.woodpecker.woodpecker.model.map.Stage;
 import com.woodpecker.woodpecker.model.user.User;
 import com.woodpecker.woodpecker.repository.GeographyMapRepository;
 import com.woodpecker.woodpecker.util.exception.ApplicationException;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -27,13 +29,35 @@ public class GeographyMapService {
 
 
     public List<GeographyMap> findByManager(User user) {
-        return geographyMapRepository.findByManager(user);
+        return geographyMapRepository.findByManager(user).stream()
+                .filter(
+                        map -> map.getOrderMap() == null ||
+                                map.getOrderMap().getStage() != Stage.НАЛИЧИЕ.ordinal()
+                )
+                .toList();
     }
 
-    public List<GeographyMap> getByDateTimeBetween(LocalDateTime startDate, LocalDateTime endDate) {
+    public List<GeographyMap> getByDateTimeBetween(AuthUser authUser, LocalDateTime startDate, LocalDateTime endDate, String nameManager) {
         startDate = startDate != null ? startDate : LocalDateTime.of(2000, 1, 1, 0, 0);
         endDate = endDate != null ? startDate : LocalDateTime.of(2040, 1, 1, 0, 0);
-        return geographyMapRepository.getByDateTimeBetweenOrderById(startDate, endDate);
+        Stream<GeographyMap> byDateTimeBetween = geographyMapRepository.getByDateTimeBetween(startDate, endDate).stream();
+        if (!nameManager.isBlank() && "мои".equalsIgnoreCase(nameManager)) {
+            byDateTimeBetween = byDateTimeBetween
+                    .filter(
+                            map -> map.getManager().id() == authUser.id()
+                    );
+        } else if (!nameManager.isBlank() && !"все".equalsIgnoreCase(nameManager)) {
+            byDateTimeBetween = byDateTimeBetween
+                    .filter(
+                            map -> map.getManager().getName().equalsIgnoreCase(nameManager)
+                    );
+        }
+        return byDateTimeBetween
+                .filter(
+                        map -> map.getOrderMap() == null ||
+                                map.getOrderMap().getStage() != Stage.НАЛИЧИЕ.ordinal()
+                )
+                .toList();
     }
 
 
@@ -43,17 +67,18 @@ public class GeographyMapService {
             geographyMap.setManager(authUser.getUser());
         } else {
             assert geographyMap.getId() != null;
-            GeographyMap byId = geographyMapRepository.findById(geographyMap.getId())
+            geographyMap = geographyMapRepository.findById(geographyMap.getId())
                     .orElseThrow(() -> new ApplicationException("Карта не может быть обновленна, так как не найдена", ErrorType.DATA_ERROR));
-            if (byId.getManager().id() == authUser.getUser().id()) {
-                geographyMap.setManager(authUser.getUser());
-            } else throw new IllegalArgumentException("Изменять можно только свои заказы");
+            if (geographyMap.getManager().id() != authUser.getUser().id())
+                throw new IllegalArgumentException("Изменять можно только свои заказы");
         }
         geographyMapRepository.save(geographyMap);
-
     }
-@Transactional
+
+    @Transactional
     public void delete(int id) {
         geographyMapRepository.delete(id);
     }
+
+
 }

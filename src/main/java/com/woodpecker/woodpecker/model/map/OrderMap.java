@@ -87,14 +87,17 @@ public class OrderMap {
     @NotNull
     private Integer stage;
 
+    @Column(name = "availability")
+    private Boolean isAvailability;
 
-    public OrderMap(LocalDateTime orderTerm, GeographyMap geographyMap, Boolean marketPlace, Boolean isColorPlywood, Integer stage) {
+    public OrderMap(LocalDateTime orderTerm, GeographyMap geographyMap, Boolean marketPlace, Boolean isColorPlywood, Integer stage, Boolean isAvailability) {
         geographyMap.setIsColorPlywood(isColorPlywood);
         this.orderTerm = orderTerm;
         this.geographyMap = geographyMap;
         this.marketPlace = marketPlace;
         this.isColorPlywood = isColorPlywood;
         this.stage = stage;
+        this.isAvailability = isAvailability;
         this.completed = false;
     }
 }

@@ -68,11 +68,14 @@ public class CutService {
 
     private void serListsForMap(OrderMap orderMap, List<String> plywoodList) {
         String typeMap = orderMap.getGeographyMap().getTypeMap();
+//        List<String> standardKit = List.of("1", "2", "3", "4", "5", "6", "7", "8");
+        List<String> standardKit = List.of("1");
+
         int calculationId = 0;
         calculationId += "мир".equalsIgnoreCase(typeMap) ? 1 : 0;
         calculationId += "россия".equalsIgnoreCase(typeMap) ? 2 : 0;
         if (calculationId == 0) {
-            plywoodList.addAll(List.of("1", "2", "3", "4", "5", "6", "7", "8"));
+            plywoodList.addAll(standardKit);
             orderMap.setPlywoodList(plywoodList);
             return;
         }
@@ -81,12 +84,12 @@ public class CutService {
         if (orderMap.getGeographyMap().getIsColorPlywood() && !"росиия".equalsIgnoreCase(typeMap)) {
             calculationId *= calculationId;
         }
-        Optional<PlywoodList> byId = plywoodListRepository.findById(calculationId);
-        if (byId.isPresent()) {
-            plywoodList.addAll(byId.get().getLists());
+        Optional<PlywoodList> specialKit = plywoodListRepository.findById(calculationId);
+        if (specialKit.isPresent()) {
+            plywoodList.addAll(specialKit.get().getLists());
             orderMap.setPlywoodList(plywoodList);
         } else {
-            plywoodList.addAll(List.of("1", "2", "3", "4", "5", "6", "7", "8"));
+            plywoodList.addAll(standardKit);
             orderMap.setPlywoodList(plywoodList);
         }
     }
@@ -100,15 +103,15 @@ public class CutService {
         String element = plywoodList.get(numberList);
         if (listIsComplete) {
             String s;
-            if (element.endsWith("Загравирован")) {
-                s = element.replace("Загравирован", "Готов");
+            if (element.endsWith("Лист загравирован")) {
+                s = element.replace("Лист загравирован", "Лист готов");
                 plywoodList.set(numberList, s);
-            } else if (!element.endsWith("Готов")) {
-                s = element + " Загравирован";
+            } else if (!element.endsWith(" Лист готов")) {
+                s = element + " Лист загравирован";
                 plywoodList.set(numberList, s);
             }
         } else {
-            plywoodList.set(numberList, element.substring(0, element.length() - 6).trim());
+            plywoodList.set(numberList, element.substring(0, element.length() - 11).trim());
         }
         if (checkAllPlywoodList(plywoodList)) {
             if (orderById.getGeographyMap().getIsColorPlywood()) {
@@ -130,7 +133,7 @@ public class CutService {
     private boolean checkAllPlywoodList(List<String> plywoodList) {
         return plywoodList
                 .stream()
-                .allMatch(s -> s.endsWith("Готов"));
+                .allMatch(s -> s.toLowerCase().endsWith("готов"));
     }
 
 }

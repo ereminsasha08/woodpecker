@@ -28,6 +28,8 @@ public class GeographyMapRestController {
         return mapService.findByManager(authUser.getUser());
     }
 
+
+
     @GetMapping("/{id}")
     public GeographyMap get(@PathVariable int id) {
         return mapService.getById(id);
@@ -47,9 +49,11 @@ public class GeographyMapRestController {
     }
 
     @GetMapping("/filter")
-    public List<GeographyMap> getFiltered(@RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
-                                          @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) {
-        return mapService.getByDateTimeBetween(startDate, endDate);
+    public List<GeographyMap> getFiltered(@AuthenticationPrincipal AuthUser authUser,
+                                          @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+                                          @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
+                                          @RequestParam String nameManager) {
+        return mapService.getByDateTimeBetween(authUser, startDate, endDate, nameManager);
     }
 
 }

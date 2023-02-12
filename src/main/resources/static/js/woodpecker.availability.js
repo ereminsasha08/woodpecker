@@ -1,4 +1,4 @@
-const mapsAjaxUrl = "rest/production/";
+const mapsAjaxUrl = "rest/availability/";
 // https://stackoverflow.com/a/5064235/548473
 const ctx = {
     ajaxUrl: mapsAjaxUrl,
@@ -16,11 +16,7 @@ $(function () {
         "order": false,
         "columns": [
             {
-                "data": "id",
-                "render": function (date, type, row) {
-                    let ref = "<button class='btn btn-info' onclick='getInfoMap(" + date + ");' data-placement=\"top\" title=\"" + date + "\">";
-                    return ref + date + "</a>";
-                }
+                "data": "id"
             },
             {
                 "data": "orderTerm",
@@ -90,7 +86,7 @@ $(function () {
                 "data": "stage",
                 "render": function (date, type, row) {
                     if (date >= 6) {
-                        return "<button class='btn btn-danger' onclick='setCondition(" + row.id + "," + date + ");'>" + getCondition(date) + "</button>";
+                        return "<button class='btn btn-danger' onclick='createOrder(" + row.id + ");'>" + getCondition(date) + "</button>";
                     } else {
                         return getCondition(date)
                     }
@@ -100,19 +96,39 @@ $(function () {
     });
 });
 
-function setCondition(id, conditionMap) {
+
+function createOrder(id) {
+    form.find(":input").val("");
+    $("#editRow").modal();
+    $.get("rest/orders/" + id, function (data) {
+        $.each(data, function (key, value) {
+            if (value != null)
+                if (key === "geographyMap") {
+                    $.each(data[key], function (key, value) {
+                        let a = document.getElementById(key);
+                        if (a != null)
+                            a.value = value
+                    });
+                } else {
+                    let a = document.getElementById(key);
+                    if (a != null)
+                        a.value = value
+                }
+        });
+    });
+
+}
+function save() {
     $.ajax({
         type: "PATCH",
-        url: ctx.ajaxUrl + id,
-        data: {
-            conditionMap: conditionMap
-        }
+        url: ctx.ajaxUrl,
+        data: form.serialize()
     }).done(function () {
+        $("#editRow").modal("hide");
         ctx.updateTable();
-        successNoty(getCondition(conditionMap));
+        successNoty("Сохранено");
     });
 }
-
 function getInfoCut(id) {
     $("#info-cut").modal();
     $.get("rest/cut/info/" + id,

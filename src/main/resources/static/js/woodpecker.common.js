@@ -10,7 +10,13 @@ function makeEditable(datatableOpts) {
                     "dataSrc": ""
                 },
                 "paging": true,
-                "info": true
+                "info": true,
+                "createdRow": function (row, data, dataIndex) {
+                    if (data.isAvailability)
+                        $(row).attr("data-map-availability", true);
+                    if (data.marketPlace)
+                        $(row).attr("data-map-urgent", true);
+                }
             }
         ));
     form = $('#detailsForm');
@@ -150,6 +156,31 @@ function getCondition(date) {
             return "Готов к отправке";
         case 11:
             return "Отправлен";
+        case 12:
+            return "Наличие";
+        case 13:
+            return "Заказ из наличия";
     }
 
+}
+
+function getInfoMap(id) {
+    $("#modalInfoMap").modal();
+    $.get("rest/orders/" + id, function (data) {
+        $.each(data, function (key, value) {
+            if (value != null)
+                if (key === "geographyMap") {
+                    $.each(data[key], function (key, value) {
+                        let a = document.getElementById(key);
+                        if (a != null)
+                            a.value = value
+                    });
+                } else {
+                    let a = document.getElementById(key);
+                    if (a != null)
+                        a.value = value
+                }
+
+        });
+    });
 }

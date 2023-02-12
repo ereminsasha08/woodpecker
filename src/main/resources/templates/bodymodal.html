@@ -1,0 +1,92 @@
+<div class="modal fade" tabindex="-1" id="modalInfoMap">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Информация о карте</h4>
+        <button type="button" class="close" data-dismiss="modal" onclick="closeNoty()">&times;</button>
+      </div>
+      <div class="modal-body">
+          <div class="row">
+            <div class="form-group col">
+              <label for="dateTime" class="col-form-label">Дата</label>
+              <output type="datetime-local" class="form-control" id="dateTime" name="dateTime"></output>
+            </div>
+
+            <div class="form-group col">
+              <label for="typeMap" class="col-form-label">Тип</label>
+              <output type="text" class="form-control" id="typeMap"></output>
+            </div>
+
+            <div class="form-group col">
+              <label for="size" class="col-form-label">Размер</label>
+              <output type="number" class="form-control" id="size" name="size" list="sizeOption"></output>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col">
+              <label for="language" class="col-form-label">Язык</label>
+              <output type="text" class="form-control" id="language" name="language"></output>
+            </div>
+
+            <div class="form-group col">
+              <label for="isState" class="col-form-label">Штаты</label>
+              <select class="form-control" id="isState" name="isState" disabled>
+                <option value="true">Со штатами</option>
+                <option value="false">Без штатов</option>
+              </select>
+            </div>
+
+            <div class="form-group col">
+              <label for="isCapital" class="col-form-label">Столицы</label>
+              <select type="text" class="form-control" id="isCapital" name="isCapital" disabled>
+                <option value="true">Со столицами</option>
+                <option value="false">Без столиц</option>
+              </select>
+            </div>
+            <div class="form-group col">
+              <label for="isMultiLevel" class="col-form-label">Многоур</label>
+              <select type="text" class="form-control" id="isMultiLevel" name="isMultiLevel" disabled>
+                <option value="true">Многоуровневая</option>
+                <option value="false">Одноуровневая</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col">
+              <label for="light" class="col-form-label">Подсветка</label>
+              <output type="text" class="form-control" id="light" name="light"></output>
+            </div>
+
+            <div class="form-group col">
+              <label for="color" class="col-form-label">Цвет</label>
+              <output type="text" class="form-control" id="color" name="color"></output>
+            </div>
+          </div>
+
+          <div class="form-group col">
+            <label for="additional" class="col-form-label">Дополнения</label>
+            <output type="text" class="form-control" id="additional" name="additional"></output>
+          </div>
+
+          <div class="form-group col">
+            <label for="description" class="col-form-label">Описание</label>
+            <output type="text" class="form-control" id="description" name="description"></output>
+          </div>
+
+          <div class="form-group col">
+            <label for="contact" class="col-form-label">Контактные данные. Адресс</label>
+            <output type="text" class="form-control" id="contact" name="contact"></output>
+          </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeNoty()">
+          <span class="fa fa-close"></span>
+          Отмена
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

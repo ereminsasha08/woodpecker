@@ -51,6 +51,10 @@ public class GeographyMap extends Product {
     @NotNull
     private Boolean isState;
 
+    @Column(name = "is_capital", columnDefinition = "boolean default true")
+    @NotNull
+    private Boolean isCapital;
+
     @Column(name = "light", nullable = false)
     @NotNull
     private String light;

@@ -8,6 +8,7 @@ const ctx = {
         $.ajax({
             type: 'GET',
             url: filter,
+            data: $("#filter").serialize(),
         }).done(updateTableByData);
     }
 }
@@ -40,25 +41,26 @@ $(function () {
             {
                 "data": "language",
                 "render": function (date, type, row) {
-                    var s = "EN";
-                    if ("Русский" === date) {
-                        s = "RU";
-                    }
-                    return s;
-                }
-            },
-            {
-                "data": "isState",
-                "render": function (date, type, row) {
-                    if (date) {
-                        return "ШТ"
-                    }
-                    return "Без ШТ";
+                    let language = date;
+                    let city = "Без столиц"
+                    if (date.includes("Русский")) {
+                        language = "Рус";
+                    } else if (date.includes("Английский"))
+                        language = "Анг"
+                    if (row.isState)
+                        city = "шт";
+                    else if (row.isCapital)
+                        city = "ст";
+                    return language + " " + city;
                 }
             },
             {
                 "data": "isMultiLevel",
                 "render": function (date, type, row) {
+                    // if (date) {
+                    //     return  '<span class="fa fa-check"></span>';
+                    // }
+                    // return '<span class="fa fa-close"></span>';
                     if (date) {
                         return "Многоур."
                     }
@@ -142,5 +144,7 @@ function saveOrder() {
         $("#createOrder").modal("hide");
         ctx.updateTable();
         successNoty("Заказ создан");
+        $("#orderForm")[0].reset();
     });
+
 }

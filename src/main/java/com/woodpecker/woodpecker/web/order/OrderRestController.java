@@ -22,8 +22,9 @@ public class OrderRestController {
     public OrderMap create(@NotNull @RequestParam Integer orderId,
                            @Nullable @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime orderTerm,
                            @RequestParam Boolean isMarketPlace,
-                           @RequestParam Boolean isColorPlywood) {
-        return orderService.create(orderId, orderTerm, isMarketPlace, isColorPlywood);
+                           @RequestParam Boolean isColorPlywood,
+                           @RequestParam Boolean isAvailability) {
+        return orderService.create(orderId, orderTerm, isMarketPlace, isColorPlywood, isAvailability);
     }
 
     @GetMapping("/{id}")

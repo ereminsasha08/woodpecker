@@ -18,7 +18,7 @@ $(function () {
             {
                 "data": "id",
                 "render": function (date, type, row) {
-                    let ref = "<button class='btn btn-info' onclick='get(" + date + ");' data-placement=\"top\" title=\"" + date + "\">";
+                    let ref = "<button class='btn btn-info' onclick='getInfoMap(" + date + ");' data-placement=\"top\" title=\"" + date + "\">";
                     return ref + date + "</a>";
                 }
             },
@@ -115,26 +115,6 @@ $(function () {
         ],
     });
 });
-
-function get(id) {
-    $("#orderInfo").modal();
-    $.get(ctx.ajaxUrl + id, function (data) {
-        $.each(data, function (key, value) {
-            if (value != null)
-                if (key === "geographyMap") {
-                    $.each(data[key], function (key, value) {
-                        let elementById = document.getElementById(key);
-                        if (elementById != null) {
-                            elementById.innerText += value;
-                        }
-                    });
-                }
-
-        });
-        $('#orderInfo').modal();
-    });
-}
-
 
 function setIsColorPlywood(id) {
     $.ajax({

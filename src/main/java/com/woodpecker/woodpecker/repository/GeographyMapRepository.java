@@ -20,7 +20,7 @@ public interface GeographyMapRepository extends BaseRepository<GeographyMap> {
     List<GeographyMap> findByManager(User user);
 
     @EntityGraph(attributePaths = {"orderMap"})
-    List<GeographyMap> getByDateTimeBetweenOrderById(LocalDateTime startDate, LocalDateTime endDate);
+    List<GeographyMap> getByDateTimeBetween(LocalDateTime startDate, LocalDateTime endDate);
 
     @EntityGraph(attributePaths = {"orderMap"})
     List<GeographyMap> findAll();

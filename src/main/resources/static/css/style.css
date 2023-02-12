@@ -1,8 +1,8 @@
-tr[data-map-excess="false"] {
-    color: green;
+tr[data-map-availability="true"] {
+    color: darkblue;
 }
 
-tr[data-map-excess="true"] {
+tr[data-map-urgent="true"] {
     color: red;
 }
 
