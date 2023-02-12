@@ -9,19 +9,18 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface GeographyMapRepository extends BaseRepository<GeographyMap> {
 
-    @Modifying
-    @Query("DELETE FROM GeographyMap gm WHERE gm.id=:id")
-    int delete(@Param("id") int id);
+
 
     @EntityGraph(attributePaths = {"orderMap"})
-    List<GeographyMap> findByManager(User user);
+    List<GeographyMap> findByManagerAndIsView(User user, boolean isView);
 
     @EntityGraph(attributePaths = {"orderMap"})
-    List<GeographyMap> getByDateTimeBetween(LocalDateTime startDate, LocalDateTime endDate);
+    List<GeographyMap> getByDateTimeBetweenAndIsView(LocalDateTime startDate, LocalDateTime endDate, boolean view);
 
     @EntityGraph(attributePaths = {"orderMap"})
-    List<GeographyMap> findAll();
+    Optional<GeographyMap> findById(Integer id);
 }

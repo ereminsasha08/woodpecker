@@ -1,6 +1,7 @@
 package com.woodpecker.woodpecker.model.map;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.woodpecker.woodpecker.model.abstractentity.Product;
 import lombok.Getter;
@@ -69,4 +70,7 @@ public class GeographyMap extends Product {
     @JsonIgnoreProperties("geographyMap")
     private OrderMap orderMap;
 
+    @Column(name = "is_view", columnDefinition = "boolean default true")
+    @JsonIgnore
+    private boolean isView;
 }

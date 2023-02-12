@@ -52,8 +52,9 @@ public class GeographyMapRestController {
     public List<GeographyMap> getFiltered(@AuthenticationPrincipal AuthUser authUser,
                                           @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
                                           @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
-                                          @RequestParam String nameManager) {
-        return mapService.getByDateTimeBetween(authUser, startDate, endDate, nameManager);
+                                          @RequestParam String nameManager,
+                                          @RequestParam boolean isPost) {
+        return mapService.getByDateTimeBetween(authUser, startDate, endDate, nameManager, isPost);
     }
 
 }

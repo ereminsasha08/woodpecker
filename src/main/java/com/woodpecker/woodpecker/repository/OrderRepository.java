@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface OrderRepository extends BaseRepository<OrderMap> {
     @EntityGraph(attributePaths = {"geographyMap"})
-    List<OrderMap> findAll();
+    List<OrderMap> findByCompleted(boolean isCompleted);
     @EntityGraph(attributePaths = {"geographyMap"})
     List<OrderMap> findByIsAvailability(boolean isAvailability);
 }

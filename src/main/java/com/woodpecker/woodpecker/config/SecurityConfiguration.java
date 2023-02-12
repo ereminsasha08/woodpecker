@@ -52,6 +52,7 @@ public class SecurityConfiguration {
                 .anyRequest().authenticated()
                 .and().httpBasic()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().headers().frameOptions().disable()
                 .and().csrf().disable();
         return http.build();
     }

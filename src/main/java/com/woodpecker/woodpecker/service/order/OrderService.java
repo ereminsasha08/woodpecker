@@ -3,6 +3,7 @@ package com.woodpecker.woodpecker.service.order;
 import com.woodpecker.woodpecker.model.map.GeographyMap;
 import com.woodpecker.woodpecker.model.map.OrderMap;
 import com.woodpecker.woodpecker.model.map.Stage;
+import com.woodpecker.woodpecker.repository.GeographyMapRepository;
 import com.woodpecker.woodpecker.repository.OrderRepository;
 import com.woodpecker.woodpecker.service.map.GeographyMapService;
 import com.woodpecker.woodpecker.util.exception.ApplicationException;
@@ -24,10 +25,10 @@ public class OrderService {
 
     final private OrderRepository orderRepository;
 
-    final private GeographyMapService geographyMapService;
+    final private GeographyMapRepository geographyMapRepository;
 
-    public List<OrderMap> getAll() {
-        return orderRepository.findAll();
+    public List<OrderMap> getAll(Boolean isCompleted) {
+        return orderRepository.findByCompleted(isCompleted);
     }
 
     public OrderMap findOrderById(Integer id) {
@@ -35,7 +36,7 @@ public class OrderService {
     }
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     public OrderMap create(Integer id, LocalDateTime orderTerm, boolean marketPlace, boolean isColorPlyWood, boolean isAvailability) {
-        GeographyMap map = geographyMapService.getById(id);
+        GeographyMap map = geographyMapRepository.getById(id);
         orderTerm = Objects.isNull(orderTerm) ? map.getDateTime().plusWeeks(2).plusDays(3) : orderTerm;
         OrderMap orderMap = new OrderMap(orderTerm, map, marketPlace, isColorPlyWood, Stage.В_ОЧЕРЕДИ_НА_РЕЗКУ.ordinal(), isAvailability);
         map.setOrderMap(orderMap);

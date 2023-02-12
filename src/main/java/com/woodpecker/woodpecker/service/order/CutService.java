@@ -31,10 +31,15 @@ public class CutService {
 
 
     public List<OrderMap> sortedForCut() {
-        return orderService.getAll().stream()
-                .filter(order -> !order.getCompleted() && order.getStage() >= Stage.НОВЫЙ_ЗАКАЗ.ordinal() && order.getStage() < Stage.ЖДЕТ_ПОКРАСКИ.ordinal())
-                .sorted(Comparator.comparing(OrderMap::getMarketPlace).reversed()
-                        .thenComparing(OrderMap::getOrderTerm))
+        return orderService.getAll(false).stream()
+                .filter(
+                        order -> !order.getCompleted()
+                                && order.getStage() >= Stage.НОВЫЙ_ЗАКАЗ.ordinal()
+                                && order.getStage() < Stage.ЖДЕТ_ПОКРАСКИ.ordinal())
+                .sorted(
+                        Comparator.comparing(OrderMap::getMarketPlace).reversed()
+                                .thenComparing(OrderMap::getIsAvailability)
+                                .thenComparing(OrderMap::getOrderTerm))
                 .toList();
     }
 

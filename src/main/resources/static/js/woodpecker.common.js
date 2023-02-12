@@ -1,5 +1,5 @@
 let form;
-
+let date = Date.now();
 function makeEditable(datatableOpts) {
     ctx.datatableApi = $("#datatable").DataTable(
         // https://api.jquery.com/jquery.extend/#jQuery-extend-deep-target-object1-objectN
@@ -12,10 +12,23 @@ function makeEditable(datatableOpts) {
                 "paging": true,
                 "info": true,
                 "createdRow": function (row, data, dataIndex) {
+                    if  (data.orderTerm != null && !(data.marketPlace || data.isAvailability)) {
+
+                        if (date - Date.parse(data.orderTerm)  > -350000000) {
+                            $(row).attr("data-map-info", true);
+                            return;
+                        }
+                    }
+                    if (data.marketPlace && data.isAvailability) {
+                        $(row).attr("data-map-urgent-availability", true);
+                        return;
+                    }
                     if (data.isAvailability)
                         $(row).attr("data-map-availability", true);
                     if (data.marketPlace)
                         $(row).attr("data-map-urgent", true);
+
+
                 }
             }
         ));
@@ -108,13 +121,13 @@ function successNoty(key) {
 
 function renderEditBtn(data, type, row) {
     if (type === "display") {
-        return "<a onclick='updateRow(" + row.id + ");'><span class='fa fa-pencil'></span></a>";
+        return "<a onclick='updateRow(" + row.id + ");'><i class='fa fa-pencil fa-2x' size='60px'></i></a>";
     }
 }
 
 function renderDeleteBtn(data, type, row) {
     if (type === "display") {
-        return "<a onclick='deleteRow(" + row.id + ");'><span class='fa fa-remove'></span></a>";
+        return "<a onclick='deleteRow(" + row.id + ");'><i class='fa fa-remove small fa-2x'  >   </i></a>";
     }
 }
 
@@ -137,15 +150,15 @@ function getCondition(date) {
         case 1:
             return "Новый заказ";
         case 2:
-            return "В очереди на резку";
+            return "Жду резку";
         case 3:
             return "Пилится";
         case 4:
-            return "На покраске";
+            return "Жду покраску";
         case 5:
             return "Красится";
         case 6:
-            return "Ждёт приклейки";
+            return "Жду приклейки";
         case 7:
             return "Приклеивается";
         case 8:
@@ -153,13 +166,13 @@ function getCondition(date) {
         case 9:
             return "Запаковывается";
         case 10:
-            return "Готов к отправке";
+            return "Жду отправку";
         case 11:
             return "Отправлен";
         case 12:
             return "Наличие";
         case 13:
-            return "Заказ из наличия";
+            return "Из наличия";
     }
 
 }

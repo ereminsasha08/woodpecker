@@ -4,6 +4,8 @@ import com.woodpecker.woodpecker.model.map.GeographyMap;
 import com.woodpecker.woodpecker.model.map.Stage;
 import com.woodpecker.woodpecker.model.user.User;
 import com.woodpecker.woodpecker.repository.GeographyMapRepository;
+import com.woodpecker.woodpecker.repository.OrderRepository;
+import com.woodpecker.woodpecker.service.order.OrderService;
 import com.woodpecker.woodpecker.util.exception.ApplicationException;
 import com.woodpecker.woodpecker.util.exception.ErrorType;
 import com.woodpecker.woodpecker.web.AuthUser;
@@ -21,6 +23,7 @@ import java.util.stream.Stream;
 public class GeographyMapService {
 
     private final GeographyMapRepository geographyMapRepository;
+    private final OrderService orderService;
 
 
     public GeographyMap getById(Integer id) {
@@ -29,18 +32,19 @@ public class GeographyMapService {
 
 
     public List<GeographyMap> findByManager(User user) {
-        return geographyMapRepository.findByManager(user).stream()
+        return geographyMapRepository.findByManagerAndIsView(user, true).stream()
                 .filter(
-                        map -> map.getOrderMap() == null ||
-                                map.getOrderMap().getStage() != Stage.НАЛИЧИЕ.ordinal()
+                        map -> map.getOrderMap() == null
+                                || map.getOrderMap().getStage() < Stage.ОТПРАВЛЕН.ordinal()
+                                || map.getOrderMap().getStage() == Stage.ЗАКАЗ_ИЗ_НАЛИЧИЯ.ordinal()
                 )
                 .toList();
     }
 
-    public List<GeographyMap> getByDateTimeBetween(AuthUser authUser, LocalDateTime startDate, LocalDateTime endDate, String nameManager) {
+    public List<GeographyMap> getByDateTimeBetween(AuthUser authUser, LocalDateTime startDate, LocalDateTime endDate, String nameManager, boolean isPost) {
         startDate = startDate != null ? startDate : LocalDateTime.of(2000, 1, 1, 0, 0);
         endDate = endDate != null ? startDate : LocalDateTime.of(2040, 1, 1, 0, 0);
-        Stream<GeographyMap> byDateTimeBetween = geographyMapRepository.getByDateTimeBetween(startDate, endDate).stream();
+        Stream<GeographyMap> byDateTimeBetween = geographyMapRepository.getByDateTimeBetweenAndIsView(startDate, endDate, true).stream();
         if (!nameManager.isBlank() && "мои".equalsIgnoreCase(nameManager)) {
             byDateTimeBetween = byDateTimeBetween
                     .filter(
@@ -52,12 +56,15 @@ public class GeographyMapService {
                             map -> map.getManager().getName().equalsIgnoreCase(nameManager)
                     );
         }
-        return byDateTimeBetween
-                .filter(
-                        map -> map.getOrderMap() == null ||
-                                map.getOrderMap().getStage() != Stage.НАЛИЧИЕ.ordinal()
-                )
-                .toList();
+        if (!isPost) {
+            byDateTimeBetween = byDateTimeBetween
+                    .filter(
+                            map -> map.getOrderMap() == null
+                                    || map.getOrderMap().getStage() < Stage.ОТПРАВЛЕН.ordinal()
+                                    || map.getOrderMap().getStage() == Stage.ЗАКАЗ_ИЗ_НАЛИЧИЯ.ordinal()
+                    );
+        }
+        return byDateTimeBetween.toList();
     }
 
 
@@ -77,7 +84,14 @@ public class GeographyMapService {
 
     @Transactional
     public void delete(int id) {
-        geographyMapRepository.delete(id);
+        GeographyMap byId = getById(id);
+        byId.setView(false);
+        try {
+            byId.getOrderMap().setCompleted(true);
+            byId.getOrderMap().setIsAvailability(false);
+        } catch (NullPointerException e) {
+
+        }
     }
 
 

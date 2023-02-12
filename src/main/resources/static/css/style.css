@@ -6,6 +6,14 @@ tr[data-map-urgent="true"] {
     color: red;
 }
 
+tr[data-map-urgent-availability="true"] {
+    color: purple;
+}
+
+tr[data-map-info="true"] {
+    color: orange;
+}
+
 .fa {
     cursor: pointer;
 }

@@ -21,6 +21,13 @@
                     <input class="form-control" type="datetime-local" name="endDate" id="endDate">
                 </div>
                 <div class="form-group col">
+                    <label for="isPost" class="col-form-label">Отправленные и наличие</label>
+                    <select class="form-control" type="boolean" id="isPost" name="isPost">
+                        <option value="false" selected>Нет</option>
+                        <option value="true">Да</option>
+                    </select>
+                </div>
+                <div class="form-group col">
                     <label for="nameManager" class="col-form-label">Менеджер</label>
                     <select class="form-control" type="text" id="nameManager" name="nameManager">
                         <option value="">Все</option>
@@ -30,6 +37,7 @@
                         <option value="Мои" selected>Мои</option>
                     </select>
                 </div>
+
 <!--                <div class="form-group col">-->
 <!--                    <label for="conditionMapFilter" x-placement="">Состояние:</label>-->
 <!--                    <select class="form-control" type="number" id="conditionMapFilter" name="conditionMapFilter">-->
@@ -229,7 +237,7 @@
                 </button>
                 <button type="button" class="btn btn-primary" onclick="save()">
                     <span class="fa fa-check"></span>
-                    Сохранить
+                    Создать карту
                 </button>
             </div>
         </div>
@@ -284,7 +292,7 @@
                 </button>
                 <button type="button" class="btn btn-primary" onclick="saveOrder()">
                     <span class="fa fa-check"></span>
-                    Сохранить заказ
+                    Создать заказ
                 </button>
             </div>
         </div>
