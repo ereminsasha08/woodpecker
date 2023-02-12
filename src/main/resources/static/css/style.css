@@ -28,6 +28,7 @@ html {
     min-height: 100%;
 }
 body {
+    background-image: url("https://resizer.mail.ru/p/c4198fe7-8cd9-5cd1-8945-b87cb2cc3eab/AAACdvdjhAj7_l3vnPRNvpAfl3HhJqllGn8ys2U1PHgxuTfvRAQqXNN64WrOgb37wfukA3zvhlwygkRlxtpoMRmZWIY.jpg");
     margin-bottom: 60px !important; /* Margin bottom by footer height */
 }
 .footer {
@@ -40,10 +41,11 @@ body {
 }
 
 table td>div div {
+    border: 3px black;
     padding: 10px;
     background: #fff;
     display: block;
-    position: absolute;
+    position: center;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

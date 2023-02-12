@@ -4,6 +4,7 @@
 <body>
 <script th:src="@{/js/woodpecker.common.js}" type="text/javascript" defer></script>
 <script th:src="@{/js/woodpecker.paint.js}" type="text/javascript" defer></script>
+<div class="container-xl">
 
 <div th:insert="~{bodyheader}"></div>
 
@@ -13,7 +14,7 @@
 <div class="jumbotron pt-2 ">
     <div class="container">
         <h3 class="text-center">Покраска</h3>
-        <table class="hover" style="width:100%" id="datatable">
+        <table class="hover" style="width:90%" id="datatable">
             <thead>
             <tr>
                 <th>Номер</th>
@@ -32,7 +33,7 @@
         </table>
     </div>
 </div>
-
+</div>
 <div class="modal fade" tabindex="-1" id="modalNamePainter">
     <div class="modal-dialog">
         <div class="modal-content">

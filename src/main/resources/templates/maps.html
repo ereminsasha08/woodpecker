@@ -5,6 +5,10 @@
 <script th:src="@{/js/woodpecker.common.js}" type="text/javascript" defer></script>
 <script th:src="@{/js/woodpecker.maps.js}" type="text/javascript" defer></script>
 
+
+<div class="container-xl">
+
+
 <div th:insert="~{bodyheader}"></div>
 
 
@@ -12,22 +16,22 @@
     <div class="card-body pb-0 container">
         <form id="filter">
             <div class="row">
-                <div class="form-group col">
-                    <label for="startDate">С даты:</label>
+                <div class="form-group col-3">
+                    <label for="startDate" class="col-form-label">С даты:</label>
                     <input class="form-control" type="datetime-local" name="startDate" id="startDate">
                 </div>
-                <div class="form-group col">
-                    <label for="endDate">по:</label>
+                <div class="form-group col-3">
+                    <label for="endDate" class="col-form-label">по дату:</label>
                     <input class="form-control" type="datetime-local" name="endDate" id="endDate">
                 </div>
-                <div class="form-group col">
-                    <label for="isPost" class="col-form-label">Отправленные и наличие</label>
+                <div class="form-group col-3">
+                        <label for="isPost" class="col-form-label">Скрытые</label>
                     <select class="form-control" type="boolean" id="isPost" name="isPost">
                         <option value="false" selected>Нет</option>
                         <option value="true">Да</option>
                     </select>
                 </div>
-                <div class="form-group col">
+                <div class="form-group col-3">
                     <label for="nameManager" class="col-form-label">Менеджер</label>
                     <select class="form-control" type="text" id="nameManager" name="nameManager">
                         <option value="">Все</option>
@@ -59,14 +63,16 @@
 
         </form>
         <div class="row">
-            <div class="col-9"></div>
-            <div class="col">
+            <div class="col-6">
+
+            </div>
+            <div class="col-3">
                 <button class="btn btn-primary" onclick="ctx.updateTable()">
                     <span class="fa fa-filter"></span>
                     Фильтр
                 </button>
             </div>
-            <div class="col">
+            <div class="col-3">
                 <button class="btn btn-danger" onclick="clearFilter()">
                     <span class="fa fa-remove"></span>
                     Отмена
@@ -75,14 +81,14 @@
         </div>
     </div>
 </div>
-<div class="jumbotron pt-2 ">
-    <div class="container">
+<div class="jumbotron pt-1 card border-dark">
+    <div style="width: 90%; position: relative">
         <button class="btn btn-primary" onclick="add()">
             <span class="fa fa-plus"></span>
             Добавить
         </button>
         <h3 class="text-center">Карты</h3>
-        <table class="display compact" style="width:100%" id="datatable">
+        <table class="display compact" id="datatable">
             <thead>
             <tr>
                 <th>Номер</th>
@@ -102,7 +108,7 @@
         </table>
     </div>
 </div>
-
+</div>
 <div class="modal fade" tabindex="-1" id="editRow">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
