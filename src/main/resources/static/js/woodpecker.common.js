@@ -1,5 +1,7 @@
 let form;
 let date = Date.now();
+let restOrder = "rest/orders/"
+
 function makeEditable(datatableOpts) {
     ctx.datatableApi = $("#datatable").DataTable(
         // https://api.jquery.com/jquery.extend/#jQuery-extend-deep-target-object1-objectN
@@ -12,9 +14,9 @@ function makeEditable(datatableOpts) {
                 "paging": true,
                 "info": true,
                 "createdRow": function (row, data, dataIndex) {
-                    if  (data.orderTerm != null && !(data.marketPlace || data.isAvailability)) {
+                    if (data.orderTerm != null && !(data.marketPlace || data.isAvailability)) {
 
-                        if (date - Date.parse(data.orderTerm)  > -350000000) {
+                        if (date - Date.parse(data.orderTerm) > -350000000) {
                             $(row).attr("data-map-info", true);
                             return;
                         }
@@ -184,9 +186,13 @@ function getInfoMap(id) {
             if (value != null)
                 if (key === "geographyMap") {
                     $.each(data[key], function (key, value) {
-                        let a = document.getElementById(key);
-                        if (a != null)
-                            a.value = value
+                        if (value != null) {
+                            let a = document.getElementById(key);
+                            if (a != null && !key.toString().startsWith("dateTime"))
+                                a.value = value
+                            else if (a != null)
+                                a.value = value.toString().substring(0, 10).replaceAll('-', '.');
+                        }
                     });
                 } else {
                     let a = document.getElementById(key);
@@ -195,5 +201,43 @@ function getInfoMap(id) {
                 }
 
         });
+    });
+}
+
+
+function getOrderForModify(id) {
+    $('#modify_orderForm').find(":input").val("");
+    $("#modify_editRow").modal();
+    $.get("rest/orders/" + id, function (data) {
+        $.each(data, function (key, value) {
+            if (value != null)
+                if (key === "geographyMap") {
+                    $.each(data[key], function (key, value) {
+                        if (value != null) {
+                            let a = document.getElementById("modify_" + key);
+                            if (a != null)
+                                a.value = value
+                        }
+                    });
+                } else {
+                    let a = document.getElementById("modify_" + key);
+                    if (a != null) {
+                        a.value = value
+                    }
+                }
+        });
+    });
+
+}
+
+function modifyOrder() {
+    $.ajax({
+        type: "PATCH",
+        url: restOrder,
+        data:  $("#modify_orderForm").serialize(),
+    }).done(function () {
+        $("#modify_editRow").modal("hide");
+        ctx.updateTable();
+        successNoty("Сохранено");
     });
 }

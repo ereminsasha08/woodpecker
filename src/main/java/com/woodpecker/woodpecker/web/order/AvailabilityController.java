@@ -4,8 +4,10 @@ import com.woodpecker.woodpecker.model.map.OrderMap;
 import com.woodpecker.woodpecker.model.map.Stage;
 import com.woodpecker.woodpecker.service.order.AvailabilityService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -22,8 +24,5 @@ public class AvailabilityController {
        return availabilityService.getAvailability();
     }
 
-    @PatchMapping()
-    public OrderMap modifyOrderFromAvailability(@RequestParam Integer id){
-        return availabilityService.modifyOrder(id);
-    }
+
 }

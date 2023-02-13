@@ -16,11 +16,12 @@
 
 
     <div class="jumbotron pt-1 card border-dark">
-        <div style="width: 90%; position: relative">
+        <div style="width: 100%; position: relative">
             <h3 class="text-center">Распил</h3>
-            <table class="hover" id="datatable">
+            <table class="display compact" style="width: 95%" id="datatable">
                 <thead>
                 <tr>
+                    <th></th>
                     <th>Номер</th>
                     <th>Дата отправки</th>
                     <th>Тип</th>
@@ -35,28 +36,55 @@
         </div>
     </div>
 </div>
-    <div class="modal fade" tabindex="-1" id="infoListCut">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Готовые листы</h4>
-                    <button type="button" class="close" data-dismiss="modal" onclick="location.reload(); return false;">
-                        &times;
-                    </button>
-                </div>
-                <div class="modal-body container-fluid" id="infoList">
+<div class="modal fade" tabindex="-1" id="infoListCut">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Готовые листы</h4>
+                <button type="button" class="close" data-dismiss="modal" onclick="location.reload(); return false;">
+                    &times;
+                </button>
+            </div>
+            <div class="modal-body container-fluid" >
+                <div id="infoList">
 
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                            onclick="location.reload(); return false;">
-                        <span class="fa fa-close"></span>
-                        Отмена
-                    </button>
+                <div>
+                    <div class="row">
+                        <form id="laserForm">
+                            <input type="hidden" id="laserId" name="id">
+                            <div class="form-group col">
+                                <select type="text" class="form-control" id="laserName" name="laserName">
+                                    <option>1л</option>
+                                    <option>2л</option>
+                                    <option>3л</option>
+                                    <option>4л</option>
+                                    <option>5л</option>
+                                    <option>6л</option>
+                                    <option>7л</option>
+                                </select>
+                            </div>
+                        </form>
+                        <div class="form-group col">
+                            <button type="button" class="btn btn-primary" onclick="changeLaser()">
+                                <span class="fa fa-check"></span>
+                                Изменить лазер
+                            </button>
+                        </div>
+                    </div>
                 </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        onclick="location.reload(); return false;">
+                    <span class="fa fa-close"></span>
+                    Отмена
+                </button>
             </div>
         </div>
     </div>
+</div>
 
 </body>
 </html>

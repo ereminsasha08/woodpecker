@@ -28,8 +28,8 @@ $(function () {
             },
             {
                 "data": "dateTime",
-                "render": function (date, type, row) {
-                    return date.substring(0, 10).replaceAll("-", ".");
+                "render": function (data, type, row) {
+                    return data.substring(0, 10).replaceAll("-", ".");
                 }
             },
             {
@@ -40,12 +40,12 @@ $(function () {
             },
             {
                 "data": "language",
-                "render": function (date, type, row) {
-                    let language = date;
+                "render": function (data, type, row) {
+                    let language = data;
                     let city = "без ст"
-                    if (date.includes("Русский")) {
+                    if (data.includes("Русский")) {
                         language = "Рус";
-                    } else if (date.includes("Английский"))
+                    } else if (data.includes("Английский"))
                         language = "Анг"
                     if (row.isState)
                         city = "шт";
@@ -56,12 +56,12 @@ $(function () {
             },
             {
                 "data": "isMultiLevel",
-                "render": function (date, type, row) {
-                    // if (date) {
+                "render": function (data, type, row) {
+                    // if (data) {
                     //     return  '<span class="fa fa-check"></span>';
                     // }
                     // return '<span class="fa fa-close"></span>';
-                    if (date) {
+                    if (data) {
                         return "Многоур"
                     }
                     return "Одноур";
@@ -69,31 +69,33 @@ $(function () {
             },
             {
                 "data": "color",
-                "render": function (date, type, row) {
-                    var ref = "<a href=\"javascript:void(0);\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"" + date + "\">"
-                    if (date.length > 10) {
-                        date = date.substring(0, 7) + "...";
+                "render": function (data, type, row) {
+                    var ref = "<a href=\"javascript:void(0);\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"" + data + "\">"
+                    if (data.length > 10) {
+                        data = data.substring(0, 7) + "...";
                     }
-                    return ref + date + "</a>";
+                    return ref + data + "</a>";
                 }
             },
             {
                 "data": "description",
-                "render": function (date, type, row) {
-                    var ref = "<a href=\"javascript:void(0);\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"" + date + "\">"
-                    if (date.length > 10) {
-                        date = date.substring(0, 7) + "...";
+                "render": function (data, type, row) {
+                    var ref = "<a href=\"javascript:void(0);\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"" + data + "\">"
+                    if (data.length > 10) {
+                        data = data.substring(0, 7) + "...";
                     }
-                    return ref + date + "</a>";
+                    return ref + data + "</a>";
                 }
             },
             {
                 "data": "orderMap",
-                "render": function (date, type, row) {
-                    if (date === null)
+                "render": function (data, type, row) {
+                    if (data !== null) {
+                        if (!getCondition(data.stage).toLowerCase().startsWith("отправлен")) {
+                            return "<button class='btn btn-danger' onclick='getOrderForModify(" + row.id + ");'>" + getCondition(data.stage) + "</button>";
+                        } else return getCondition(data.stage);
+                    } else {
                         return "<button class='btn btn-secondary' onclick='createOrder(" + row.id + ");'>Начать</button>";
-                    else {
-                        return getCondition(date.stage)
                     }
                 }
             },
@@ -123,8 +125,15 @@ $(function () {
 
 function add() {
     form.find(":input").val("");
+    document.getElementById('dateTime').value = new Date().toISOString().substring(0, 16);
+    document.getElementById('typeMap').value = "Мир";
+    document.getElementById('isPlexiglass').value = "false";
+    document.getElementById('isState').value = "true";
+    document.getElementById('isCapital').value = "true"
+    document.getElementById('isMultiLevel').value = "true";
+    document.getElementById('light').value = "Без подсветки";
+    document.getElementById('isMonochromatic').value = "false";
     $("#editRow").modal();
-    document.getElementById('conditionMap').value = "0";
 }
 
 

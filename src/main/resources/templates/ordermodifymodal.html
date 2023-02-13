@@ -1,0 +1,90 @@
+<div class="modal fade" tabindex="-1" id="modify_editRow">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Изменить заказ</h4>
+                <button type="button" class="close" data-dismiss="modal" onclick="closeNoty()">&times;</button>
+            </div>
+            <div class="modal-body container-fluid">
+                <form id="modify_orderForm">
+                    <input type="hidden" id="modify_id" name="id">
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="modify_orderTerm" class="col-form-label">Дата отправки</label>
+                            <input type="datetime-local" class="form-control" id="modify_orderTerm" name="orderTerm"
+                                   placeholder="Время">
+                        </div>
+
+                        <div class="form-group col">
+                            <label for="modify_light" class="col-form-label">Подсветка</label>
+                            <input type="text" class="form-control" id="modify_light" name="light"
+                                   list="lightOption"
+                                   placeholder="Подсветка">
+                            <datalist id="lightOption">
+                                <option>Без подсветки</option>
+                                <option>Холодная подсветка</option>
+                                <option>Нейтральная подсветка</option>
+                                <option>Тёплая подсветка</option>
+                                <option>Беспроводная подсветка</option>
+                                <option>RGB подсветка</option>
+                            </datalist>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="form-group col">
+                            <label for="modify_marketPlace" class="col-form-label">Тип заказа</label>
+                            <select class="form-control" id="modify_marketPlace" name="isMarketPlace">
+                                <option value="true">Маркет плейс</option>
+                                <option value="false">Обычный заказ</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col">
+                            <label for="modify_isAvailability" class="col-form-label">Наличие</label>
+                            <select class="form-control" id="modify_isAvailability" name="isAvailability">
+                                <option value="false">Заказ</option>
+                                <option value="true">Наличие</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group col">
+                        <label for="modify_additional" class="col-form-label">Дополнения</label>
+                        <input type="text" class="form-control" id="modify_additional" name="additional"
+                               placeholder="Дополнения">
+                    </div>
+
+                    <div class="form-group col">
+                        <label for="modify_description" class="col-form-label">Описание</label>
+                        <input type="text" class="form-control" id="modify_description" name="description"
+                               placeholder="Описание">
+                    </div>
+
+                    <div class="form-group col">
+                        <label for="modify_contact" class="col-form-label">Контактные данные. Адресс</label>
+                        <input type="text" class="form-control" id="modify_contact" name="contact"
+                               placeholder="Контактные данные. Адресс">
+                    </div>
+
+                    <div class="form-group col">
+                        <label for="modify_price" class="col-form-label">Цена</label>
+                        <input type="number" class="form-control" id="modify_price" name="price"
+                               placeholder="Цена">
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeNoty()">
+                    <span class="fa fa-close"></span>
+                    Отмена
+                </button>
+                <button type="button" class="btn btn-primary" onclick="modifyOrder()">
+                    <span class="fa fa-check"></span>
+                    Сохранить
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

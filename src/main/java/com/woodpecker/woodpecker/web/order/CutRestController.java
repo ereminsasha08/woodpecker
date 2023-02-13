@@ -26,6 +26,11 @@ public class CutRestController {
         cutService.setLaser(id);
     }
 
+    @PostMapping
+    public void changeLaser(@RequestParam Integer id, @RequestParam String laserName){
+        cutService.changeLaser(id, laserName);
+    }
+
     @GetMapping("/info/{id}")
     public List<String> infoAboutCut(@PathVariable Integer id) {
         return cutService.infoCut(id);

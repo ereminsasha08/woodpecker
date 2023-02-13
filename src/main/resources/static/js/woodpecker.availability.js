@@ -85,11 +85,8 @@ $(function () {
             {
                 "data": "stage",
                 "render": function (date, type, row) {
-                    if (date >= 6) {
-                        return "<button class='btn btn-danger' onclick='createOrder(" + row.id + ");'>" + getCondition(date) + "</button>";
-                    } else {
-                        return getCondition(date)
-                    }
+                    return "<button class='btn btn-danger' onclick='getOrderForModify(" + row.id + ");'>" + getCondition(date) + "</button>";
+
                 }
             },
         ],
@@ -97,38 +94,9 @@ $(function () {
 });
 
 
-function createOrder(id) {
-    form.find(":input").val("");
-    $("#editRow").modal();
-    $.get("rest/orders/" + id, function (data) {
-        $.each(data, function (key, value) {
-            if (value != null)
-                if (key === "geographyMap") {
-                    $.each(data[key], function (key, value) {
-                        let a = document.getElementById(key);
-                        if (a != null)
-                            a.value = value
-                    });
-                } else {
-                    let a = document.getElementById(key);
-                    if (a != null)
-                        a.value = value
-                }
-        });
-    });
 
-}
-function save() {
-    $.ajax({
-        type: "PATCH",
-        url: ctx.ajaxUrl,
-        data: form.serialize()
-    }).done(function () {
-        $("#editRow").modal("hide");
-        ctx.updateTable();
-        successNoty("Сохранено");
-    });
-}
+
+
 function getInfoCut(id) {
     $("#info-cut").modal();
     $.get("rest/cut/info/" + id,
@@ -137,12 +105,12 @@ function getInfoCut(id) {
             $.each(data, function (index, value) {
                 listSelect +=
                     '<div class="row">' +
-                    '<div class="form-group col-3"></div>'+
+                    '<div class="form-group col-3"></div>' +
                     '<div class="form-group col-6">' +
                     '<output type="text" class="form-control" id="list" name="list"> ' +
                     '<span id ="' + index + '">"' + value + '"</span>' +
                     '</output>' +
-                    '</div>'+
+                    '</div>' +
                     '</div>'
             });
             document.getElementById("info").innerHTML = listSelect;

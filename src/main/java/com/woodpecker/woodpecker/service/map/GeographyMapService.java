@@ -35,8 +35,7 @@ public class GeographyMapService {
         return geographyMapRepository.findByManagerAndIsView(user, true).stream()
                 .filter(
                         map -> map.getOrderMap() == null
-                                || map.getOrderMap().getStage() < Stage.ОТПРАВЛЕН.ordinal()
-                                || map.getOrderMap().getStage() == Stage.ЗАКАЗ_ИЗ_НАЛИЧИЯ.ordinal()
+                                || !(map.getOrderMap().getIsAvailability() || map.getOrderMap().getCompleted())
                 )
                 .toList();
     }
@@ -60,11 +59,11 @@ public class GeographyMapService {
             byDateTimeBetween = byDateTimeBetween
                     .filter(
                             map -> map.getOrderMap() == null
-                                    || map.getOrderMap().getStage() < Stage.ОТПРАВЛЕН.ordinal()
-                                    || map.getOrderMap().getStage() == Stage.ЗАКАЗ_ИЗ_НАЛИЧИЯ.ordinal()
+                                    || !map.getOrderMap().getIsAvailability()
                     );
         }
-        return byDateTimeBetween.toList();
+        return byDateTimeBetween
+                .toList();
     }
 
 
@@ -74,10 +73,14 @@ public class GeographyMapService {
             geographyMap.setManager(authUser.getUser());
         } else {
             assert geographyMap.getId() != null;
-            geographyMap = geographyMapRepository.findById(geographyMap.getId())
-                    .orElseThrow(() -> new ApplicationException("Карта не может быть обновленна, так как не найдена", ErrorType.DATA_ERROR));
-            if (geographyMap.getManager().id() != authUser.getUser().id())
+            GeographyMap byId = getById(geographyMap.id());
+            if (byId.getManager().id() != authUser.getUser().id())
                 throw new IllegalArgumentException("Изменять можно только свои заказы");
+            else {
+                geographyMap.setManager(authUser.getUser());
+                geographyMap.setIsColorPlywood(byId.getIsColorPlywood());
+                geographyMap.setOrderMap(byId.getOrderMap());
+            }
         }
         geographyMapRepository.save(geographyMap);
     }

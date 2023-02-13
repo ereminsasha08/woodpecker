@@ -15,6 +15,8 @@ import javax.validation.constraints.NotNull;
 @Setter
 public abstract class Product extends BaseEntity {
 
+    @Column(name = "description", length = 800)
+    private String description;
 
     @Column(name = "price", nullable = false)
     @NotNull

@@ -17,19 +17,28 @@ $(function () {
         "order": false,
         "columns": [
             {
+                "data": "geographyMap",
+                "render": function (data, type, row) {
+                    if (data.isPlexiglass) {
+                        return '<i class="fa fa-exclamation" aria-hidden="true"></i>';
+                    }
+                    return '';
+                }
+            },
+            {
                 "data": "id",
-                "render": function (date, type, row) {
-                    let ref = "<button class='btn btn-info' onclick='getInfoMap(" + date + ");' data-placement=\"top\" title=\"" + date + "\">";
-                    return ref + date + "</a>";
+                "render": function (data, type, row) {
+                    let ref = "<button class='btn btn-info' onclick='getInfoMap(" + data + ");' data-placement=\"top\" title=\"" + data + "\">";
+                    return ref + data + "</a>";
                 }
             },
             {
                 "data": "orderTerm",
-                "render": function (date, type, row) {
+                "render": function (data, type, row) {
                     if (type === "display") {
-                        return date.substring(0, 10).replaceAll("-", ".");
+                        return data.substring(0, 10).replaceAll("-", ".");
                     }
-                    return date;
+                    return data;
 
                 }
             },
@@ -41,12 +50,12 @@ $(function () {
             },
             {
                 "data": "geographyMap.language",
-                "render": function (date, type, row) {
-                    let language = date;
+                "render": function (data, type, row) {
+                    let language = data;
                     let city = "без ст"
-                    if (date.includes("Русский")) {
+                    if (data.includes("Русский")) {
                         language = "Рус";
-                    } else if (date.includes("Английский"))
+                    } else if (data.includes("Английский"))
                         language = "Анг"
                     if (row.geographyMap.isState)
                         city = "шт";
@@ -57,8 +66,8 @@ $(function () {
             },
             {
                 "data": "geographyMap.isMultiLevel",
-                "render": function (date, type, row) {
-                    if (date) {
+                "render": function (data, type, row) {
+                    if (data) {
                         return "Многоур."
                     }
                     return "Одноур.";
@@ -66,19 +75,19 @@ $(function () {
             },
             {
                 "data": "geographyMap.color",
-                "render": function (date, type, row) {
-                    // let ref = "<a href=\"javascript:void(0);\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"" + date + "\">"
-                    // if (date.length > 10) {
-                    //     date = date.substring(0, 7) + "...";
+                "render": function (data, type, row) {
+                    // let ref = "<a href=\"javascript:void(0);\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"" + data + "\">"
+                    // if (data.length > 10) {
+                    //     data = data.substring(0, 7) + "...";
                     // }
-                    return date;
+                    return data;
                 }
             },
             {
                 "data": "laser",
-                "render": function (date, type, row) {
-                    if (date != null) {
-                        return "<button class='btn btn-warning' onclick='getInfoCut(" + row.id + "," + row.geographyMap.isColorPlywood + ");'>" + date + "</button>";
+                "render": function (data, type, row) {
+                    if (data != null) {
+                        return "<button class='btn btn-warning' onclick='getInfoCut(" + row.id + "," + row.geographyMap.isColorPlywood + ");'>" + data + "</button>";
                     } else {
                         return "<button class='btn btn-danger' onclick='setLaser(" + row.id + ");'>Пилить</button>";
                     }
@@ -100,6 +109,17 @@ function setLaser(id) {
     });
 }
 
+function changeLaser(){
+    $.ajax({
+        type: "POST",
+        url: cutAjaxUrl,
+        data: $('#laserForm').serialize(),
+    }).done(function () {
+        ctx.updateTable();
+        successNoty("Лазер изменен");
+    });
+}
+
 function getInfoCut(id, isColorPlywood) {
     $("#infoListCut").modal();
     $.get(cutAjaxUrl + "info/" + id,
@@ -112,19 +132,21 @@ function getInfoCut(id, isColorPlywood) {
                     '  </h5>' +
                     '</div>'
             $.each(data, function (index, value) {
-                listSelect += '<div class="row">' +
-                   ' <div class="form-group col-6">'+
-                      '  <output type="text" class="form-control" id="list" name="list"> ' +
+                listSelect +=
+                    '<div class="row">' +
+                    ' <div class="form-group col-6">' +
+                    '  <output type="text" class="form-control" id="list" name="list"> ' +
                     ' <span id ="' + index + '">"' + value + '"</span>' +
                     '</output>' +
                     '</div>' +
                     '<div class="form-group col-6">' +
-                    "<input "+' class="form-check-input"'+"type='checkbox'" + ' id="' + index + '"' + (value.endsWith("Лист готов") ? "checked" : "") + " onclick='updateInfoAboutCut($(this)," + id + "," + index + "," + isColorPlywood + ");'/>" +
+                    "<input " + ' class="form-check-input"' + "type='checkbox'" + ' id="' + index + '"' + (value.endsWith("Лист готов") ? "checked" : "") + " onclick='updateInfoAboutCut($(this)," + id + "," + index + "," + isColorPlywood + ");'/>" +
                     '<label for="' + id + '" class="form-check-label">' + (value.endsWith("Лист загравирован") || value.endsWith("Лист готов") ? '  Выпилен?' : '  Загравирован?') + '</label>' +
                     '</div>' +
                     '</div>'
             });
             document.getElementById("infoList").innerHTML = listSelect;
+            document.getElementById("laserId").value = id;
         });
 }
 

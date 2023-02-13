@@ -16,19 +16,28 @@ $(function () {
         "order": false,
         "columns": [
             {
+                "data": "geographyMap",
+                "render": function (data, type, row) {
+                    if (data.isPlexiglass || !data.light.toLowerCase().startsWith("без под") || (data.additional != null && data.additional.toString().length > 0)) {
+                        return '<i class="fa fa-exclamation" aria-hidden="true"></i>';
+                    }
+                    return '';
+                }
+            },
+            {
                 "data": "id",
-                "render": function (date, type, row) {
-                    let ref = "<button class='btn btn-info' onclick='getInfoMap(" + date + ");' data-placement=\"top\" title=\"" + date + "\">";
-                    return ref + date + "</a>";
+                "render": function (data, type, row) {
+                    let ref = "<button class='btn btn-info' onclick='getInfoMap(" + data + ");' data-placement=\"top\" title=\"" + data + "\">";
+                    return ref + data + "</a>";
                 }
             },
             {
                 "data": "orderTerm",
-                "render": function (date, type, row) {
+                "render": function (data, type, row) {
                     if (type === "display") {
-                        return date.substring(0, 10).replaceAll("-", ".");
+                        return data.substring(0, 10).replaceAll("-", ".");
                     }
-                    return date;
+                    return data;
 
                 }
             },
@@ -40,47 +49,48 @@ $(function () {
             },
             {
                 "data": "geographyMap.language",
-                "render": function (date, type, row) {
-                    let s = "EN";
-                    if ("Русский" === date) {
-                        s = "RU";
-                    }
-                    return s;
-                }
-            },
-            {
-                "data": "geographyMap.isState",
-                "render": function (date, type, row) {
-                    if (date) {
-                        return "ШТ"
-                    }
-                    return "Без ШТ";
+                "render": function (data, type, row) {
+                    let language = data;
+                    let city = "без ст"
+                    if (data.includes("Русский")) {
+                        language = "Рус";
+                    } else if (data.includes("Английский"))
+                        language = "Анг"
+                    if (row.geographyMap.isState)
+                        city = "шт";
+                    else if (row.geographyMap.isCapital)
+                        city = "ст";
+                    return language + " " + city;
                 }
             },
             {
                 "data": "geographyMap.isMultiLevel",
-                "render": function (date, type, row) {
-                    if (date) {
-                        return "Многоур."
+                "render": function (data, type, row) {
+                    if (data) {
+                        return '<span class="fa fa-check"></span>';
                     }
-                    return "Одноур.";
+                    return '<span class="fa fa-close"></span>';
+                    // if (data) {
+                    //     return "Многоур."
+                    // }
+                    // return "Одноур.";
                 }
             },
             {
                 "data": "geographyMap.color",
-                "render": function (date, type, row) {
-                    let ref = "<a href=\"javascript:void(0);\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"" + date + "\">"
-                    if (date.length > 10) {
-                        date = date.substring(0, 7) + "...";
+                "render": function (data, type, row) {
+                    let ref = "<a href=\"javascript:void(0);\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"" + data + "\">"
+                    if (data.length > 10) {
+                        data = data.substring(0, 7) + "...";
                     }
-                    return ref + date + "</a>";
+                    return ref + data + "</a>";
                 }
             },
             {
                 "data": "laser",
-                "render": function (date, type, row) {
-                    if (date != null) {
-                        return "<button class='btn btn-warning' onclick='getInfoCut(" + row.id + ");'>" + date + "</button>";
+                "render": function (data, type, row) {
+                    if (data != null) {
+                        return "<button class='btn btn-warning' onclick='getInfoCut(" + row.id + ");'>" + data + "</button>";
                     } else {
                         return "<button class='btn btn-info small' onclick='setLaser(" + row.id + ");'>Нет</button>";
                     }
@@ -88,11 +98,11 @@ $(function () {
             },
             {
                 "data": "stage",
-                "render": function (date, type, row) {
-                    if (date >= 6) {
-                        return "<button class='btn btn-danger' onclick='setCondition(" + row.id + "," + date + ");'>" + getCondition(date) + "</button>";
+                "render": function (data, type, row) {
+                    if (data >= 6) {
+                        return "<button class='btn btn-danger' onclick='setCondition(" + row.id + "," + data + ");'>" + getCondition(data) + "</button>";
                     } else {
-                        return getCondition(date)
+                        return getCondition(data)
                     }
                 }
             },

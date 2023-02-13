@@ -5,6 +5,7 @@ import com.woodpecker.woodpecker.model.map.Stage;
 import com.woodpecker.woodpecker.model.support.Laser;
 import com.woodpecker.woodpecker.model.support.PlywoodList;
 import com.woodpecker.woodpecker.repository.LaserRepository;
+import com.woodpecker.woodpecker.repository.OrderRepository;
 import com.woodpecker.woodpecker.repository.PlywoodListRepository;
 import com.woodpecker.woodpecker.util.exception.ApplicationException;
 import com.woodpecker.woodpecker.util.exception.ErrorType;
@@ -28,6 +29,7 @@ public class CutService {
     private final LaserRepository laserRepository;
 
     private final PlywoodListRepository plywoodListRepository;
+    private final OrderRepository orderRepository;
 
 
     public List<OrderMap> sortedForCut() {
@@ -73,8 +75,8 @@ public class CutService {
 
     private void serListsForMap(OrderMap orderMap, List<String> plywoodList) {
         String typeMap = orderMap.getGeographyMap().getTypeMap();
-        List<String> standardKit = List.of("1", "2", "3", "4", "5", "6", "7", "8");
-//        List<String> standardKit = List.of("1");
+//        List<String> standardKit = List.of("1", "2", "3", "4", "5", "6", "7", "8");
+        List<String> standardKit = List.of("1");
 
         int calculationId = 0;
         calculationId += "мир".equalsIgnoreCase(typeMap) ? 1 : 0;
@@ -109,14 +111,14 @@ public class CutService {
         if (listIsComplete) {
             String s;
             if (element.endsWith("Лист загравирован")) {
-                s = element.replace("Лист загравирован", "Лист готов");
+                s = element.split(" ")[0] + ( " Лист готов");
                 plywoodList.set(numberList, s);
             } else if (!element.endsWith(" Лист готов")) {
-                s = element + " Лист загравирован";
+                s = element.split(" ")[0] + " Лист загравирован";
                 plywoodList.set(numberList, s);
             }
         } else {
-            plywoodList.set(numberList, element.substring(0, element.length() - 11).trim());
+            plywoodList.set(numberList, element.split(" ")[0]);
         }
         if (checkAllPlywoodList(plywoodList)) {
             if (orderById.getGeographyMap().getIsColorPlywood()) {
@@ -131,7 +133,8 @@ public class CutService {
 
     private void refreshCapacity(OrderMap orderById) {
         String laserName = orderById.getLaser();
-        Laser laser = laserRepository.findByName(laserName);
+        Laser laser = laserRepository.findByName(laserName).orElseThrow(() -> new ApplicationException("Лазер не найден", ErrorType.DATA_NOT_FOUND));
+        ;
         laser.setCapacity(orderById.getGeographyMap(), -1);
     }
 
@@ -141,4 +144,15 @@ public class CutService {
                 .allMatch(s -> s.toLowerCase().endsWith("готов"));
     }
 
+    @Transactional
+    public void changeLaser(Integer id, String laserName) {
+        OrderMap orderById = orderService.findOrderById(id);
+        if (orderById.getLaser().equalsIgnoreCase(laserName) || checkAllPlywoodList(orderById.getPlywoodList())) {
+            throw new ApplicationException("Лазер не изменен", ErrorType.DATA_NOT_FOUND);
+        }
+        refreshCapacity(orderById);
+        Laser laser = laserRepository.findByName(laserName).orElseThrow(() -> new ApplicationException("Лазер не найден", ErrorType.DATA_NOT_FOUND));
+        laser.setCapacity(orderById.getGeographyMap(), 1);
+        orderById.setLaser(laser.getName());
+    }
 }

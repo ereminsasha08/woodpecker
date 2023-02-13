@@ -40,9 +40,6 @@ public class GeographyMap extends Product {
     @NotNull
     private String color;
 
-    @Column(name = "description", length = 800)
-    private String description;
-
     @Column(name = "date_time", nullable = false)
     @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
@@ -72,5 +69,11 @@ public class GeographyMap extends Product {
 
     @Column(name = "is_view", columnDefinition = "boolean default true")
     @JsonIgnore
-    private boolean isView;
+    private boolean isView = true;
+
+    @Column(name = "is_monochromatic", columnDefinition = "boolean default false")
+    private Boolean isMonochromatic;
+
+    @Column(name = "is_Plexiglass", columnDefinition = "boolean default false")
+    private Boolean isPlexiglass;
 }

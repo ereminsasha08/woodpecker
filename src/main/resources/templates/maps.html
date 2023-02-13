@@ -5,6 +5,7 @@
 <script th:src="@{/js/woodpecker.common.js}" type="text/javascript" defer></script>
 <script th:src="@{/js/woodpecker.maps.js}" type="text/javascript" defer></script>
 
+<div th:insert="~{ordermodifymodal}"></div>
 
 <div class="container-xl">
 
@@ -23,7 +24,7 @@
                         <input class="form-control" type="datetime-local" name="endDate" id="endDate">
                     </div>
                     <div class="form-group col-3">
-                        <label for="isPost" class="col-form-label">Скрытые</label>
+                        <label for="isPost" class="col-form-label">Нал. и отпр.</label>
                         <select class="form-control" type="boolean" id="isPost" name="isPost">
                             <option value="false" selected>Нет</option>
                             <option value="true">Да</option>
@@ -80,13 +81,13 @@
     </div>
 
     <div class="jumbotron pt-1 card border-dark">
-        <div style="width: 90%; position: relative">
+        <div style="width: 100%; position: relative">
             <button class="btn btn-primary" onclick="add()">
                 <span class="fa fa-plus"></span>
                 Добавить
             </button>
             <h3 class="text-center">Карты</h3>
-            <table class="display compact" id="datatable">
+            <table class="hover" style="width: 95%" id="datatable">
                 <thead>
                 <tr>
                     <th>Номер</th>
@@ -125,15 +126,6 @@
                                    placeholder="Время">
                         </div>
 
-                        <div class="form-group col">
-                            <label for="typeMap" class="col-form-label">Тип</label>
-                            <input type="text" class="form-control" id="typeMap" name="typeMap" list="typeMapOptional"
-                                   placeholder="Тип">
-                            <datalist id="typeMapOptional">
-                                <option>Мир</option>
-                                <option>Россия</option>
-                            </datalist>
-                        </div>
 
                         <div class="form-group col">
                             <label for="size" class="col-form-label">Размер</label>
@@ -152,8 +144,6 @@
                                 <option>350</option>
                             </datalist>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="form-group col">
                             <label for="language" class="col-form-label">Язык</label>
                             <input type="text" class="form-control" id="language" name="language"
@@ -164,6 +154,18 @@
                                 <option>Английский</option>
                             </datalist>
                         </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="typeMap" class="col-form-label">Тип</label>
+                            <input type="text" class="form-control" id="typeMap" name="typeMap" list="typeMapOptional"
+                                   placeholder="Тип">
+                            <datalist id="typeMapOptional">
+                                <option>Мир</option>
+                                <option>Россия</option>
+                            </datalist>
+                        </div>
+
 
                         <div class="form-group col">
                             <label for="isState" class="col-form-label">Штаты</label>
@@ -189,6 +191,19 @@
                     </div>
                     <div class="row">
                         <div class="form-group col">
+                            <label for="color" class="col-form-label">Цвет</label>
+                            <input type="text" class="form-control" id="color" name="color"
+                                   placeholder="Цвет">
+                        </div>
+                        <div class="form-group col">
+                            <label for="isMonochromatic" class="col-form-label">Однотонная</label>
+                            <select class="form-control" id="isMonochromatic" name="isMonochromatic">
+                                <option value="false">Нет</option>
+                                <option value="true">Да</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col">
                             <label for="light" class="col-form-label">Подсветка</label>
                             <input type="text" class="form-control" id="light" name="light"
                                    list="lightOption"
@@ -202,18 +217,19 @@
                                 <option>RGB подсветка</option>
                             </datalist>
                         </div>
-
                         <div class="form-group col">
-                            <label for="color" class="col-form-label">Цвет</label>
-                            <input type="text" class="form-control" id="color" name="color"
-                                   placeholder="Цвет">
+                            <label for="isPlexiglass" class="col-form-label">Оргстекло</label>
+                            <select class="form-control" id="isPlexiglass" name="isPlexiglass">
+                                <option value="false">Нет</option>
+                                <option value="true">Да</option>
+                            </select>
                         </div>
                     </div>
 
                     <div class="form-group col">
-                        <label for="additional" class="col-form-label">Дополнения</label>
+                        <label for="additional" class="col-form-label">Дополнительные товары, услуги</label>
                         <input type="text" class="form-control" id="additional" name="additional"
-                               placeholder="Дополнения">
+                               placeholder="Дополнительные товары, услуги">
                     </div>
 
                     <div class="form-group col">
@@ -242,7 +258,7 @@
                 </button>
                 <button type="button" class="btn btn-primary" onclick="save()">
                     <span class="fa fa-check"></span>
-                    Создать карту
+                    Сохранить карту
                 </button>
             </div>
         </div>
@@ -275,7 +291,7 @@
                     </div>
                     <div class="row">
                         <div class="form-group col">
-                            <label for="isState" class="col-form-label">Тип заказа</label>
+                            <label for="isMarketPlace" class="col-form-label">Тип заказа</label>
                             <select class="form-control" id="isMarketPlace" name="isMarketPlace">
                                 <option value="true">Маркет плейс</option>
                                 <option value="false">Обычный заказ</option>
