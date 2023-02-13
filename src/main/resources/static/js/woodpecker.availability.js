@@ -135,11 +135,15 @@ function getInfoCut(id) {
         function (data) {
             let listSelect = "";
             $.each(data, function (index, value) {
-                listSelect += '<div className="row">' +
-                    '<div className="col">' +
-                    ' <span id ="' + index + '">"' + value + '"</span>' +
-                    '</div>' +
-                    ' </div>'
+                listSelect +=
+                    '<div class="row">' +
+                    '<div class="form-group col-3"></div>'+
+                    '<div class="form-group col-6">' +
+                    '<output type="text" class="form-control" id="list" name="list"> ' +
+                    '<span id ="' + index + '">"' + value + '"</span>' +
+                    '</output>' +
+                    '</div>'+
+                    '</div>'
             });
             document.getElementById("info").innerHTML = listSelect;
             $('#info-cut').modal();

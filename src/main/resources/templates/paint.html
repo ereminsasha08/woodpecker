@@ -4,36 +4,35 @@
 <body>
 <script th:src="@{/js/woodpecker.common.js}" type="text/javascript" defer></script>
 <script th:src="@{/js/woodpecker.paint.js}" type="text/javascript" defer></script>
-<div class="container-xl">
-
-<div th:insert="~{bodyheader}"></div>
 
 <div th:insert="~{bodymodal}"></div>
 
+<div class="container-xl">
 
-<div class="jumbotron pt-2 ">
-    <div class="container">
-        <h3 class="text-center">Покраска</h3>
-        <table class="hover" style="width:90%" id="datatable">
-            <thead>
-            <tr>
-                <th>Номер</th>
-                <th>Дата отправки</th>
-                <th>Тип</th>
-                <th>Размер</th>
-                <th>Язык</th>
-                <th>Штаты</th>
-                <th>Многур</th>
-                <th>Цвет</th>
-                <th>Лазер</th>
-                <th>Художник</th>
-                <th>Состояние</th>
-            </tr>
-            </thead>
-        </table>
+    <div th:insert="~{bodyheader}"></div>
+
+    <div class="jumbotron pt-1 card border-dark">
+        <div style="width: 90%; position: relative">
+            <h3 class="text-center">Покраска</h3>
+            <table class="display compact" id="datatable">
+                <thead>
+                <tr>
+                    <th>Номер</th>
+                    <th>Дата отправки</th>
+                    <th>Размер</th>
+                    <th>Яз.Гор.</th>
+                    <th>Мн-ур</th>
+                    <th>Цвет</th>
+                    <th>Лазер</th>
+                    <th>Художник</th>
+                    <th>Состояние</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
     </div>
 </div>
-</div>
+
 <div class="modal fade" tabindex="-1" id="modalNamePainter">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -71,18 +70,18 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="modalTitleCut"></h4>
+                <h4 class="modal-title" id="modalTitleCut">Готовность листов</h4>
                 <button type="button" class="close" data-dismiss="modal" onclick="closeNoty()">&times;</button>
             </div>
-            <div class="modal-body">
-                <p id="info"></p>
+            <div class="modal-body container-fluid" id="info">
+
             </div>
-            <div class="modal-footer" id="infoButton">
+            <div class="modal-footer"  id="infoButton">
+
             </div>
         </div>
     </div>
 </div>
-
 
 </body>
 </html>

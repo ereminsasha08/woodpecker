@@ -5,34 +5,34 @@
 </head>
 <body>
 
-<script th:src="@{/js/woodpecker.common.js}" type="text/javascript" defer> </script>
+<script th:src="@{/js/woodpecker.common.js}" type="text/javascript" defer></script>
 <script th:src="@{/js/woodpecker.users.js}" type="text/javascript" defer></script>
 <div class="container-xl">
 
-<div th:insert="~{bodyheader}"></div>
+    <div th:insert="~{bodyheader}"></div>
 
-<div class="jumbotron pt-4">
-    <div class="container" style="width: 90%">
-        <h3 class="text-center">Пользователи</h3>
-        <button class="btn btn-primary" onclick="add()">
-            <span class="fa fa-plus"></span>
-            Добавить
-        </button>
-        <table class="table table-striped" id="datatable">
-            <thead>
-            <tr>
-                <th>Имя</th>
-                <th>Email</th>
-                <th>Права</th>
-                <th>Блокировка</th>
-                <th>Дата регестрации</th>
-                <th></th>
-                <th></th>
-            </tr>
-            </thead>
-        </table>
+    <div class="jumbotron pt-4">
+        <div style="width: 90%; position: relative">
+            <h3 class="text-center">Пользователи</h3>
+            <button class="btn btn-primary" onclick="add()">
+                <span class="fa fa-plus"></span>
+                Добавить
+            </button>
+            <table class="table table-striped" id="datatable">
+                <thead>
+                <tr>
+                    <th>Имя</th>
+                    <th>Email</th>
+                    <th>Права</th>
+                    <th>Блокировка</th>
+                    <th>Дата регестрации</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+            </table>
+        </div>
     </div>
-</div>
 </div>
 
 <div class="modal fade" tabindex="-1" id="editRow">

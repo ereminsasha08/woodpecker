@@ -42,7 +42,7 @@ $(function () {
                 "data": "language",
                 "render": function (date, type, row) {
                     let language = date;
-                    let city = "Без столиц"
+                    let city = "без ст"
                     if (date.includes("Русский")) {
                         language = "Рус";
                     } else if (date.includes("Английский"))
@@ -62,9 +62,9 @@ $(function () {
                     // }
                     // return '<span class="fa fa-close"></span>';
                     if (date) {
-                        return "Многоур."
+                        return "Многоур"
                     }
-                    return "Одноур.";
+                    return "Одноур";
                 }
             },
             {

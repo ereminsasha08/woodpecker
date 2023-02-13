@@ -73,8 +73,8 @@ public class CutService {
 
     private void serListsForMap(OrderMap orderMap, List<String> plywoodList) {
         String typeMap = orderMap.getGeographyMap().getTypeMap();
-//        List<String> standardKit = List.of("1", "2", "3", "4", "5", "6", "7", "8");
-        List<String> standardKit = List.of("1");
+        List<String> standardKit = List.of("1", "2", "3", "4", "5", "6", "7", "8");
+//        List<String> standardKit = List.of("1");
 
         int calculationId = 0;
         calculationId += "мир".equalsIgnoreCase(typeMap) ? 1 : 0;

@@ -17,74 +17,68 @@ $(function () {
         "columns": [
             {
                 "data": "id",
-                "render": function (date, type, row) {
-                    let ref = "<button class='btn btn-info' onclick='getInfoMap(" + date + ");' data-placement=\"top\" title=\"" + date + "\">";
-                    return ref + date + "</a>";
+                "render": function (data, type, row) {
+                    let ref = "<button class='btn btn-info' onclick='getInfoMap(" + data + ");' data-placement=\"top\" title=\"" + data + "\">";
+                    return ref + data + "</a>";
                 }
             },
             {
                 "data": "orderTerm",
-                "render": function (date, type, row) {
+                "render": function (data, type, row) {
                     if (type === "display") {
-                        return date.substring(0, 10).replaceAll("-", ".");
+                        return data.substring(0, 10).replaceAll("-", ".");
                     }
-                    return date;
+                    return data;
 
                 }
-            },
-            {
-                "data": "geographyMap.typeMap"
             },
             {
                 "data": "geographyMap.size"
             },
             {
                 "data": "geographyMap.language",
-                "render": function (date, type, row) {
-                    let s = "EN";
-                    if ("Русский" === date) {
-                        s = "RU";
-                    }
-                    return s;
-                }
-            },
-            {
-                "data": "geographyMap.isState",
-                "render": function (date, type, row) {
-                    if (date) {
-                        return "ШТ"
-                    }
-                    return "Без ШТ";
+                "render": function (data, type, row) {
+                    let language = data;
+                    let city = "без ст"
+                    if (data.includes("Русский")) {
+                        language = "Рус";
+                    } else if (data.includes("Английский"))
+                        language = "Анг"
+                    if (row.geographyMap.isState)
+                        city = "шт";
+                    else if (row.geographyMap.isCapital)
+                        city = "ст";
+                    return language + " " + city;
                 }
             },
             {
                 "data": "geographyMap.isMultiLevel",
-                "render": function (date, type, row) {
-                    if (date) {
-                        return "Многоур."
+                "render": function (data, type, row) {
+                    if (data) {
+                        return '<span class="fa fa-check"></span>';
                     }
-                    return "Одноур.";
+                    return '<span class="fa fa-close"></span>';
+                    // if (data) {
+                    //     return "Многоур."
+                    // }
+                    // return "Одноур.";
                 }
             },
             {
                 "data": "geographyMap.color",
-                "render": function (date, type, row) {
-                    let ref = "<a href=\"javascript:void(0);\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"" + date + "\">"
-                    if (date.length > 10) {
-                        date = date.substring(0, 7) + "...";
-                    }
-                    return ref + date + "</a>";
+                "render": function (data, type, row) {
+                    return data;
                 }
             },
             {
                 "data": "laser",
-                "render": function (date, type, row) {
-                    if (date != null) {
+                "render": function (data, type, row) {
+                    if (data != null) {
                         if (row.isColorPlywood) {
-                            return "<button class='btn btn-danger' onclick='getInfoCut(" + row.id + "," + row.isColorPlywood + ");'>" + date + "</button>";
+                            return "<button class='btn btn-danger' onclick='getInfoCut(" + row.id + "," + row.isColorPlywood + ");'>" + data + "</button>";
 
                         } else {
-                            return "<button class='btn btn-warning' onclick='getInfoCut(" + row.id + "," + row.isColorPlywood + ");'>" + date + "</button>";
+                            return "<button class='btn btn-warning' onclick='getInfoCut(" + row.id + "," + row.isColorPlywood + ");'>" + data + "</button>";
                         }
                     } else {
                         return "<button class='btn btn-info small' onclick='setLaser(" + row.id + ");'>Нет</button>";
@@ -94,21 +88,21 @@ $(function () {
             },
             {
                 "data": "namePainter",
-                "render": function (date, type, row) {
-                    if (date != null)
-                        return date;
+                "render": function (data, type, row) {
+                    if (data != null)
+                        return data;
                     return "Не назначен";
                 }
             },
             {
                 "data": "stage",
-                "render": function (date, type, row) {
-                    if (date === 5)
+                "render": function (data, type, row) {
+                    if (data === 5)
                         return "<button class='btn btn-danger' onclick='setStagePaint(" + row.id + ");'>Покраненно!</button>";
-                    if (date === 4)
+                    if (data === 4)
                         return "<button class='btn btn-secondary' onclick='setPainter(" + row.id + ");'>Назначить художника</button>";
                     else
-                        return "Ждет покраску досок";
+                        return getCondition(data);
 
                 }
             },
@@ -164,11 +158,16 @@ function getInfoCut(id, isColor) {
         function (data) {
             let listSelect = "";
             $.each(data, function (index, value) {
-                listSelect += '<div class="row">' +
-                    '<div class="col">' +
-                    ' <span id ="' + index + '">"' + value + '"</span>' +
-                    '</div>' +
-                    ' </div>'
+                listSelect +=
+                    '<div class="row">' +
+                    '<div class="form-group col-3"></div>'+
+                    '<div class="form-group col-6">' +
+                    '<output type="text" class="form-control" id="list" name="list"> ' +
+                    '<span id ="' + index + '">"' + value + '"</span>' +
+                    '</output>' +
+                    '</div>'+
+                    '</div>'
+
             });
             document.getElementById("info").innerHTML = listSelect;
             let cancel = "<button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" onclick=\"closeNoty()\"><span class=\"fa fa-close\"></span>Отмена</button>";

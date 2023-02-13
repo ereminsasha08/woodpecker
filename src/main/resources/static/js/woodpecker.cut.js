@@ -42,20 +42,17 @@ $(function () {
             {
                 "data": "geographyMap.language",
                 "render": function (date, type, row) {
-                    let s = "EN";
-                    if ("Русский" === date) {
-                        s = "RU";
-                    }
-                    return s;
-                }
-            },
-            {
-                "data": "geographyMap.isState",
-                "render": function (date, type, row) {
-                    if (date) {
-                        return "ШТ"
-                    }
-                    return "Без ШТ";
+                    let language = date;
+                    let city = "без ст"
+                    if (date.includes("Русский")) {
+                        language = "Рус";
+                    } else if (date.includes("Английский"))
+                        language = "Анг"
+                    if (row.geographyMap.isState)
+                        city = "шт";
+                    else if (row.geographyMap.isCapital)
+                        city = "ст";
+                    return language + " " + city;
                 }
             },
             {
@@ -70,11 +67,11 @@ $(function () {
             {
                 "data": "geographyMap.color",
                 "render": function (date, type, row) {
-                    let ref = "<a href=\"javascript:void(0);\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"" + date + "\">"
-                    if (date.length > 10) {
-                        date = date.substring(0, 7) + "...";
-                    }
-                    return ref + date + "</a>";
+                    // let ref = "<a href=\"javascript:void(0);\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"" + date + "\">"
+                    // if (date.length > 10) {
+                    //     date = date.substring(0, 7) + "...";
+                    // }
+                    return date;
                 }
             },
             {
@@ -110,22 +107,22 @@ function getInfoCut(id, isColorPlywood) {
             let listSelect = "";
             if (isColorPlywood)
                 listSelect = '<div>' +
-                    '  <span>' +
+                    '  <h5>' +
                     'Карта из покрашенных досок' +
-                    '  </span>' +
+                    '  </h5>' +
                     '</div>'
             $.each(data, function (index, value) {
-                listSelect += '<div className="row">' +
-                    '<form>' +
-                    '<div className="col">' +
+                listSelect += '<div class="row">' +
+                   ' <div class="form-group col-6">'+
+                      '  <output type="text" class="form-control" id="list" name="list"> ' +
                     ' <span id ="' + index + '">"' + value + '"</span>' +
+                    '</output>' +
                     '</div>' +
-                    '  <div className="col">' +
-                    '<label htmlFor="' + id + '" className="col-form-label">"' + (value.endsWith("Лист загравирован") || value.endsWith("Лист готов") ? "Выпилен?" : "Загравирован?") + '"</label>' +
-                    "<input type='checkbox'" + ' id="' + index + '"' + (value.endsWith("Лист готов") ? "checked" : "") + " onclick='updateInfoAboutCut($(this)," + id + "," + index + "," + isColorPlywood + ");'/>" +
-                    ' </div>' +
-                    ' </form>' +
-                    ' </div>'
+                    '<div class="form-group col-6">' +
+                    "<input "+' class="form-check-input"'+"type='checkbox'" + ' id="' + index + '"' + (value.endsWith("Лист готов") ? "checked" : "") + " onclick='updateInfoAboutCut($(this)," + id + "," + index + "," + isColorPlywood + ");'/>" +
+                    '<label for="' + id + '" class="form-check-label">' + (value.endsWith("Лист загравирован") || value.endsWith("Лист готов") ? '  Выпилен?' : '  Загравирован?') + '</label>' +
+                    '</div>' +
+                    '</div>'
             });
             document.getElementById("infoList").innerHTML = listSelect;
         });

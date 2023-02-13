@@ -7,54 +7,56 @@
 
 <script th:src="@{/js/woodpecker.common.js}" type="text/javascript" defer></script>
 <script th:src="@{/js/woodpecker.cut.js}" type="text/javascript" defer></script>
-<div class="container-xl">
-
-<div th:insert="~{bodyheader}"></div>
 
 <div th:insert="~{bodymodal}"></div>
 
-<div class="jumbotron pt-2 ">
-    <div class="container">
-        <h3 class="text-center">Распил</h3>
-        <table class="hover" style="width:90%" id="datatable">
-            <thead>
-            <tr>
-                <th>Номер</th>
-                <th>Дата отправки</th>
-                <th>Тип</th>
-                <th>Размер</th>
-                <th>Язык</th>
-                <th>Штаты</th>
-                <th>Многур</th>
-                <th>Цвет</th>
-                <th>Лазер</th>
-            </tr>
-            </thead>
-        </table>
-    </div>
-</div>
+<div class="container-xl">
+
+    <div th:insert="~{bodyheader}"></div>
 
 
-<div class="modal fade" tabindex="-1" id="infoListCut">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Готовые листы</h4>
-                <button type="button" class="close" data-dismiss="modal" onclick="location.reload(); return false;">
-                    &times;
-                </button>
-            </div>
-            <div class="modal-body" id="infoList"></div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                        onclick="location.reload(); return false;">
-                    <span class="fa fa-close"></span>
-                    Отмена
-                </button>
-            </div>
+    <div class="jumbotron pt-1 card border-dark">
+        <div style="width: 90%; position: relative">
+            <h3 class="text-center">Распил</h3>
+            <table class="hover" id="datatable">
+                <thead>
+                <tr>
+                    <th>Номер</th>
+                    <th>Дата отправки</th>
+                    <th>Тип</th>
+                    <th>Размер</th>
+                    <th>Яз.Гор.</th>
+                    <th>Многур</th>
+                    <th>Цвет</th>
+                    <th>Лазер</th>
+                </tr>
+                </thead>
+            </table>
         </div>
     </div>
 </div>
-</div>
+    <div class="modal fade" tabindex="-1" id="infoListCut">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Готовые листы</h4>
+                    <button type="button" class="close" data-dismiss="modal" onclick="location.reload(); return false;">
+                        &times;
+                    </button>
+                </div>
+                <div class="modal-body container-fluid" id="infoList">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                            onclick="location.reload(); return false;">
+                        <span class="fa fa-close"></span>
+                        Отмена
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

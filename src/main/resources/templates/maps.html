@@ -8,107 +8,106 @@
 
 <div class="container-xl">
 
+    <div th:insert="~{bodyheader}"></div>
 
-<div th:insert="~{bodyheader}"></div>
-
-
-<div class="card border-dark jumbotron pt-4">
-    <div class="card-body pb-0 container">
-        <form id="filter">
-            <div class="row">
-                <div class="form-group col-3">
-                    <label for="startDate" class="col-form-label">С даты:</label>
-                    <input class="form-control" type="datetime-local" name="startDate" id="startDate">
-                </div>
-                <div class="form-group col-3">
-                    <label for="endDate" class="col-form-label">по дату:</label>
-                    <input class="form-control" type="datetime-local" name="endDate" id="endDate">
-                </div>
-                <div class="form-group col-3">
+    <div class="card border-dark jumbotron pt-4">
+        <div class="card-body pb-0 container">
+            <form id="filter">
+                <div class="row">
+                    <div class="form-group col-3">
+                        <label for="startDate" class="col-form-label">С даты:</label>
+                        <input class="form-control" type="datetime-local" name="startDate" id="startDate">
+                    </div>
+                    <div class="form-group col-3">
+                        <label for="endDate" class="col-form-label">по дату:</label>
+                        <input class="form-control" type="datetime-local" name="endDate" id="endDate">
+                    </div>
+                    <div class="form-group col-3">
                         <label for="isPost" class="col-form-label">Скрытые</label>
-                    <select class="form-control" type="boolean" id="isPost" name="isPost">
-                        <option value="false" selected>Нет</option>
-                        <option value="true">Да</option>
-                    </select>
+                        <select class="form-control" type="boolean" id="isPost" name="isPost">
+                            <option value="false" selected>Нет</option>
+                            <option value="true">Да</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-3">
+                        <label for="nameManager" class="col-form-label">Менеджер</label>
+                        <select class="form-control" type="text" id="nameManager" name="nameManager">
+                            <option value="">Все</option>
+                            <option value="Оля">Оля</option>
+                            <option value="Катя">Катя</option>
+                            <option value="Вера">Вера</option>
+                            <option value="Мои" selected>Мои</option>
+                        </select>
+                    </div>
+
+                    <!--                <div class="form-group col">-->
+                    <!--                    <label for="conditionMapFilter" x-placement="">Состояние:</label>-->
+                    <!--                    <select class="form-control" type="number" id="conditionMapFilter" name="conditionMapFilter">-->
+                    <!--                        <option value="-1">Неизвестно</option>-->
+                    <!--                        <option value="0">Новый заказ</option>-->
+                    <!--                        <option value="1">В очереди на резку</option>-->
+                    <!--                        <option value="2">Пилится</option>-->
+                    <!--                        <option value="4">Выпилен</option>-->
+                    <!--                        <option value="5">На покраске</option>-->
+                    <!--                        <option value="6">Красится</option>-->
+                    <!--                        <option value="8">Покрашен</option>-->
+                    <!--                        <option value="10">На приклейки</option>-->
+                    <!--                        <option value="12">На запаковке</option>-->
+                    <!--                        <option value="14">Готов к отправке</option>-->
+                    <!--                        <option value="16">Отправлен</option>-->
+                    <!--                    </select>-->
+                    <!--                </div>-->
                 </div>
-                <div class="form-group col-3">
-                    <label for="nameManager" class="col-form-label">Менеджер</label>
-                    <select class="form-control" type="text" id="nameManager" name="nameManager">
-                        <option value="">Все</option>
-                        <option value="Оля">Оля</option>
-                        <option value="Катя">Катя</option>
-                        <option value="Вера">Вера</option>
-                        <option value="Мои" selected>Мои</option>
-                    </select>
+            </form>
+            <div class="row">
+                <div class="col-6">
+
                 </div>
-
-<!--                <div class="form-group col">-->
-<!--                    <label for="conditionMapFilter" x-placement="">Состояние:</label>-->
-<!--                    <select class="form-control" type="number" id="conditionMapFilter" name="conditionMapFilter">-->
-<!--                        <option value="-1">Неизвестно</option>-->
-<!--                        <option value="0">Новый заказ</option>-->
-<!--                        <option value="1">В очереди на резку</option>-->
-<!--                        <option value="2">Пилится</option>-->
-<!--                        <option value="4">Выпилен</option>-->
-<!--                        <option value="5">На покраске</option>-->
-<!--                        <option value="6">Красится</option>-->
-<!--                        <option value="8">Покрашен</option>-->
-<!--                        <option value="10">На приклейки</option>-->
-<!--                        <option value="12">На запаковке</option>-->
-<!--                        <option value="14">Готов к отправке</option>-->
-<!--                        <option value="16">Отправлен</option>-->
-<!--                    </select>-->
-<!--                </div>-->
-            </div>
-
-        </form>
-        <div class="row">
-            <div class="col-6">
-
-            </div>
-            <div class="col-3">
-                <button class="btn btn-primary" onclick="ctx.updateTable()">
-                    <span class="fa fa-filter"></span>
-                    Фильтр
-                </button>
-            </div>
-            <div class="col-3">
-                <button class="btn btn-danger" onclick="clearFilter()">
-                    <span class="fa fa-remove"></span>
-                    Отмена
-                </button>
+                <div class="col-3">
+                    <button class="btn btn-primary" onclick="ctx.updateTable()">
+                        <span class="fa fa-filter"></span>
+                        Фильтр
+                    </button>
+                </div>
+                <div class="col-3">
+                    <button class="btn btn-danger" onclick="clearFilter()">
+                        <span class="fa fa-remove"></span>
+                        Отмена
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="jumbotron pt-1 card border-dark">
-    <div style="width: 90%; position: relative">
-        <button class="btn btn-primary" onclick="add()">
-            <span class="fa fa-plus"></span>
-            Добавить
-        </button>
-        <h3 class="text-center">Карты</h3>
-        <table class="display compact" id="datatable">
-            <thead>
-            <tr>
-                <th>Номер</th>
-                <th>Дата</th>
-                <th>Тип</th>
-                <th>Размер</th>
-                <th>Язык и города</th>
-                <th>Многур</th>
-                <th>Цвет</th>
-                <th>Описание</th>
-                <th>Состояние</th>
-                <th>Цена</th>
-                <th></th>
-                <th></th>
-            </tr>
-            </thead>
-        </table>
+
+    <div class="jumbotron pt-1 card border-dark">
+        <div style="width: 90%; position: relative">
+            <button class="btn btn-primary" onclick="add()">
+                <span class="fa fa-plus"></span>
+                Добавить
+            </button>
+            <h3 class="text-center">Карты</h3>
+            <table class="display compact" id="datatable">
+                <thead>
+                <tr>
+                    <th>Номер</th>
+                    <th>Дата</th>
+                    <th>Тип</th>
+                    <th>Размер</th>
+                    <th>Яз.Гор.</th>
+                    <th>Мн-ур</th>
+                    <th>Цвет</th>
+                    <th>Описание</th>
+                    <th>Состояние</th>
+                    <th>Цена</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+            </table>
+        </div>
     </div>
 </div>
-</div>
+
 <div class="modal fade" tabindex="-1" id="editRow">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -249,6 +248,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" tabindex="-1" id="createOrder">
     <div class="modal-dialog modal-lg">
         <div class="modal-content ">
@@ -304,5 +304,6 @@
         </div>
     </div>
 </div>
+
 </body>
 </html>
