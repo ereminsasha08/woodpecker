@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<div th:insert="~{header}"></div>
+<div th:insert="~{part/header}"></div>
 <body>
 <script th:src="@{/js/woodpecker.common.js}" type="text/javascript" defer></script>
 <script th:src="@{/js/woodpecker.maps.js}" type="text/javascript" defer></script>
 
-<div th:insert="~{ordermodifymodal}"></div>
+<div th:insert="~{part/ordermodifymodal}"></div>
+<div th:insert="~{part/infoordermodel}"></div>
 
 <div class="container-xl">
 
-    <div th:insert="~{bodyheader}"></div>
+    <div th:insert="~{part/bodyheader}"></div>
 
     <div class="card border-dark jumbotron pt-4">
         <div class="card-body pb-0 container">
@@ -126,6 +127,48 @@
                                    placeholder="Время">
                         </div>
 
+                        <div class="form-group col">
+                            <label for="light" class="col-form-label">Подсветка</label>
+                            <input type="text" class="form-control" id="light" name="light"
+                                   list="lightOption"
+                                   placeholder="Подсветка">
+                            <datalist id="lightOption">
+                                <option>Без подсветки</option>
+                                <option>Холодная подсветка</option>
+                                <option>Нейтральная подсветка</option>
+                                <option>Тёплая подсветка</option>
+                                <option>Беспроводная подсветка</option>
+                                <option>RGB подсветка</option>
+                            </datalist>
+                        </div>
+                        <div class="form-group col">
+                            <label for="isPlexiglass" class="col-form-label">Оргстекло</label>
+                            <select class="form-control" id="isPlexiglass" name="isPlexiglass">
+                                <option value="false">Нет</option>
+                                <option value="true">Да</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="typeMap" class="col-form-label">Тип</label>
+                            <input type="text" class="form-control" id="typeMap" name="typeMap" list="typeMapOptional"
+                                   placeholder="Тип">
+                            <datalist id="typeMapOptional">
+                                <option>Мир</option>
+                                <option>Россия</option>
+                            </datalist>
+                        </div>
+
+
+                        <div class="form-group col">
+                            <label for="isMultiLevel" class="col-form-label">Многоур</label>
+                            <select type="text" class="form-control" id="isMultiLevel" name="isMultiLevel">
+                                <option value="true">Многоуровневая</option>
+                                <option value="false">Одноуровневая</option>
+                            </select>
+                        </div>
 
                         <div class="form-group col">
                             <label for="size" class="col-form-label">Размер</label>
@@ -155,16 +198,9 @@
                             </datalist>
                         </div>
                     </div>
+
+
                     <div class="row">
-                        <div class="form-group col">
-                            <label for="typeMap" class="col-form-label">Тип</label>
-                            <input type="text" class="form-control" id="typeMap" name="typeMap" list="typeMapOptional"
-                                   placeholder="Тип">
-                            <datalist id="typeMapOptional">
-                                <option>Мир</option>
-                                <option>Россия</option>
-                            </datalist>
-                        </div>
 
 
                         <div class="form-group col">
@@ -181,20 +217,7 @@
                                 <option value="false">Без столиц</option>
                             </select>
                         </div>
-                        <div class="form-group col">
-                            <label for="isMultiLevel" class="col-form-label">Многоур</label>
-                            <select type="text" class="form-control" id="isMultiLevel" name="isMultiLevel">
-                                <option value="true">Многоуровневая</option>
-                                <option value="false">Одноуровневая</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col">
-                            <label for="color" class="col-form-label">Цвет</label>
-                            <input type="text" class="form-control" id="color" name="color"
-                                   placeholder="Цвет">
-                        </div>
+
                         <div class="form-group col">
                             <label for="isMonochromatic" class="col-form-label">Однотонная</label>
                             <select class="form-control" id="isMonochromatic" name="isMonochromatic">
@@ -202,30 +225,12 @@
                                 <option value="true">Да</option>
                             </select>
                         </div>
-
-                        <div class="form-group col">
-                            <label for="light" class="col-form-label">Подсветка</label>
-                            <input type="text" class="form-control" id="light" name="light"
-                                   list="lightOption"
-                                   placeholder="Подсветка">
-                            <datalist id="lightOption">
-                                <option>Без подсветки</option>
-                                <option>Холодная подсветка</option>
-                                <option>Нейтральная подсветка</option>
-                                <option>Тёплая подсветка</option>
-                                <option>Беспроводная подсветка</option>
-                                <option>RGB подсветка</option>
-                            </datalist>
-                        </div>
-                        <div class="form-group col">
-                            <label for="isPlexiglass" class="col-form-label">Оргстекло</label>
-                            <select class="form-control" id="isPlexiglass" name="isPlexiglass">
-                                <option value="false">Нет</option>
-                                <option value="true">Да</option>
-                            </select>
-                        </div>
                     </div>
-
+                    <div class="form-group col">
+                        <label for="color" class="col-form-label">Цвет</label>
+                        <input type="text" class="form-control" id="color" name="color"
+                               placeholder="Цвет">
+                    </div>
                     <div class="form-group col">
                         <label for="additional" class="col-form-label">Дополнительные товары, услуги</label>
                         <input type="text" class="form-control" id="additional" name="additional"
@@ -249,6 +254,7 @@
                         <input type="number" class="form-control" id="price" name="price"
                                placeholder="Цена">
                     </div>
+
                 </form>
             </div>
             <div class="modal-footer">
@@ -279,8 +285,8 @@
                         <div class="form-group col">
                             <label for="isAvailability" class="col-form-label">Наличие</label>
                             <select class="form-control" id="isAvailability" name="isAvailability">
-                                <option value="false">Заказ</option>
-                                <option value="true">Наличие</option>
+                                <option value="false">Нет</option>
+                                <option value="true">Да</option>
                             </select>
                         </div>
                         <div class="form-group col">

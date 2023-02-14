@@ -90,9 +90,9 @@ $(function () {
                 "data": "laser",
                 "render": function (data, type, row) {
                     if (data != null) {
-                        return "<button class='btn btn-warning' onclick='getInfoCut(" + row.id + ");'>" + data + "</button>";
+                        return "<button class='btn btn-info' onclick='getInfoCut(" + row.id + ");'>" + data + "</button>";
                     } else {
-                        return "<button class='btn btn-info small' onclick='setLaser(" + row.id + ");'>Нет</button>";
+                        return "<button class='btn btn-secondary' onclick='setLaser(" + row.id + ");'>Нет</button>";
                     }
                 }
             },

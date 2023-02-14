@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<div th:insert="~{header}"></div>
+<div th:insert="~{part/header}"></div>
 <body>
 <script th:src="@{/js/woodpecker.common.js}" type="text/javascript" defer></script>
 <script th:src="@{/js/woodpecker.paint.js}" type="text/javascript" defer></script>
 
-<div th:insert="~{bodymodal}"></div>
+<div th:insert="~{part/infoordermodel}"></div>
 
 <div class="container-xl">
 
-    <div th:insert="~{bodyheader}"></div>
+    <div th:insert="~{part/bodyheader}"></div>
 
     <div class="jumbotron pt-1 card border-dark">
         <div style="width: 100%; position: relative">
@@ -17,6 +17,7 @@
             <table class="display hover" style="width: 95%" id="datatable">
                 <thead>
                 <tr>
+                    <th></th>
                     <th>Номер</th>
                     <th>Дата отправки</th>
                     <th>Размер</th>

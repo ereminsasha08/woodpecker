@@ -16,7 +16,11 @@ $(function () {
         "order": false,
         "columns": [
             {
-                "data": "id"
+                "data": "id",
+                "render": function (data, type, row) {
+                    let ref = "<button class='btn btn-info' onclick='getInfoMap(" + data + ");' data-placement=\"top\" title=\"" + data + "\">";
+                    return ref + data + "</a>";
+                }
             },
             {
                 "data": "orderTerm",
@@ -76,16 +80,16 @@ $(function () {
                 "data": "laser",
                 "render": function (date, type, row) {
                     if (date != null) {
-                        return "<button class='btn btn-warning' onclick='getInfoCut(" + row.id + ");'>" + date + "</button>";
+                        return "<button class='btn btn-info' onclick='getInfoCut(" + row.id + ");'>" + date + "</button>";
                     } else {
-                        return "<button class='btn btn-info small' onclick='setLaser(" + row.id + ");'>Нет</button>";
+                        return "<button class='btn btn-secondary small' onclick='setLaser(" + row.id + ");'>Нет</button>";
                     }
                 }
             },
             {
                 "data": "stage",
                 "render": function (date, type, row) {
-                    return "<button class='btn btn-danger' onclick='getOrderForModify(" + row.id + ");'>" + getCondition(date) + "</button>";
+                    return "<button class='btn btn-warning' onclick='getOrderForModify(" + row.id + ");'>" + getCondition(date) + "</button>";
 
                 }
             },

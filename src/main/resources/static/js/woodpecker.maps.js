@@ -24,7 +24,13 @@ $(function () {
 
         "columns": [
             {
-                "data": "id"
+                "data": "id",
+                "render": function (data, type, row) {
+                    if (row.orderMap != null) {
+                        let ref = "<button class='btn btn-info' onclick='getInfoMap(" + data + ");' data-placement=\"top\" title=\"" + data + "\">";
+                        return ref + data + "</a>";
+                    } else return data;
+                }
             },
             {
                 "data": "dateTime",
@@ -92,10 +98,10 @@ $(function () {
                 "render": function (data, type, row) {
                     if (data !== null) {
                         if (!getCondition(data.stage).toLowerCase().startsWith("отправлен")) {
-                            return "<button class='btn btn-danger' onclick='getOrderForModify(" + row.id + ");'>" + getCondition(data.stage) + "</button>";
+                            return "<button class='btn btn-warning' onclick='getOrderForModify(" + row.id + ");'>" + getCondition(data.stage) + "</button>";
                         } else return getCondition(data.stage);
                     } else {
-                        return "<button class='btn btn-secondary' onclick='createOrder(" + row.id + ");'>Начать</button>";
+                        return "<button class='btn btn-warning' onclick='createOrder(" + row.id + ");'>Начать</button>";
                     }
                 }
             },

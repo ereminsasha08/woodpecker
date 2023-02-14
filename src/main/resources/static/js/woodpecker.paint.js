@@ -16,6 +16,15 @@ $(function () {
         "order": false,
         "columns": [
             {
+                "data": "geographyMap",
+                "render": function (data, type, row) {
+                    if (data.isMonochromatic) {
+                        return '<i class="fa fa-exclamation" aria-hidden="true"></i>';
+                    }
+                    return '';
+                }
+            },
+            {
                 "data": "id",
                 "render": function (data, type, row) {
                     let ref = "<button class='btn btn-info' onclick='getInfoMap(" + data + ");' data-placement=\"top\" title=\"" + data + "\">";
@@ -75,13 +84,13 @@ $(function () {
                 "render": function (data, type, row) {
                     if (data != null) {
                         if (row.isColorPlywood) {
-                            return "<button class='btn btn-danger' onclick='getInfoCut(" + row.id + "," + row.isColorPlywood + ");'>" + data + "</button>";
+                            return "<button class='btn btn-warning' onclick='getInfoCut(" + row.id + "," + row.isColorPlywood + ");'>" + data + "</button>";
 
                         } else {
-                            return "<button class='btn btn-warning' onclick='getInfoCut(" + row.id + "," + row.isColorPlywood + ");'>" + data + "</button>";
+                            return "<button class='btn btn-info' onclick='getInfoCut(" + row.id + "," + row.isColorPlywood + ");'>" + data + "</button>";
                         }
                     } else {
-                        return "<button class='btn btn-info small' onclick='setLaser(" + row.id + ");'>Нет</button>";
+                        return "<button class='btn btn-secondary small' onclick='setLaser(" + row.id + ");'>Нет</button>";
                     }
 
                 }
@@ -100,7 +109,7 @@ $(function () {
                     if (data === 5)
                         return "<button class='btn btn-danger' onclick='setStagePaint(" + row.id + ");'>Покраненно!</button>";
                     if (data === 4)
-                        return "<button class='btn btn-secondary' onclick='setPainter(" + row.id + ");'>Назначить художника</button>";
+                        return "<button class='btn btn-warning' onclick='setPainter(" + row.id + ");'>Назначить художника</button>";
                     else
                         return getCondition(data);
 

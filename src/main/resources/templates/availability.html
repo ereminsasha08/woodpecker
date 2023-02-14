@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<div th:insert="~{header}"></div>
+<div th:insert="~{part/header}"></div>
 <body>
 <script th:src="@{/js/woodpecker.common.js}" type="text/javascript" defer></script>
 <script th:src="@{/js/woodpecker.availability.js}" type="text/javascript" defer></script>
 
-<div th:insert="~{ordermodifymodal}"></div>
+<div th:insert="~{part/ordermodifymodal}"></div>
+<div th:insert="~{part/infoordermodel}"></div>
+
 
 <div class="container-xl">
 
-    <div th:insert="~{bodyheader}"></div>
+    <div th:insert="~{part/bodyheader}"></div>
 
 
 

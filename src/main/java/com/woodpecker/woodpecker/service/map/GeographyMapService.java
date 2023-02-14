@@ -35,7 +35,8 @@ public class GeographyMapService {
         return geographyMapRepository.findByManagerAndIsView(user, true).stream()
                 .filter(
                         map -> map.getOrderMap() == null
-                                || !(map.getOrderMap().getIsAvailability() || map.getOrderMap().getCompleted())
+                                || !(map.getOrderMap().getIsAvailability()
+                                || map.getOrderMap().getCompleted())
                 )
                 .toList();
     }
@@ -59,7 +60,8 @@ public class GeographyMapService {
             byDateTimeBetween = byDateTimeBetween
                     .filter(
                             map -> map.getOrderMap() == null
-                                    || !map.getOrderMap().getIsAvailability()
+                                    || !(map.getOrderMap().getIsAvailability()
+                                    || map.getOrderMap().getCompleted())
                     );
         }
         return byDateTimeBetween

@@ -187,15 +187,15 @@ function getInfoMap(id) {
                 if (key === "geographyMap") {
                     $.each(data[key], function (key, value) {
                         if (value != null) {
-                            let a = document.getElementById(key);
-                            if (a != null && !key.toString().startsWith("dateTime"))
+                            let a = document.getElementById("infoMap_" + key);
+                            if (a != null && !key.toString().endsWith("dateTime"))
                                 a.value = value
                             else if (a != null)
                                 a.value = value.toString().substring(0, 10).replaceAll('-', '.');
                         }
                     });
                 } else {
-                    let a = document.getElementById(key);
+                    let a = document.getElementById("infoMap_" + key);
                     if (a != null)
                         a.value = value
                 }
@@ -234,7 +234,7 @@ function modifyOrder() {
     $.ajax({
         type: "PATCH",
         url: restOrder,
-        data:  $("#modify_orderForm").serialize(),
+        data: $("#modify_orderForm").serialize(),
     }).done(function () {
         $("#modify_editRow").modal("hide");
         ctx.updateTable();
