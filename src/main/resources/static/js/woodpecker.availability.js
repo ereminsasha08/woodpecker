@@ -39,21 +39,8 @@ $(function () {
             },
             {
                 "data": "geographyMap.language",
-                "render": function (date, type, row) {
-                    let s = "EN";
-                    if ("Русский" === date) {
-                        s = "RU";
-                    }
-                    return s;
-                }
-            },
-            {
-                "data": "geographyMap.isState",
-                "render": function (date, type, row) {
-                    if (date) {
-                        return "ШТ"
-                    }
-                    return "Без ШТ";
+                "render": function (data, type, row) {
+                   return renderLanguageState(data, row);
                 }
             },
             {
@@ -63,6 +50,19 @@ $(function () {
                         return "Многоур."
                     }
                     return "Одноур.";
+                }
+            },
+            {
+                "data": "geographyMap.isColorPlywood",
+                "render": function (data, type, row) {
+                    if (data) {
+                        return '<span class="fa fa-check"></span>';
+                    }
+                    return '<span class="fa fa-close"></span>';
+                    // if (data) {
+                    //     return "Многоур."
+                    // }
+                    // return "Одноур.";
                 }
             },
             {
@@ -103,10 +103,6 @@ $(function () {
         ]
     });
 });
-
-
-
-
 
 function getInfoCut(id) {
     $("#info-cut").modal();

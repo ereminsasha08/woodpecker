@@ -11,6 +11,7 @@ const ctx = {
     }
 }
 
+
 // $(document).ready(function () {
 $(function () {
     makeEditable({
@@ -51,26 +52,33 @@ $(function () {
             {
                 "data": "geographyMap.language",
                 "render": function (data, type, row) {
-                    let language = data;
-                    let city = "без ст"
-                    if (data.includes("Русский")) {
-                        language = "Рус";
-                    } else if (data.includes("Английский"))
-                        language = "Анг"
-                    if (row.geographyMap.isState)
-                        city = "шт";
-                    else if (row.geographyMap.isCapital)
-                        city = "ст";
-                    return language + " " + city;
+                    return renderLanguageState(data, row);
                 }
             },
             {
                 "data": "geographyMap.isMultiLevel",
                 "render": function (data, type, row) {
                     if (data) {
-                        return "Многоур."
+                        return '<span class="fa fa-check"></span>';
                     }
-                    return "Одноур.";
+                    return '<span class="fa fa-close"></span>';
+                    // if (data) {
+                    //     return "Многоур."
+                    // }
+                    // return "Одноур.";
+                }
+            },
+            {
+                "data": "geographyMap.isColorPlywood",
+                "render": function (data, type, row) {
+                    if (data) {
+                        return '<span class="fa fa-check"></span>';
+                    }
+                    return '<span class="fa fa-close"></span>';
+                    // if (data) {
+                    //     return "Многоур."
+                    // }
+                    // return "Одноур.";
                 }
             },
             {

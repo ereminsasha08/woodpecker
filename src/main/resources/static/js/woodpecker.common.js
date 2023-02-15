@@ -179,6 +179,20 @@ function getCondition(date) {
 
 }
 
+
+function renderLanguageState(data, row) {
+    let language = data;
+    let city = "без ст"
+    if (data.includes("Русский")) {
+        language = "Рус";
+    } else if (data.includes("Английский"))
+        language = "Анг"
+    if (row.geographyMap.isState)
+        city = "шт";
+    else if (row.geographyMap.isCapital)
+        city = "ст";
+    return language + " " + city;
+}
 function getInfoMap(id) {
     $("#modalInfoMap").modal();
     $.get("rest/orders/" + id, function (data) {
