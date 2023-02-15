@@ -40,6 +40,8 @@ spring:
     is-getter: none
 
   # https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#common-application-properties-cache
+  flyway:
+    baseline-on-migrate: true
 
 
 #  cache:

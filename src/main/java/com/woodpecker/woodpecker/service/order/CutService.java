@@ -68,15 +68,15 @@ public class CutService {
         OrderMap orderMap = orderService.findOrderById(id);
         List<String> plywoodList = orderMap.getPlywoodList();
         if (plywoodList.isEmpty()) {
-            serListsForMap(orderMap, plywoodList);
+            setListsForMap(orderMap, plywoodList);
         }
         return plywoodList;
     }
 
-    private void serListsForMap(OrderMap orderMap, List<String> plywoodList) {
+    private void setListsForMap(OrderMap orderMap, List<String> plywoodList) {
         String typeMap = orderMap.getGeographyMap().getTypeMap();
-//        List<String> standardKit = List.of("1", "2", "3", "4", "5", "6", "7", "8");
-        List<String> standardKit = List.of("1");
+        List<String> standardKit = List.of("1", "2", "3", "4", "5", "6", "7", "8");
+//        List<String> standardKit = List.of("1");
 
         int calculationId = 0;
         calculationId += "мир".equalsIgnoreCase(typeMap) ? 1 : 0;
@@ -134,7 +134,6 @@ public class CutService {
     private void refreshCapacity(OrderMap orderById) {
         String laserName = orderById.getLaser();
         Laser laser = laserRepository.findByName(laserName).orElseThrow(() -> new ApplicationException("Лазер не найден", ErrorType.DATA_NOT_FOUND));
-        ;
         laser.setCapacity(orderById.getGeographyMap(), -1);
     }
 

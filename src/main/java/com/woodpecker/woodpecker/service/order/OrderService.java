@@ -51,11 +51,14 @@ public class OrderService {
 
     @Transactional
     public OrderMap modifyOrder(AuthUser authUser, Integer id, LocalDateTime orderTerm, String light, String additional, String description,
-                                String contact, Integer price, Boolean isMarketPlace, Boolean isAvailability) {
+                                String contact, Integer price, Boolean isMarketPlace, Boolean isAvailability, Boolean isColorPlywood) {
         OrderMap modifyOrder = findOrderById(id);
 //        if (!modifyOrder.getIsAvailability() && modifyOrder.getGeographyMap().getManager().id() != authUser.id())
 //            throw new IllegalArgumentException("Изменять можно только свои заказы");
         modifyOrder.setMarketPlace(isMarketPlace);
+        if (modifyOrder.getStage() >= Stage.ПИЛИТСЯ.ordinal() && isColorPlywood != modifyOrder.getIsColorPlywood())
+            throw new IllegalArgumentException("Нельзя менять тип покраски для карты, которая пилится");
+        modifyOrder.setIsColorPlywood(isColorPlywood);
 
         orderTerm = Objects.isNull(orderTerm) ? LocalDateTime.now().plusWeeks(2).plusDays(3) : orderTerm;
         modifyOrder.setOrderTerm(orderTerm);
@@ -67,6 +70,7 @@ public class OrderService {
         modifyGeographyMap.setDescription(description);
         modifyGeographyMap.setContact(contact);
         modifyGeographyMap.setPrice(price);
+        modifyGeographyMap.setIsColorPlywood(isColorPlywood);
         if (modifyOrder.getStage() == Stage.НАЛИЧИЕ.ordinal()) {
             modifyOrder.setStage(Stage.ЗАКАЗ_ИЗ_НАЛИЧИЯ.ordinal());
             modifyOrder.setCompleted(false);
