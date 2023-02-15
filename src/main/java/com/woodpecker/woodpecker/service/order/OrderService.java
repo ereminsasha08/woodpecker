@@ -41,7 +41,9 @@ public class OrderService {
         GeographyMap map = geographyMapRepository.getById(id);
         if (map.getManager().id() != authUser.id())
             throw new IllegalArgumentException("Начинать можно только свои заказы");
-        orderTerm = Objects.isNull(orderTerm) ? LocalDateTime.now().plusWeeks(2).plusDays(3) : orderTerm;
+        if (marketPlace && !isAvailability)
+            orderTerm = Objects.isNull(orderTerm) ? LocalDateTime.now() : orderTerm;
+        else orderTerm = Objects.isNull(orderTerm) ? LocalDateTime.now().plusWeeks(2).plusDays(3) : orderTerm;
         OrderMap orderMap = new OrderMap(orderTerm, map, marketPlace, isColorPlyWood, Stage.В_ОЧЕРЕДИ_НА_РЕЗКУ.ordinal(), isAvailability);
         map.setOrderMap(orderMap);
         return orderRepository.save(orderMap);
@@ -52,9 +54,12 @@ public class OrderService {
                                 String contact, Integer price, Boolean isMarketPlace, Boolean isAvailability) {
         OrderMap modifyOrder = findOrderById(id);
         if (!modifyOrder.getIsAvailability() && modifyOrder.getGeographyMap().getManager().id() != authUser.id())
-             throw new IllegalArgumentException("Изменять можно только свои заказы");
+            throw new IllegalArgumentException("Изменять можно только свои заказы");
         modifyOrder.setMarketPlace(isMarketPlace);
+
+        orderTerm = Objects.isNull(orderTerm) ? LocalDateTime.now().plusWeeks(2).plusDays(3) : orderTerm;
         modifyOrder.setOrderTerm(orderTerm);
+
         modifyOrder.setIsAvailability(isAvailability);
         GeographyMap modifyGeographyMap = modifyOrder.getGeographyMap();
         modifyGeographyMap.setLight(light);

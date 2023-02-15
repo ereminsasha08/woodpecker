@@ -21,7 +21,6 @@ function clearFilter() {
 // $(document).ready(function () {
 $(function () {
     makeEditable({
-
         "columns": [
             {
                 "data": "id",
@@ -132,12 +131,10 @@ $(function () {
 function add() {
     form.find(":input").val("");
     document.getElementById('dateTime').value = new Date().toISOString().substring(0, 16);
-    document.getElementById('typeMap').value = "Мир";
     document.getElementById('isPlexiglass').value = "false";
     document.getElementById('isState').value = "true";
     document.getElementById('isCapital').value = "true"
     document.getElementById('isMultiLevel').value = "true";
-    document.getElementById('light').value = "Без подсветки";
     document.getElementById('isMonochromatic').value = "false";
     $("#editRow").modal();
 }
@@ -162,4 +159,55 @@ function saveOrder() {
         $("#orderForm")[0].reset();
     });
 
+}
+
+
+function makeEditable(datatableOpts) {
+    ctx.datatableApi = $("#datatable").DataTable(
+        // https://api.jquery.com/jquery.extend/#jQuery-extend-deep-target-object1-objectN
+        $.extend(true, datatableOpts,
+            {
+                "ajax": {
+                    "url": ctx.ajaxUrl,
+                    "dataSrc": ""
+                },
+                "paging": true,
+                "info": true,
+                "createdRow": function (row, data, dataIndex) {
+                    if (data.orderMap != null) {
+                        if (data.orderMap.orderTerm != null && !(data.orderMap.marketPlace || data.orderMap.isAvailability)) {
+
+                            if (date - Date.parse(data.orderMap.orderTerm) > -350000000) {
+                                $(row).attr("data-map-info", true);
+                                return;
+                            }
+                        }
+                        if (data.orderMap.marketPlace && data.orderMap.isAvailability) {
+                            $(row).attr("data-map-urgent-availability", true);
+                            return;
+                        }
+                        if (data.orderMap.isAvailability)
+                            $(row).attr("data-map-availability", true);
+                        if (data.orderMap.marketPlace)
+                            $(row).attr("data-map-urgent", true);
+                    }
+
+                },
+            }
+        ));
+    form = $('#detailsForm');
+
+    $(document).ajaxError(function (event, jqXHR, options, jsExc) {
+        failNoty(jqXHR);
+    });
+
+    // solve problem with cache in IE: https://stackoverflow.com/a/4303862/548473
+    $.ajaxSetup({cache: false});
+    //
+    // var token = $("meta[name='_csrf']").attr("content");
+    // var header = $("meta[name='_csrf_header']").attr("content");
+    //
+    // $(document).ajaxSend(function (e, xhr, options) {
+    //     xhr.setRequestHeader(header, token);
+    // });
 }

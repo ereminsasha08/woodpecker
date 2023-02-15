@@ -9,12 +9,8 @@
                 <div class="row">
                     <div class="form-group col">
                         <label for="infoMap_dateTime" class="col-form-label">Дата</label>
-                        <output type="datetime-local" class="form-control" id="infoMap_dateTime" name="dateTime"></output>
-                    </div>
-
-                    <div class="form-group col">
-                        <label for="infoMap_light" class="col-form-label">Подсветка</label>
-                        <output type="text" class="form-control" id="infoMap_light" name="light"></output>
+                        <textarea class="form-control overflow-auto" rows="1"   id="infoMap_dateTime"
+                                  name="dateTime" disabled></textarea>
                     </div>
 
                     <div class="form-group col">
@@ -26,11 +22,30 @@
                     </div>
                 </div>
                 <div class="row">
+
                     <div class="form-group col">
-                        <label for="infoMap_typeMap" class="col-form-label">Тип</label>
-                        <output type="text" class="form-control" id="infoMap_typeMap"></output>
+                        <label for="infoMap_light" class="col-form-label">Подсветка</label>
+                        <textarea class="form-control overflow-auto" rows="1"  id="infoMap_light" name="light" disabled></textarea>
                     </div>
 
+                    <div class="form-group col">
+                        <label for="infoMap_typeMap" class="col-form-label">Тип</label>
+                        <textarea class="form-control overflow-auto" rows="1"  id="infoMap_typeMap" name="typeMap" disabled></textarea>
+                    </div>
+
+
+                    <div class="form-group col">
+                        <label for="infoMap_size" class="col-form-label">Размер</label>
+                        <textarea class="form-control overflow-auto" rows="1" id="infoMap_size" name="size" disabled></textarea>
+                    </div>
+
+                    <div class="form-group col">
+                        <label for="infoMap_language" class="col-form-label">Язык</label>
+                        <textarea class="form-control overflow-auto" rows="1" id="infoMap_language" name="language" disabled></textarea>
+                    </div>
+
+                </div>
+                <div class="row">
                     <div class="form-group col">
                         <label for="infoMap_isMultiLevel" class="col-form-label">Многоур</label>
                         <select type="text" class="form-control" id="infoMap_isMultiLevel" name="isMultiLevel" disabled>
@@ -38,19 +53,6 @@
                             <option value="false">Одноуровневая</option>
                         </select>
                     </div>
-                    <div class="form-group col">
-                        <label for="infoMap_size" class="col-form-label">Размер</label>
-                        <output type="number" class="form-control" id="infoMap_size" name="size" list="sizeOption"></output>
-                    </div>
-
-                    <div class="form-group col">
-                        <label for="infoMap_language" class="col-form-label">Язык</label>
-                        <output type="text" class="form-control" id="infoMap_language" name="language"></output>
-                    </div>
-
-                </div>
-                <div class="row">
-
                     <div class="form-group col">
                         <label for="infoMap_isState" class="col-form-label">Штаты</label>
                         <select class="form-control" id="infoMap_isState" name="isState" disabled>
@@ -77,26 +79,26 @@
                     </div>
 
 
-
-
                 </div>
+
                 <div class="form-group col">
                     <label for="infoMap_color" class="col-form-label">Цвет</label>
-                    <output type="text" class="form-control" id="infoMap_color" name="color"></output>
+                    <textarea class="form-control overflow-auto" rows="1" id="infoMap_color" name="color" disabled></textarea>
                 </div>
                 <div class="form-group col">
                     <label for="infoMap_additional" class="col-form-label">Дополнительные товары, услуги</label>
-                    <output type="text" class="form-control" id="infoMap_additional" name="additional"></output>
+                    <textarea disabled class="form-control overflow-auto" rows="2" id="infoMap_additional" name="additional"
+                              placeholder="Дополнительные товары, услуги"></textarea>
                 </div>
 
                 <div class="form-group col">
                     <label for="infoMap_description" class="col-form-label">Описание</label>
-                    <output type="text" class="form-control" id="infoMap_description" name="description"></output>
+                    <textarea class="form-control overflow-auto" rows="2" id="infoMap_description" name="description" disabled></textarea>
                 </div>
 
                 <div class="form-group col">
                     <label for="infoMap_contact" class="col-form-label">Контактные данные. Адресс</label>
-                    <output type="text" class="form-control" id="infoMap_contact" name="contact"></output>
+                    <textarea class="form-control overflow-auto" rows="2" id="infoMap_contact" name="contact" disabled></textarea>
                 </div>
 
             </div>

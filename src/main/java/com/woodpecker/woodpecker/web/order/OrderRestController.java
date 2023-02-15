@@ -37,8 +37,8 @@ public class OrderRestController {
 
     @PatchMapping()
     public OrderMap modifyOrderFromAvailability(@AuthenticationPrincipal AuthUser authUser,
-                                                @RequestParam Integer id,
-                                                @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime orderTerm,
+                                                @NotNull @RequestParam Integer id,
+                                                @Nullable @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime orderTerm,
                                                 @RequestParam String light,
                                                 @RequestParam String additional,
                                                 @RequestParam String description,

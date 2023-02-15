@@ -76,7 +76,9 @@ $(function () {
             {
                 "data": "geographyMap.color",
                 "render": function (data, type, row) {
-                    return data;
+                    if (data.toString().length < 15)
+                        return data;
+                    else return '<div class="overflow-auto" style="max-width: 240px; max-height: 40px">' +  data + '</div>';
                 }
             },
             {
@@ -169,12 +171,12 @@ function getInfoCut(id, isColor) {
             $.each(data, function (index, value) {
                 listSelect +=
                     '<div class="row">' +
-                    '<div class="form-group col-3"></div>'+
+                    '<div class="form-group col-3"></div>' +
                     '<div class="form-group col-6">' +
                     '<output type="text" class="form-control" id="list" name="list"> ' +
                     '<span id ="' + index + '">"' + value + '"</span>' +
                     '</output>' +
-                    '</div>'+
+                    '</div>' +
                     '</div>'
 
             });

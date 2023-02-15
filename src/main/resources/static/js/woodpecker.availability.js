@@ -13,7 +13,6 @@ const ctx = {
 // $(document).ready(function () {
 $(function () {
     makeEditable({
-        "order": false,
         "columns": [
             {
                 "data": "id",
@@ -94,6 +93,14 @@ $(function () {
                 }
             },
         ],
+        "order": [
+            [
+                6,
+                "asc",
+                3,
+                "asc",
+            ]
+        ]
     });
 });
 

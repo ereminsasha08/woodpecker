@@ -108,6 +108,45 @@
             </table>
         </div>
     </div>
+    <footer class="page-footer">
+        <div class="footer-copyright jumbotron pt-1 ">
+            <table align ="center">
+                <tr>
+                    <th>Цветовая маркировка</th>
+                </tr>
+            </table>
+            <table align ="center">
+                <tr>
+                    <th>ᅠ ᅠ </th>
+                </tr>
+            </table>
+            <table align ="center">
+                <tr data-map-urgent="true">
+                    <th>МАРКЕТПЛЕЙС</th>
+                </tr>
+            </table>
+            <table align ="center">
+                <tr data-map-urgent-availability="true">
+                    <th>НАЛИЧИЕ МАРКЕТПЛЕЙС</th>
+                </tr>
+            </table>
+            <table align ="center">
+                <tr data-map-info="true">
+                    <th>ОБЫЧНЫЙ ЗАКАЗ, ОТПРАВКА В ТЕЧЕНИЕ 5 ДНЕЙ</th>
+                </tr>
+            </table>
+            <table align ="center">
+                <tr>
+                    <th>ОБЫЧНЫЙ ЗАКАЗ</th>
+                </tr>
+            </table>
+            <table align ="center">
+                <tr data-map-availability="true">
+                    <th>НАЛИЧИЕ</th>
+                </tr>
+            </table>
+        </div>
+    </footer>
 </div>
 
 <div class="modal fade" tabindex="-1" id="editRow">
@@ -127,20 +166,7 @@
                                    placeholder="Время">
                         </div>
 
-                        <div class="form-group col">
-                            <label for="light" class="col-form-label">Подсветка</label>
-                            <input type="text" class="form-control" id="light" name="light"
-                                   list="lightOption"
-                                   placeholder="Подсветка">
-                            <datalist id="lightOption">
-                                <option>Без подсветки</option>
-                                <option>Холодная подсветка</option>
-                                <option>Нейтральная подсветка</option>
-                                <option>Тёплая подсветка</option>
-                                <option>Беспроводная подсветка</option>
-                                <option>RGB подсветка</option>
-                            </datalist>
-                        </div>
+
                         <div class="form-group col">
                             <label for="isPlexiglass" class="col-form-label">Оргстекло</label>
                             <select class="form-control" id="isPlexiglass" name="isPlexiglass">
@@ -152,6 +178,18 @@
                     </div>
                     <div class="row">
                         <div class="form-group col">
+                            <label for="light" class="col-form-label">Подсветка</label>
+                            <input type="text" class="form-control" id="light" name="light" list="lightOption">
+                            <datalist id="lightOption">
+                                <option>Без подсветки</option>
+                                <option>Холодная подсветка</option>
+                                <option>Нейтральная подсветка</option>
+                                <option>Тёплая подсветка</option>
+                                <option>Беспроводная подсветка</option>
+                                <option>RGB подсветка</option>
+                            </datalist>
+                        </div>
+                        <div class="form-group col">
                             <label for="typeMap" class="col-form-label">Тип</label>
                             <input type="text" class="form-control" id="typeMap" name="typeMap" list="typeMapOptional"
                                    placeholder="Тип">
@@ -162,13 +200,7 @@
                         </div>
 
 
-                        <div class="form-group col">
-                            <label for="isMultiLevel" class="col-form-label">Многоур</label>
-                            <select type="text" class="form-control" id="isMultiLevel" name="isMultiLevel">
-                                <option value="true">Многоуровневая</option>
-                                <option value="false">Одноуровневая</option>
-                            </select>
-                        </div>
+
 
                         <div class="form-group col">
                             <label for="size" class="col-form-label">Размер</label>
@@ -201,7 +233,13 @@
 
 
                     <div class="row">
-
+                        <div class="form-group col">
+                            <label for="isMultiLevel" class="col-form-label">Многоур</label>
+                            <select type="text" class="form-control" id="isMultiLevel" name="isMultiLevel">
+                                <option value="true">Многоуровневая</option>
+                                <option value="false">Одноуровневая</option>
+                            </select>
+                        </div>
 
                         <div class="form-group col">
                             <label for="isState" class="col-form-label">Штаты</label>
@@ -233,28 +271,25 @@
                     </div>
                     <div class="form-group col">
                         <label for="additional" class="col-form-label">Дополнительные товары, услуги</label>
-                        <input type="text" class="form-control" id="additional" name="additional"
-                               placeholder="Дополнительные товары, услуги">
+                        <textarea class="form-control overflow-auto" rows="2" id="additional" name="additional"
+                                  placeholder="Дополнительные товары, услуги"></textarea>
                     </div>
 
                     <div class="form-group col">
                         <label for="description" class="col-form-label">Описание</label>
-                        <input type="text" class="form-control" id="description" name="description"
-                               placeholder="Описание">
+                        <textarea class="form-control overflow-auto" rows="2" id="description" name="description"
+                                  placeholder="Описание"></textarea>
                     </div>
-
                     <div class="form-group col">
                         <label for="contact" class="col-form-label">Контактные данные. Адресс</label>
-                        <input type="text" class="form-control" id="contact" name="contact"
-                               placeholder="Контактные данные. Адресс">
+                        <textarea class="form-control overflow-auto" rows="2" id="contact" name="contact"
+                                  placeholder="Контактные данные. Адресс"></textarea>
                     </div>
-
                     <div class="form-group col">
                         <label for="price" class="col-form-label">Цена</label>
                         <input type="number" class="form-control" id="price" name="price"
                                placeholder="Цена">
                     </div>
-
                 </form>
             </div>
             <div class="modal-footer">
@@ -283,19 +318,10 @@
                     <input type="hidden" id="order-Id" name="orderId">
                     <div class="row">
                         <div class="form-group col">
-                            <label for="isAvailability" class="col-form-label">Наличие</label>
-                            <select class="form-control" id="isAvailability" name="isAvailability">
-                                <option value="false">Нет</option>
-                                <option value="true">Да</option>
-                            </select>
-                        </div>
-                        <div class="form-group col">
                             <label for="orderTerm" class="col-form-label">Дата отправки</label>
                             <input type="datetime-local" class="form-control" id="orderTerm" name="orderTerm"
                                    placeholder="Время">
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="form-group col">
                             <label for="isMarketPlace" class="col-form-label">Тип заказа</label>
                             <select class="form-control" id="isMarketPlace" name="isMarketPlace">
@@ -303,6 +329,16 @@
                                 <option value="false">Обычный заказ</option>
                             </select>
                         </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="isAvailability" class="col-form-label">Наличие</label>
+                            <select class="form-control" id="isAvailability" name="isAvailability">
+                                <option value="false">Нет</option>
+                                <option value="true">Да</option>
+                            </select>
+                        </div>
+
                         <div class="form-group col">
                             <label for="isColorPlywood" class="col-form-label">Способ производства</label>
                             <select class="form-control" id="isColorPlywood" name="isColorPlywood">

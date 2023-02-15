@@ -210,22 +210,26 @@ function getOrderForModify(id) {
     $("#modify_editRow").modal();
     $.get("rest/orders/" + id, function (data) {
         $.each(data, function (key, value) {
-            if (value != null)
-                if (key === "geographyMap") {
-                    $.each(data[key], function (key, value) {
-                        if (value != null) {
-                            let a = document.getElementById("modify_" + key);
-                            if (a != null)
-                                a.value = value
+                if (value != null)
+                    if (key === "geographyMap") {
+                        $.each(data[key], function (key, value) {
+                            if (value != null) {
+                                let a = document.getElementById("modify_" + key);
+                                if (a != null)
+                                    a.value = value
+                            }
+                        });
+                    } else {
+                        let a = document.getElementById("modify_" + key);
+                        if (a != null && !key.toString().endsWith("orderTerm")) {
+                            a.value = value
+                        } else if (a != null) {
+                            a.value = value.toString().substring(0, 16);
                         }
-                    });
-                } else {
-                    let a = document.getElementById("modify_" + key);
-                    if (a != null) {
-                        a.value = value
                     }
-                }
-        });
+            }
+        )
+        ;
     });
 
 }

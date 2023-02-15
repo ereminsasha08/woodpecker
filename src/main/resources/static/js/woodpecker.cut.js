@@ -76,11 +76,9 @@ $(function () {
             {
                 "data": "geographyMap.color",
                 "render": function (data, type, row) {
-                    // let ref = "<a href=\"javascript:void(0);\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"" + data + "\">"
-                    // if (data.length > 10) {
-                    //     data = data.substring(0, 7) + "...";
-                    // }
-                    return data;
+                    if (data.toString().length < 15)
+                        return data;
+                    else return '<div class="overflow-auto" style="max-width: 240px; max-height: 40px">' +  data + '</div>';
                 }
             },
             {
