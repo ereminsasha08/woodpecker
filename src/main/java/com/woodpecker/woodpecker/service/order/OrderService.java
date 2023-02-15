@@ -39,8 +39,8 @@ public class OrderService {
     public OrderMap create(AuthUser authUser, Integer id, LocalDateTime orderTerm, boolean marketPlace, boolean isColorPlyWood, boolean isAvailability) {
 
         GeographyMap map = geographyMapRepository.getById(id);
-        if (map.getManager().id() != authUser.id())
-            throw new IllegalArgumentException("Начинать можно только свои заказы");
+//        if (map.getManager().id() != authUser.id())
+//            throw new IllegalArgumentException("Начинать можно только свои заказы");
         if (marketPlace && !isAvailability)
             orderTerm = Objects.isNull(orderTerm) ? LocalDateTime.now() : orderTerm;
         else orderTerm = Objects.isNull(orderTerm) ? LocalDateTime.now().plusWeeks(2).plusDays(3) : orderTerm;
@@ -53,8 +53,8 @@ public class OrderService {
     public OrderMap modifyOrder(AuthUser authUser, Integer id, LocalDateTime orderTerm, String light, String additional, String description,
                                 String contact, Integer price, Boolean isMarketPlace, Boolean isAvailability) {
         OrderMap modifyOrder = findOrderById(id);
-        if (!modifyOrder.getIsAvailability() && modifyOrder.getGeographyMap().getManager().id() != authUser.id())
-            throw new IllegalArgumentException("Изменять можно только свои заказы");
+//        if (!modifyOrder.getIsAvailability() && modifyOrder.getGeographyMap().getManager().id() != authUser.id())
+//            throw new IllegalArgumentException("Изменять можно только свои заказы");
         modifyOrder.setMarketPlace(isMarketPlace);
 
         orderTerm = Objects.isNull(orderTerm) ? LocalDateTime.now().plusWeeks(2).plusDays(3) : orderTerm;

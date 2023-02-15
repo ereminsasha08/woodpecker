@@ -10,8 +10,10 @@ services:
     environment:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password
+    volumes:
+      - ./database:/var/lib/postgresql
   woodpecker:
-    image: sashaeremin/mywood:0.0.1
+    image: sashaeremin/mywood:0.0.5
     container_name: "woodpecker_app"
     restart: always
     ports:

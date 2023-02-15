@@ -1,14 +1,17 @@
 #  https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 spring:
-  sql:
-    init:
-      mode: always
-
+#  sql:
+#    init:
+#      mode: always
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: user
+    password: password
   jpa:
-    show-sql: true
+#    show-sql: true
     open-in-view: false
     # https://stackoverflow.com/a/67678945/548473
-    defer-datasource-initialization: true
+#    defer-datasource-initialization: true
     properties:
       #  http://docs.jboss.org/hibernate/orm/5.3/userguide/html_single/Hibernate_User_Guide.html#configurations
       hibernate:
@@ -16,22 +19,18 @@ spring:
         default_batch_fetch_size: 20
         # https://stackoverflow.com/questions/21257819/what-is-the-difference-between-hibernate-jdbc-fetch-size-and-hibernate-jdbc-batc
         jdbc.batch_size: 20
-        show_sql: true
-    hibernate:
-      ddl-auto: update
-  datasource:
-    url: jdbc:h2:mem:wood
-    username: sa
-    password:
-    driverClassName: org.h2.Driver
-  h2:
-    console:
-      path: /h2
-      enabled: true
+#        show_sql: true
+#    hibernate:
+#      ddl-auto: create
   #  datasource:
-  #    url: jdbc:://localhost:5432/postgres
-  #    username: user
-  #    password: password
+  #    url: jdbc:h2:mem:wood
+  #    username: sa
+  #    password:
+  #    driverClassName: org.h2.Driver
+  #  h2:
+  #    console:
+  #      path: /h2
+  #      enabled: true
 
   # Jackson Serialization Issue Resolver
   jackson.visibility:

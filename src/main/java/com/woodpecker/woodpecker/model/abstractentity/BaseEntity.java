@@ -19,7 +19,8 @@ import javax.persistence.*;
 public abstract class BaseEntity implements Persistable<Integer>, HasId {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "my_sequence", sequenceName = "my_sequence", initialValue = 8000, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "my_sequence")
     protected Integer id;
 
     // doesn't work for hibernate lazy proxy

@@ -7,9 +7,11 @@ import com.woodpecker.woodpecker.model.abstractentity.Product;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
@@ -20,8 +22,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class GeographyMap extends Product {
 
+
     @Column(name = "type_map", nullable = false)
     @NotNull
+    @NotBlank
     private String typeMap;
 
     @Column(name = "size", nullable = false)
@@ -30,6 +34,7 @@ public class GeographyMap extends Product {
 
     @Column(name = "language_map", nullable = false)
     @NotNull
+    @NotBlank
     private String language;
 
     @Column(name = "is_multi_level", nullable = false)
@@ -38,6 +43,7 @@ public class GeographyMap extends Product {
 
     @Column(name = "color", nullable = false)
     @NotNull
+    @NotBlank
     private String color;
 
     @Column(name = "date_time", nullable = false)
@@ -55,6 +61,7 @@ public class GeographyMap extends Product {
 
     @Column(name = "light", nullable = false)
     @NotNull
+    @NotBlank
     private String light;
 
     @Column(name = "additional", length = 800)

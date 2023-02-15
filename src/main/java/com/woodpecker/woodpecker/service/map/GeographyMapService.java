@@ -76,13 +76,13 @@ public class GeographyMapService {
         } else {
             assert geographyMap.getId() != null;
             GeographyMap byId = getById(geographyMap.id());
-            if (byId.getManager().id() != authUser.getUser().id())
-                throw new IllegalArgumentException("Изменять можно только свои заказы");
-            else {
-                geographyMap.setManager(authUser.getUser());
-                geographyMap.setIsColorPlywood(byId.getIsColorPlywood());
-                geographyMap.setOrderMap(byId.getOrderMap());
-            }
+//            if (byId.getManager().id() != authUser.getUser().id())
+//                throw new IllegalArgumentException("Изменять можно только свои заказы");
+//            else {
+//            geographyMap.setManager(authUser.getUser());
+            geographyMap.setIsColorPlywood(byId.getIsColorPlywood());
+            geographyMap.setOrderMap(byId.getOrderMap());
+//        }
         }
         geographyMapRepository.save(geographyMap);
     }
