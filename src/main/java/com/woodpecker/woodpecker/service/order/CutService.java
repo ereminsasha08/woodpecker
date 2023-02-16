@@ -10,6 +10,8 @@ import com.woodpecker.woodpecker.repository.PlywoodListRepository;
 import com.woodpecker.woodpecker.util.exception.ApplicationException;
 import com.woodpecker.woodpecker.util.exception.ErrorType;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +24,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class CutService {
 
     private final OrderService orderService;
@@ -41,14 +44,20 @@ public class CutService {
                 .sorted(
                         Comparator.comparing(OrderMap::getMarketPlace).reversed()
                                 .thenComparing(OrderMap::getIsAvailability)
-                                .thenComparing(OrderMap::getOrderTerm))
+                                .thenComparing(OrderMap::getOrderTerm)
+                                .thenComparing(OrderMap::getId)
+                )
                 .toList();
     }
 
     @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public void setLaser(Integer id) {
+    public void setLaser(Integer id, Boolean isColorPlywood, Boolean isWoodStain) {
         OrderMap orderMap = orderService.findOrderById(id);
         chooseLaser(orderMap);
+        List<String> plywoodList = orderMap.getPlywoodList();
+        setListsForMap(orderMap, plywoodList, isColorPlywood, isWoodStain);
+        orderMap.setIsColorPlywood(isColorPlywood);
+        orderMap.getGeographyMap().setIsColorPlywood(isColorPlywood);
         orderMap.setStage(Stage.ПИЛИТСЯ.ordinal());
         orderMap.setCut_begin(LocalDateTime.now());
     }
@@ -63,17 +72,14 @@ public class CutService {
         order.setLaser(minCapasityLaser.getName());
     }
 
-    @Transactional(isolation = Isolation.REPEATABLE_READ)
+
     public List<String> infoCut(Integer id) {
-        OrderMap orderMap = orderService.findOrderById(id);
-        List<String> plywoodList = orderMap.getPlywoodList();
-        if (plywoodList.isEmpty()) {
-            setListsForMap(orderMap, plywoodList);
-        }
+        List<String> plywoodList = orderService.findOrderById(id).getPlywoodList();
+        log.info("InfoCut plywoodList: {}", plywoodList.toArray());
         return plywoodList;
     }
 
-    private void setListsForMap(OrderMap orderMap, List<String> plywoodList) {
+    private void setListsForMap(OrderMap orderMap, List<String> plywoodList, Boolean isColorPlywood, Boolean isWoodStain) {
         String typeMap = orderMap.getGeographyMap().getTypeMap();
         List<String> standardKit = List.of("1", "2", "3", "4", "5", "6", "7", "8");
 //        List<String> standardKit = List.of("1");
@@ -88,7 +94,7 @@ public class CutService {
         }
         calculationId += orderMap.getGeographyMap().getSize();
         calculationId *= orderMap.getGeographyMap().getIsMultiLevel() ? 1 : 10;
-        if (orderMap.getGeographyMap().getIsColorPlywood() && !"росиия".equalsIgnoreCase(typeMap)) {
+        if (isColorPlywood && isWoodStain && !"росиия".equalsIgnoreCase(typeMap)) {
             calculationId *= calculationId;
         }
         Optional<PlywoodList> specialKit = plywoodListRepository.findById(calculationId);
@@ -111,7 +117,7 @@ public class CutService {
         if (listIsComplete) {
             String s;
             if (element.endsWith("Лист загравирован")) {
-                s = element.split(" ")[0] + ( " Лист готов");
+                s = element.split(" ")[0] + (" Лист готов");
                 plywoodList.set(numberList, s);
             } else if (!element.endsWith(" Лист готов")) {
                 s = element.split(" ")[0] + " Лист загравирован";

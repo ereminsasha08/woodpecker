@@ -28,8 +28,9 @@ html {
     min-height: 100%;
 }
 body {
-    background-image: url("https://resizer.mail.ru/p/c4198fe7-8cd9-5cd1-8945-b87cb2cc3eab/AAACdvdjhAj7_l3vnPRNvpAfl3HhJqllGn8ys2U1PHgxuTfvRAQqXNN64WrOgb37wfukA3zvhlwygkRlxtpoMRmZWIY.jpg");
+    background-image: url("https://ir.ozone.ru/s3/multimedia-s/wc1000/6081859492.jpg");
     margin-bottom: 60px !important; /* Margin bottom by footer height */
+    background-size: cover;
 }
 .footer {
     position: absolute;

@@ -36,7 +36,7 @@ public class OrderService {
     }
 
     @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public OrderMap create(AuthUser authUser, Integer id, LocalDateTime orderTerm, boolean marketPlace, boolean isColorPlyWood, boolean isAvailability) {
+    public OrderMap create(AuthUser authUser, Integer id, LocalDateTime orderTerm, boolean marketPlace, boolean isAvailability) {
 
         GeographyMap map = geographyMapRepository.getById(id);
 //        if (map.getManager().id() != authUser.id())
@@ -44,7 +44,7 @@ public class OrderService {
         if (marketPlace && !isAvailability)
             orderTerm = Objects.isNull(orderTerm) ? LocalDateTime.now() : orderTerm;
         else orderTerm = Objects.isNull(orderTerm) ? LocalDateTime.now().plusWeeks(2).plusDays(3) : orderTerm;
-        OrderMap orderMap = new OrderMap(orderTerm, map, marketPlace, isColorPlyWood, Stage.В_ОЧЕРЕДИ_НА_РЕЗКУ.ordinal(), isAvailability);
+        OrderMap orderMap = new OrderMap(orderTerm, map, marketPlace, Stage.В_ОЧЕРЕДИ_НА_РЕЗКУ.ordinal(), isAvailability);
         map.setOrderMap(orderMap);
         return orderRepository.save(orderMap);
     }
@@ -77,4 +77,5 @@ public class OrderService {
         }
         return orderRepository.save(modifyOrder);
     }
+
 }

@@ -98,7 +98,6 @@ create table users
     registered timestamp default now() not null,
     primary key (id)
 );
-
 create sequence my_sequence start 8000 increment 1;
 
 alter table if exists role

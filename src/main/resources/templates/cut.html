@@ -46,7 +46,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Готовые листы</h4>
-                <button type="button" class="close" data-dismiss="modal" onclick="location.reload(); return false;">
+                <button type="button" class="close" data-dismiss="modal" onclick="ctx.updateTable()">
                     &times;
                 </button>
             </div>
@@ -82,7 +82,7 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                        onclick="location.reload(); return false;">
+                        onclick="ctx.updateTable()">
                     <span class="fa fa-close"></span>
                     Отмена
                 </button>
@@ -91,5 +91,50 @@
     </div>
 </div>
 
+
+
+<div class="modal fade" tabindex="-1" id="setLaser">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h4 class="modal-title">Способ производства</h4>
+                <button type="button" class="close" data-dismiss="modal" onclick="closeNoty()">&times;</button>
+            </div>
+            <div class="modal-body container-fluid">
+                <form id="setLaserForm">
+                    <input type="hidden" id="orderId" name="orderId">
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="isColorPlywood" class="col-form-label">Тип покраски</label>
+                            <select class="form-control" id="isColorPlywood" name="isColorPlywood">
+                                <option value="true">Крашенные доски</option>
+                                <option value="false">Ручная покраска</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col">
+                            <label for="isWoodStain" class="col-form-label">Морилка с цветом</label>
+                            <select class="form-control" id="isWoodStain" name="isWoodStain">
+                                <option value="false">Нет</option>
+                                <option value="true">Да</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeNoty()">
+                    <span class="fa fa-close"></span>
+                    Отмена
+                </button>
+                <button type="button" class="btn btn-primary" onclick="saveLaserForm()">
+                    <span class="fa fa-check"></span>
+                    Создать заказ
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

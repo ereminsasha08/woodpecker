@@ -25,9 +25,8 @@ public class OrderRestController {
                            @NotNull @RequestParam Integer orderId,
                            @Nullable @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime orderTerm,
                            @RequestParam Boolean isMarketPlace,
-                           @RequestParam Boolean isColorPlywood,
                            @RequestParam Boolean isAvailability) {
-        return orderService.create(authUser, orderId, orderTerm, isMarketPlace, isColorPlywood, isAvailability);
+        return orderService.create(authUser, orderId, orderTerm, isMarketPlace, isAvailability);
     }
 
     @GetMapping("/{id}")

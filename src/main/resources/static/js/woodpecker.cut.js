@@ -86,7 +86,7 @@ $(function () {
                 "render": function (data, type, row) {
                     if (data.toString().length < 15)
                         return data;
-                    else return '<div class="overflow-auto" style="max-width: 240px; max-height: 40px">' +  data + '</div>';
+                    else return '<div class="overflow-auto" style="max-width: 240px; max-height: 40px">' + data + '</div>';
                 }
             },
             {
@@ -106,16 +106,24 @@ $(function () {
 });
 
 function setLaser(id) {
+    let find = $('#setLaserForm').find(":input").val("");
+    document.getElementById('orderId').value = id;
+    $("#setLaser").modal();
+}
+
+function saveLaserForm() {
     $.ajax({
         type: "PATCH",
-        url: cutAjaxUrl + id,
+        url: cutAjaxUrl,
+        data: $('#setLaserForm').serialize(),
     }).done(function () {
         ctx.updateTable();
-        successNoty("Лазер установлен");
+        successNoty("Лазер и листы установлены");
+        $("#setLaser").modal("hide");
     });
 }
 
-function changeLaser(){
+function changeLaser() {
     $.ajax({
         type: "POST",
         url: cutAjaxUrl,

@@ -27,6 +27,7 @@ public class ProductionService {
                 .filter(order -> !order.getCompleted())
                 .sorted(
                         Comparator.comparing(OrderMap::getMarketPlace).reversed()
+                                .thenComparing(OrderMap::getIsAvailability)
                                 .thenComparing(OrderMap::getOrderTerm)
                                 .thenComparing(OrderMap::getId)
                 )

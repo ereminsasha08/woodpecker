@@ -21,9 +21,11 @@ public class CutRestController {
         return cutService.sortedForCut();
     }
 
-    @PatchMapping("/{id}")
-    public void setLaser(@NotNull @PathVariable Integer id) {
-        cutService.setLaser(id);
+    @PatchMapping
+    public void setLaserAndList(@NotNull @RequestParam Integer orderId,
+                                @NotNull @RequestParam Boolean isColorPlywood,
+                                @NotNull @RequestParam Boolean isWoodStain) {
+        cutService.setLaser(orderId, isColorPlywood, isWoodStain);
     }
 
     @PostMapping

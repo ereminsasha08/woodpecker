@@ -19,10 +19,18 @@ public class PainterService {
 
     public List<OrderMap> getPaint() {
         return orderService.getAll(false).stream()
-                .filter(order -> order.getIsColorPlywood() ||
-                        order.getStage() >= Stage.ЖДЕТ_ПОКРАСКИ.ordinal() && order.getStage() <= Stage.КРАСИТСЯ.ordinal())
-                .sorted(Comparator.comparing(OrderMap::getMarketPlace).reversed()
-                        .thenComparing(OrderMap::getOrderTerm))
+                .filter(
+                        order ->
+                                order.getIsColorPlywood() != null && (
+                                        order.getIsColorPlywood() ||
+                                                order.getStage() >= Stage.ЖДЕТ_ПОКРАСКИ.ordinal() && order.getStage() <= Stage.КРАСИТСЯ.ordinal())
+                )
+                .sorted(
+                        Comparator.comparing(OrderMap::getMarketPlace).reversed()
+                                .thenComparing(OrderMap::getIsAvailability)
+                                .thenComparing(OrderMap::getOrderTerm)
+                                .thenComparing(OrderMap::getId)
+                )
                 .toList();
     }
 
