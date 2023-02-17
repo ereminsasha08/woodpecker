@@ -75,6 +75,14 @@ public class OrderService {
             modifyOrder.setStage(Stage.ЗАКАЗ_ИЗ_НАЛИЧИЯ.ordinal());
             modifyOrder.setCompleted(false);
         }
+        if (modifyOrder.getStage() == Stage.ЖДУ_ПРИКЛЕЙКУ_НАЛИЧИЕ.ordinal()) {
+            modifyOrder.setStage(Stage.ЗАКАЗ_ИЗ_НАЛИЧИЯ_НЕ_ПРИКЛЕЕННЫЙ.ordinal());
+            modifyOrder.setCompleted(false);
+        }
+        if (modifyOrder.getStage() == Stage.ЖДУ_ПОКРАСКУ_НАЛИЧИЕ.ordinal()) {
+            modifyOrder.setStage(Stage.ЗАКАЗ_ИЗ_НАЛИЧИЯ_НЕ_ПОКРАШЕННЫЙ.ordinal());
+            modifyOrder.setCompleted(false);
+        }
         return orderRepository.save(modifyOrder);
     }
 

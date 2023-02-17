@@ -14,9 +14,12 @@
     <div th:insert="~{part/bodyheader}"></div>
 
 
-
     <div class="jumbotron pt-2 ">
         <div style="width: 100%; position: relative">
+            <button class="btn btn-primary" onclick="add()">
+                <span class="fa fa-plus"></span>
+                Добавить
+            </button>
             <h3 class="text-center">Наличие</h3>
             <table class="hover" style="width: 95%" id="datatable">
                 <thead>
@@ -38,22 +41,22 @@
     </div>
     <footer class="page-footer">
         <div class="footer-copyright jumbotron pt-1 ">
-            <table align ="center">
+            <table align="center">
                 <tr>
                     <th>Цветовая маркировка</th>
                 </tr>
             </table>
-            <table align ="center">
+            <table align="center">
                 <tr data-map-urgent-availability="true">
-                    <th>ᅠ ᅠ </th>
+                    <th>ᅠ ᅠ</th>
                 </tr>
             </table>
-            <table align ="center">
+            <table align="center">
                 <tr data-map-urgent-availability="true">
                     <th>НАЛИЧИЕ МАРКЕТПЛЕЙС</th>
                 </tr>
             </table>
-            <table align ="center">
+            <table align="center">
                 <tr data-map-availability="true">
                     <th>НАЛИЧИЕ</th>
                 </tr>
@@ -83,6 +86,167 @@
 
 </div>
 
+
+<div class="modal fade" tabindex="-1" id="createAvailability">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Добавить карту в наличие</h4>
+                <button type="button" class="close" data-dismiss="modal" onclick="closeNoty()">&times;</button>
+            </div>
+            <div class="modal-body container-fluid">
+                <form id="formAvailability">
+                    <input type="hidden" id="availability_price" name="price">
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="availability_dateTime" class="col-form-label">Дата</label>
+                            <input type="datetime-local" class="form-control" id="availability_dateTime" name="dateTime"
+                                   placeholder="Время">
+                        </div>
+
+
+                        <div class="form-group col">
+                            <label for="availability_isPlexiglass" class="col-form-label">Оргстекло</label>
+                            <select class="form-control" id="availability_isPlexiglass" name="isPlexiglass">
+                                <option value="false">Нет</option>
+                                <option value="true">Да</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="light" class="col-form-label">Подсветка</label>
+                            <input type="text" class="form-control" id="light" name="light" list="lightOption">
+                            <datalist id="lightOption">
+                                <option>Без подсветки</option>
+                                <option>Холодная подсветка</option>
+                                <option>Нейтральная подсветка</option>
+                                <option>Тёплая подсветка</option>
+                                <option>Беспроводная подсветка</option>
+                                <option>RGB подсветка</option>
+                            </datalist>
+                        </div>
+                        <div class="form-group col">
+                            <label for="typeMap" class="col-form-label">Тип</label>
+                            <input type="text" class="form-control" id="typeMap" name="typeMap" list="typeMapOptional"
+                                   placeholder="Тип">
+                            <datalist id="typeMapOptional">
+                                <option>Мир</option>
+                                <option>Россия</option>
+                            </datalist>
+                        </div>
+                        <div class="form-group col">
+                            <label for="size" class="col-form-label">Размер</label>
+                            <input type="number" class="form-control" id="size" name="size" list="sizeOption"
+                                   placeholder="Размер">
+                            <datalist id="sizeOption">
+                                <option>100</option>
+                                <option>120</option>
+                                <option>140</option>
+                                <option>160</option>
+                                <option>180</option>
+                                <option>200</option>
+                                <option>220</option>
+                                <option>250</option>
+                                <option>300</option>
+                                <option>350</option>
+                            </datalist>
+                        </div>
+                        <div class="form-group col">
+                            <label for="language" class="col-form-label">Язык</label>
+                            <input type="text" class="form-control" id="language" name="language"
+                                   list="languageOption"
+                                   placeholder="Язык">
+                            <datalist id="languageOption">
+                                <option>Русский</option>
+                                <option>Английский</option>
+                            </datalist>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="isMultiLevel" class="col-form-label">Многоур</label>
+                            <select type="text" class="form-control" id="isMultiLevel" name="isMultiLevel">
+                                <option value="true">Многоуровневая</option>
+                                <option value="false">Одноуровневая</option>
+                            </select>
+                        </div>
+                        <div class="form-group col">
+                            <label for="isState" class="col-form-label">Штаты</label>
+                            <select class="form-control" id="isState" name="isState">
+                                <option value="true">Со штатами</option>
+                                <option value="false">Без штатов</option>
+                            </select>
+                        </div>
+                        <div class="form-group col">
+                            <label for="isCapital" class="col-form-label">Столицы</label>
+                            <select type="text" class="form-control" id="isCapital" name="isCapital">
+                                <option value="true">Со столицами</option>
+                                <option value="false">Без столиц</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col">
+                            <label for="availability_isMonochromatic" class="col-form-label">Однотонная</label>
+                            <select class="form-control" id="availability_isMonochromatic" name="isMonochromatic">
+                                <option value="false">Нет</option>
+                                <option value="true">Да</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="isColorPlywood" class="col-form-label">Тип покраски</label>
+                            <select class="form-control" id="isColorPlywood" name="isColorPlywood">
+                                <option value="true">Крашенные доски</option>
+                                <option value="false">Ручная покраска</option>
+                            </select>
+                        </div>
+                        <div class="form-group col">
+                            <label for="laser" class="col-form-label">Лазер</label>
+                            <select class="form-control" id="laser" name="laser">
+                                <option value="1л">1л</option>
+                                <option value="2л">2л</option>
+                                <option value="3л">3л</option>
+                                <option value="4л">4л</option>
+                                <option value="5л">5л</option>
+                                <option value="6л">6л</option>
+                                <option value="7л">7л</option>
+                            </select>
+                        </div>
+                        <div class="form-group col">
+                            <label for="stage" class="col-form-label">Стадия</label>
+                            <select class="form-control" type="number" id="stage" name="stage">
+                                <option value="14">Жду покраску</option>
+                                <option value="15">Жду приклейки</option>
+                                <option value="12">Готов к отправке</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group col">
+                        <label for="color" class="col-form-label">Цвет</label>
+                        <input type="text" class="form-control" id="color" name="color"
+                               placeholder="Цвет">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeNoty()">
+                    <span class="fa fa-close"></span>
+                    Отмена
+                </button>
+                <button type="button" class="btn btn-primary" onclick="saveAvailability()">
+                    <span class="fa fa-check"></span>
+                    Сохранить наличие
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

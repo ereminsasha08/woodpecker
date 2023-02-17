@@ -132,9 +132,9 @@ function add() {
     form.find(":input").val("");
     document.getElementById('dateTime').value = new Date().toISOString().substring(0, 16);
     document.getElementById('isPlexiglass').value = "false";
-    document.getElementById('isState').value = "true";
-    document.getElementById('isCapital').value = "true"
-    document.getElementById('isMultiLevel').value = "true";
+    // document.getElementById('isState').value = "true";
+    // document.getElementById('isCapital').value = "true"
+    // document.getElementById('isMultiLevel').value = "true";
     document.getElementById('isMonochromatic').value = "false";
     $("#editRow").modal();
 }

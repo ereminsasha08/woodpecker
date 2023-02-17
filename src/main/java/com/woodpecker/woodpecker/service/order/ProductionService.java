@@ -58,5 +58,15 @@ public class ProductionService {
             orderMap.setStage(Stage.ЗАПАКОВЫВАЕТСЯ.ordinal());
             orderMap.setPacked_end(LocalDateTime.now());
         }
+        if (conditionMap == Stage.ЗАКАЗ_ИЗ_НАЛИЧИЯ_НЕ_ПОКРАШЕННЫЙ.ordinal())
+        {
+            orderMap.setStage(Stage.ЖДЕТ_ПОКРАСКИ.ordinal());
+            orderMap.setCut_end(LocalDateTime.now());
+        }
+        if (conditionMap == Stage.ЗАКАЗ_ИЗ_НАЛИЧИЯ_НЕ_ПРИКЛЕЕННЫЙ.ordinal())
+        {
+            orderMap.setStage(Stage.ЖДЕТ_ПРИКЛЕЙКИ.ordinal());
+            orderMap.setPainting_end(LocalDateTime.now());
+        }
     }
 }

@@ -94,9 +94,16 @@ public class OrderMap {
         this.orderTerm = orderTerm;
         this.geographyMap = geographyMap;
         this.marketPlace = marketPlace;
-
         this.stage = stage;
         this.isAvailability = isAvailability;
         this.completed = false;
+    }
+
+    public void setAllTime() {
+        cut_begin = orderTerm;
+        cut_end = orderTerm;
+        painting_begin = orderTerm;
+        gluing_end = orderTerm;
+        packed_end = orderTerm;
     }
 }

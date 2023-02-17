@@ -174,7 +174,16 @@ function getCondition(date) {
         case 12:
             return "Наличие";
         case 13:
-            return "Из наличия";
+            return "Из наличия готвый";
+        case 14:
+            return "Из наличия не покрашен"
+        case 15:
+            return "Из наличия не приклеен"
+        case 16:
+            return "Из наличия жду покраску"
+        case 17:
+            return "Из наличия жду приклейку"
+
     }
 
 }

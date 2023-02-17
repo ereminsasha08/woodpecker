@@ -28,7 +28,7 @@ public abstract class Product extends BaseEntity {
 //    @NotNull
     private User manager;
 
-    @Column(name = "contact", nullable = false)
+    @Column(name = "contact")
     String contact;
 
 

@@ -104,6 +104,28 @@ $(function () {
     });
 });
 
+function add() {
+    $('#formAvailability').find(":input").val("");
+    document.getElementById('availability_dateTime').value = new Date().toISOString().substring(0, 16);
+    document.getElementById('availability_isPlexiglass').value = "false";
+    document.getElementById('availability_isMonochromatic').value = "false";
+    document.getElementById('availability_price').value = "1000";
+    $("#createAvailability").modal();
+}
+
+function saveAvailability() {
+    $.ajax({
+        type: "POST",
+        url: mapsAjaxUrl,
+        data: $('#formAvailability').serialize()
+    }).done(function () {
+        $("#createAvailability").modal("hide");
+        ctx.updateTable();
+        successNoty("Карта создана");
+        $("#formAvailability")[0].reset();
+    });
+
+}
 function getInfoCut(id) {
     $("#info-cut").modal();
     $.get("rest/cut/info/" + id,

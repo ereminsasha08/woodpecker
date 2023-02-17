@@ -17,7 +17,7 @@ create table lists
 create table maps
 (
     id               int4                 not null,
-    contact          varchar(255)         not null,
+    contact          varchar(255),
     description      varchar(800),
     price            int4                 not null,
     additional       varchar(800),
@@ -108,7 +108,8 @@ alter table if exists role
     add constraint uk_user_role unique (user_id, role);
 
 alter table if exists users
-drop constraint if exists UK_6dotkott2kjsp8vw4d0m25fb7;
+drop
+constraint if exists UK_6dotkott2kjsp8vw4d0m25fb7;
 
 alter table if exists users
     add constraint UK_6dotkott2kjsp8vw4d0m25fb7 unique (email);
@@ -142,4 +143,6 @@ alter table if exists role
     add constraint FKgg3583634e0ydkacyk8wbbm19
     foreign key (user_id)
     references users
-    on delete cascade;
+    on
+delete
+cascade;
