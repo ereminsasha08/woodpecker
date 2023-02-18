@@ -44,6 +44,8 @@ public class OrderService {
         if (marketPlace && !isAvailability)
             orderTerm = Objects.isNull(orderTerm) ? LocalDateTime.now() : orderTerm;
         else orderTerm = Objects.isNull(orderTerm) ? LocalDateTime.now().plusWeeks(2).plusDays(3) : orderTerm;
+
+
         OrderMap orderMap = new OrderMap(orderTerm, map, marketPlace, Stage.В_ОЧЕРЕДИ_НА_РЕЗКУ.ordinal(), isAvailability);
         map.setOrderMap(orderMap);
         return orderRepository.save(orderMap);
@@ -56,6 +58,7 @@ public class OrderService {
 //        if (!modifyOrder.getIsAvailability() && modifyOrder.getGeographyMap().getManager().id() != authUser.id())
 //            throw new IllegalArgumentException("Изменять можно только свои заказы");
         modifyOrder.setMarketPlace(isMarketPlace);
+        modifyOrder.setIsPaid(isMarketPlace);
         if (modifyOrder.getStage() >= Stage.ПИЛИТСЯ.ordinal() && isColorPlywood != modifyOrder.getIsColorPlywood())
             throw new IllegalArgumentException("Нельзя менять тип покраски для карты, которая пилится");
         modifyOrder.setIsColorPlywood(isColorPlywood);
@@ -71,6 +74,12 @@ public class OrderService {
         modifyGeographyMap.setContact(contact);
         modifyGeographyMap.setPrice(price);
         modifyGeographyMap.setIsColorPlywood(isColorPlywood);
+
+        checkIsAvailability(modifyOrder);
+        return orderRepository.save(modifyOrder);
+    }
+
+    private static void checkIsAvailability(OrderMap modifyOrder) {
         if (modifyOrder.getStage() == Stage.НАЛИЧИЕ.ordinal()) {
             modifyOrder.setStage(Stage.ЗАКАЗ_ИЗ_НАЛИЧИЯ.ordinal());
             modifyOrder.setCompleted(false);
@@ -83,7 +92,11 @@ public class OrderService {
             modifyOrder.setStage(Stage.ЗАКАЗ_ИЗ_НАЛИЧИЯ_НЕ_ПОКРАШЕННЫЙ.ordinal());
             modifyOrder.setCompleted(false);
         }
-        return orderRepository.save(modifyOrder);
     }
 
+    @Transactional
+    public void setPaid(Integer id, Boolean isPaid) {
+        OrderMap orderMap = orderRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Заказ не найден"));
+        orderMap.setIsPaid(isPaid);
+    }
 }

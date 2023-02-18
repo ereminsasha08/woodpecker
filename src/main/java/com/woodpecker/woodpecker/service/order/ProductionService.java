@@ -42,6 +42,11 @@ public class ProductionService {
                 .orElseThrow(() -> new ApplicationException("Карта не найдена", ErrorType.DATA_NOT_FOUND));
         int newCondition = conditionMap + 1;
         orderMap.setStage(newCondition);
+        setTimeAndCompleted(orderMap, newCondition);
+        updateStatusForAvailability(conditionMap, orderMap);
+    }
+
+    private static void setTimeAndCompleted(OrderMap orderMap, int newCondition) {
         if (newCondition == Stage.ДОДЕЛЫВАЕТСЯ.ordinal())
             orderMap.setGluing_end(LocalDateTime.now());
         if (newCondition == Stage.ЗАПАКОВЫВАЕТСЯ.ordinal())
@@ -53,6 +58,9 @@ public class ProductionService {
             orderMap.setPost_end(LocalDateTime.now());
             orderMap.setCompleted(true);
         }
+    }
+
+    private static void updateStatusForAvailability(Integer conditionMap, OrderMap orderMap) {
         if (conditionMap == Stage.ЗАКАЗ_ИЗ_НАЛИЧИЯ.ordinal())
         {
             orderMap.setStage(Stage.ЗАПАКОВЫВАЕТСЯ.ordinal());

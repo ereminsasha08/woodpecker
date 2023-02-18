@@ -5,8 +5,10 @@ import com.woodpecker.woodpecker.service.order.OrderService;
 import com.woodpecker.woodpecker.web.AuthUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.lang.Nullable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
@@ -34,7 +36,7 @@ public class OrderRestController {
         return orderService.findOrderById(id);
     }
 
-    @PatchMapping()
+    @PatchMapping
     public OrderMap modifyOrderFromAvailability(@AuthenticationPrincipal AuthUser authUser,
                                                 @NotNull @RequestParam Integer id,
                                                 @Nullable @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime orderTerm,
@@ -48,4 +50,13 @@ public class OrderRestController {
                                                 @RequestParam Boolean isColorPlywood) {
         return orderService.modifyOrder(authUser, id, orderTerm, light, additional, description, contact, price, isMarketPlace, isAvailability, isColorPlywood);
     }
+
+    @PatchMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Transactional
+    public void paid(@PathVariable Integer id, @RequestParam Boolean isPaid) {
+        orderService.setPaid(id, isPaid);
+    }
+
+
 }

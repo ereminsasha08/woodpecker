@@ -23,6 +23,15 @@ $(function () {
     makeEditable({
         "columns": [
             {
+                "data": "orderMap",
+                "render": function (data, type, row) {
+                    if (data != null){
+                        return "<input type='checkbox' " + (data.isPaid ? "checked" : "") + " onclick='setPaid($(this)," + row.id + ");'/>";
+                    }
+                    else return "";
+                }
+            },
+            {
                 "data": "id",
                 "render": function (data, type, row) {
                     if (row.orderMap != null) {
@@ -85,11 +94,14 @@ $(function () {
             {
                 "data": "description",
                 "render": function (data, type, row) {
-                    var ref = "<a href=\"javascript:void(0);\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"" + data + "\">"
-                    if (data.length > 10) {
-                        data = data.substring(0, 7) + "...";
+                    if (data != null) {
+                        let ref = "<a href=\"javascript:void(0);\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"" + data + "\">"
+                        if (data.length > 10) {
+                            data = data.substring(0, 7) + "...";
+                        }
+                        return ref + data + "</a>";
                     }
-                    return ref + data + "</a>";
+                    else return "";
                 }
             },
             {
@@ -127,6 +139,21 @@ $(function () {
         ],
     });
 });
+
+function setPaid(chkbox, id) {
+    var enabled = chkbox.is(":checked");
+//  https://stackoverflow.com/a/22213543/548473
+    $.ajax({
+        url: ordersAjaxUrl + id,
+        type: "PATCH",
+        data: "isPaid=" + enabled
+    }).done(function () {
+        chkbox.closest("tr").attr("data-order-paid", enabled);
+        successNoty(enabled ? "Оплачен" : "Не оплачен");
+    }).fail(function () {
+        $(chkbox).prop("checked", !enabled);
+    });
+}
 
 function add() {
     form.find(":input").val("");
@@ -175,12 +202,16 @@ function makeEditable(datatableOpts) {
                 "info": true,
                 "createdRow": function (row, data, dataIndex) {
                     if (data.orderMap != null) {
+                        if(!data.orderMap.isPaid){
+                            $(row).attr("data-order-paid", false);
+                        }
                         if (data.orderMap.orderTerm != null && !(data.orderMap.marketPlace || data.orderMap.isAvailability)) {
 
                             if (date - Date.parse(data.orderMap.orderTerm) > -350000000) {
                                 $(row).attr("data-map-info", true);
                                 return;
                             }
+
                         }
                         if (data.orderMap.marketPlace && data.orderMap.isAvailability) {
                             $(row).attr("data-map-urgent-availability", true);

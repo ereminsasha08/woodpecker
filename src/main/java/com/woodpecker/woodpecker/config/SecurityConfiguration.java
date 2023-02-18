@@ -52,8 +52,10 @@ public class SecurityConfiguration {
                 .antMatchers("/admin/**").hasRole("ADMIN")
 
                 .anyRequest().authenticated()
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().formLogin().defaultSuccessUrl("/maps")
+                .and().rememberMe().alwaysRemember(true)
                 .and().csrf().disable();
         return http.build();
     }

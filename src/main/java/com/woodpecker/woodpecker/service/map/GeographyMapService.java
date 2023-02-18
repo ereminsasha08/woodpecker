@@ -2,10 +2,8 @@ package com.woodpecker.woodpecker.service.map;
 
 import com.woodpecker.woodpecker.model.map.GeographyMap;
 import com.woodpecker.woodpecker.model.map.OrderMap;
-import com.woodpecker.woodpecker.model.map.Stage;
 import com.woodpecker.woodpecker.model.user.User;
 import com.woodpecker.woodpecker.repository.GeographyMapRepository;
-import com.woodpecker.woodpecker.repository.OrderRepository;
 import com.woodpecker.woodpecker.service.order.OrderService;
 import com.woodpecker.woodpecker.util.exception.ApplicationException;
 import com.woodpecker.woodpecker.util.exception.ErrorType;
@@ -24,7 +22,6 @@ import java.util.stream.Stream;
 public class GeographyMapService {
 
     private final GeographyMapRepository geographyMapRepository;
-    private final OrderService orderService;
 
 
     public GeographyMap getById(Integer id) {
@@ -80,9 +77,9 @@ public class GeographyMapService {
 //            if (byId.getManager().id() != authUser.getUser().id())
 //                throw new IllegalArgumentException("Изменять можно только свои заказы");
 //            else {
-                geographyMap.setManager(byId.getManager());
-                geographyMap.setIsColorPlywood(byId.getIsColorPlywood());
-                geographyMap.setOrderMap(byId.getOrderMap());
+            geographyMap.setManager(byId.getManager());
+            geographyMap.setIsColorPlywood(byId.getIsColorPlywood());
+            geographyMap.setOrderMap(byId.getOrderMap());
 //            }
         }
         geographyMapRepository.save(geographyMap);
@@ -98,4 +95,6 @@ public class GeographyMapService {
             orderMap.setIsAvailability(false);
         }
     }
+
+
 }

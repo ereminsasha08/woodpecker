@@ -29,7 +29,6 @@ public class GeographyMapRestController {
     }
 
 
-
     @GetMapping("/{id}")
     public GeographyMap get(@PathVariable int id) {
         return mapService.getById(id);
@@ -56,5 +55,6 @@ public class GeographyMapRestController {
                                           @RequestParam boolean isPost) {
         return mapService.getByDateTimeBetween(authUser, startDate, endDate, nameManager, isPost);
     }
+
 
 }

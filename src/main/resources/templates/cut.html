@@ -60,7 +60,7 @@
                             <input type="hidden" id="laserId" name="id">
                             <div class="form-group col">
                                 <select type="text" class="form-control" id="laserName" name="laserName">
-                                    <option>1л</option>
+
                                     <option>2л</option>
                                     <option>3л</option>
                                     <option>4л</option>
@@ -77,6 +77,14 @@
                             </button>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <button type="button" class="btn btn-warning" onclick="changeList()">
+                                Изменить тип производства
+                            </button>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -130,7 +138,7 @@
                 </button>
                 <button type="button" class="btn btn-primary" onclick="saveLaserForm()">
                     <span class="fa fa-check"></span>
-                    Создать заказ
+                    Сохранить
                 </button>
             </div>
         </div>

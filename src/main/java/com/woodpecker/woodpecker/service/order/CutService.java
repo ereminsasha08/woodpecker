@@ -11,13 +11,13 @@ import com.woodpecker.woodpecker.util.exception.ApplicationException;
 import com.woodpecker.woodpecker.util.exception.ErrorType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,25 +51,26 @@ public class CutService {
     }
 
     @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public void setLaser(Integer id, Boolean isColorPlywood, Boolean isWoodStain) {
+    public void setLaserAndList(Integer id, Boolean isColorPlywood, Boolean isWoodStain) {
         OrderMap orderMap = orderService.findOrderById(id);
-        chooseLaser(orderMap);
-        List<String> plywoodList = orderMap.getPlywoodList();
-        setListsForMap(orderMap, plywoodList, isColorPlywood, isWoodStain);
+        if (orderMap.getPlywoodList().isEmpty()) {
+            orderMap.setLaser(chooseLaser(orderMap));
+        }
+        setListsForMap(orderMap, new LinkedList<>(), isColorPlywood, isWoodStain);
         orderMap.setIsColorPlywood(isColorPlywood);
         orderMap.getGeographyMap().setIsColorPlywood(isColorPlywood);
         orderMap.setStage(Stage.ПИЛИТСЯ.ordinal());
         orderMap.setCut_begin(LocalDateTime.now());
     }
 
-    private void chooseLaser(OrderMap order) {
+    private String chooseLaser(OrderMap order) {
         Laser minCapasityLaser = laserRepository.findAll()
                 .stream()
                 .filter(laser -> laser.getMaxSize() >= order.getGeographyMap().getSize())
                 .min(Comparator.comparing(Laser::getCapacity))
                 .orElseThrow(() -> new ApplicationException("Нет потходящего лазер", ErrorType.DATA_NOT_FOUND));
         minCapasityLaser.setCapacity(order.getGeographyMap(), 1);
-        order.setLaser(minCapasityLaser.getName());
+        return minCapasityLaser.getName();
     }
 
 
@@ -81,7 +82,10 @@ public class CutService {
 
     private void setListsForMap(OrderMap orderMap, List<String> plywoodList, Boolean isColorPlywood, Boolean isWoodStain) {
         String typeMap = orderMap.getGeographyMap().getTypeMap();
-        List<String> standardKit = List.of("1", "2", "3", "4", "5", "6", "7", "8");
+        List<String> standardKit;
+        if (orderMap.getGeographyMap().getIsMultiLevel())
+            standardKit = List.of("3", "6", "8");
+        else standardKit = List.of("1", "2", "3");
 //        List<String> standardKit = List.of("1");
 
         int calculationId = 0;
@@ -94,7 +98,8 @@ public class CutService {
         }
         calculationId += orderMap.getGeographyMap().getSize();
         calculationId *= orderMap.getGeographyMap().getIsMultiLevel() ? 1 : 10;
-        if (isColorPlywood && isWoodStain && !"росиия".equalsIgnoreCase(typeMap)) {
+//        Морилка с цветом
+        if (isColorPlywood && isWoodStain && !"росиия".equalsIgnoreCase(typeMap) && !orderMap.getGeographyMap().getIsMonochromatic()) {
             calculationId *= calculationId;
         }
         Optional<PlywoodList> specialKit = plywoodListRepository.findById(calculationId);

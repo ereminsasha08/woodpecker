@@ -25,7 +25,7 @@ public class CutRestController {
     public void setLaserAndList(@NotNull @RequestParam Integer orderId,
                                 @NotNull @RequestParam Boolean isColorPlywood,
                                 @NotNull @RequestParam Boolean isWoodStain) {
-        cutService.setLaser(orderId, isColorPlywood, isWoodStain);
+        cutService.setLaserAndList(orderId, isColorPlywood, isWoodStain);
     }
 
     @PostMapping

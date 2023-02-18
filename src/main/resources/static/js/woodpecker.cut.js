@@ -93,9 +93,9 @@ $(function () {
                 "data": "laser",
                 "render": function (data, type, row) {
                     if (data != null) {
-                        return "<button class='btn btn-warning' onclick='getInfoCut(" + row.id + "," + row.geographyMap.isColorPlywood + ");'>" + data + "</button>";
+                        return "<button class='btn btn-warning' onclick='getInfoCut(" + row.id + "," + row.geographyMap.isColorPlywood + ",\""+data+"\");'>" + data + "</button>";
                     } else {
-                        return "<button class='btn btn-danger' onclick='setLaser(" + row.id + ");'>Пилить</button>";
+                        return "<button class='btn btn-warning' onclick='setLaser(" + row.id + ");'>Пилить</button>";
                     }
                 }
             },
@@ -106,7 +106,7 @@ $(function () {
 });
 
 function setLaser(id) {
-    let find = $('#setLaserForm').find(":input").val("");
+    $('#setLaserForm').find(":input").val("");
     document.getElementById('orderId').value = id;
     $("#setLaser").modal();
 }
@@ -118,23 +118,34 @@ function saveLaserForm() {
         data: $('#setLaserForm').serialize(),
     }).done(function () {
         ctx.updateTable();
-        successNoty("Лазер и листы установлены");
+        successNoty("Установлено");
         $("#setLaser").modal("hide");
     });
 }
 
-function changeLaser() {
-    $.ajax({
-        type: "POST",
-        url: cutAjaxUrl,
-        data: $('#laserForm').serialize(),
-    }).done(function () {
-        ctx.updateTable();
-        successNoty("Лазер изменен");
-    });
+function changeList() {
+    if (confirm('Вы уверенны?')) {
+        $("#infoListCut").modal("hide");
+        document.getElementById("isColorPlywood").value = "";
+        document.getElementById('isWoodStain').value = "";
+        $("#setLaser").modal();
+    }
 }
 
-function getInfoCut(id, isColorPlywood) {
+function changeLaser() {
+    if (confirm('Вы уверенны?')) {
+        $.ajax({
+            type: "POST",
+            url: cutAjaxUrl,
+            data: $('#laserForm').serialize(),
+        }).done(function () {
+            ctx.updateTable();
+            successNoty("Лазер изменен");
+        });
+    }
+}
+
+function getInfoCut(id, isColorPlywood, laserName) {
     $("#infoListCut").modal();
     $.get(cutAjaxUrl + "info/" + id,
         function (data) {
@@ -159,9 +170,13 @@ function getInfoCut(id, isColorPlywood) {
                     '</div>' +
                     '</div>'
             });
+
+            document.getElementById('orderId').value = id;
             document.getElementById("infoList").innerHTML = listSelect;
             document.getElementById("laserId").value = id;
+            document.getElementById('laserName').value = laserName;
         });
+
 }
 
 

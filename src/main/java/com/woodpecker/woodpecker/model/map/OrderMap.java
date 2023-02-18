@@ -90,7 +90,11 @@ public class OrderMap {
     @Column(name = "availability")
     private Boolean isAvailability;
 
+    @Column(name = "is_paid", columnDefinition = "boolean default false")
+    private Boolean isPaid;
+
     public OrderMap(LocalDateTime orderTerm, GeographyMap geographyMap, Boolean marketPlace, Integer stage, Boolean isAvailability) {
+        this.isPaid = marketPlace;
         this.orderTerm = orderTerm;
         this.geographyMap = geographyMap;
         this.marketPlace = marketPlace;
