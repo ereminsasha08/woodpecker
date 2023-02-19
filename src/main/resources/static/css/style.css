@@ -23,7 +23,7 @@ tr[data-user-enabled="false"] {
 }
 
 tr[data-order-paid="false"] {
-    opacity: 0.8;
+    opacity: 0.75;
 }
 
 /*https://getbootstrap.com/docs/4.0/examples/sticky-footer/sticky-footer.css*/
@@ -32,7 +32,7 @@ html {
     min-height: 100%;
 }
 body {
-    background-image: url("https://ir.ozone.ru/s3/multimedia-s/wc1000/6081859492.jpg");
+    background-image: url('../images/oxytryanka.jpg');
     margin-bottom: 60px !important; /* Margin bottom by footer height */
     background-size: cover;
 }

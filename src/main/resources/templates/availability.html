@@ -25,11 +25,11 @@
                 <thead>
                 <tr>
                     <th>Номер</th>
-                    <th>Дата отправки</th>
                     <th>Тип</th>
                     <th>Размер</th>
                     <th>Яз.Гор.</th>
                     <th>Многур</th>
+                    <th>Подсветка</th>
                     <th>Кр.Дк</th>
                     <th>Цвет</th>
                     <th>Лазер</th>
@@ -116,27 +116,6 @@
                     </div>
                     <div class="row">
                         <div class="form-group col">
-                            <label for="light" class="col-form-label">Подсветка</label>
-                            <input type="text" class="form-control" id="light" name="light" list="lightOption">
-                            <datalist id="lightOption">
-                                <option>Без подсветки</option>
-                                <option>Холодная подсветка</option>
-                                <option>Нейтральная подсветка</option>
-                                <option>Тёплая подсветка</option>
-                                <option>Беспроводная подсветка</option>
-                                <option>RGB подсветка</option>
-                            </datalist>
-                        </div>
-                        <div class="form-group col">
-                            <label for="typeMap" class="col-form-label">Тип</label>
-                            <input type="text" class="form-control" id="typeMap" name="typeMap" list="typeMapOptional"
-                                   placeholder="Тип">
-                            <datalist id="typeMapOptional">
-                                <option>Мир</option>
-                                <option>Россия</option>
-                            </datalist>
-                        </div>
-                        <div class="form-group col">
                             <label for="size" class="col-form-label">Размер</label>
                             <input type="number" class="form-control" id="size" name="size" list="sizeOption"
                                    placeholder="Размер">
@@ -163,15 +142,15 @@
                                 <option>Английский</option>
                             </datalist>
                         </div>
-                    </div>
 
-                    <div class="row">
                         <div class="form-group col">
-                            <label for="isMultiLevel" class="col-form-label">Многоур</label>
-                            <select type="text" class="form-control" id="isMultiLevel" name="isMultiLevel">
-                                <option value="true">Многоуровневая</option>
-                                <option value="false">Одноуровневая</option>
-                            </select>
+                            <label for="typeMap" class="col-form-label">Тип</label>
+                            <input type="text" class="form-control" id="typeMap" name="typeMap" list="typeMapOptional"
+                                   placeholder="Тип">
+                            <datalist id="typeMapOptional">
+                                <option>Мир</option>
+                                <option>Россия</option>
+                            </datalist>
                         </div>
                         <div class="form-group col">
                             <label for="isState" class="col-form-label">Штаты</label>
@@ -180,6 +159,12 @@
                                 <option value="false">Без штатов</option>
                             </select>
                         </div>
+
+                    </div>
+
+                    <div class="row">
+
+
                         <div class="form-group col">
                             <label for="isCapital" class="col-form-label">Столицы</label>
                             <select type="text" class="form-control" id="isCapital" name="isCapital">
@@ -187,7 +172,25 @@
                                 <option value="false">Без столиц</option>
                             </select>
                         </div>
-
+                        <div class="form-group col">
+                            <label for="isMultiLevel" class="col-form-label">Многоур</label>
+                            <select type="text" class="form-control" id="isMultiLevel" name="isMultiLevel">
+                                <option value="true">Многоуровневая</option>
+                                <option value="false">Одноуровневая</option>
+                            </select>
+                        </div>
+                        <div class="form-group col">
+                            <label for="light" class="col-form-label">Подсветка</label>
+                            <input type="text" class="form-control" id="light" name="light" list="lightOption">
+                            <datalist id="lightOption">
+                                <option>Без подсветки</option>
+                                <option>Холодная подсветка</option>
+                                <option>Нейтральная подсветка</option>
+                                <option>Тёплая подсветка</option>
+                                <option>Беспроводная подсветка</option>
+                                <option>RGB подсветка</option>
+                            </datalist>
+                        </div>
                         <div class="form-group col">
                             <label for="availability_isMonochromatic" class="col-form-label">Однотонная</label>
                             <select class="form-control" id="availability_isMonochromatic" name="isMonochromatic">

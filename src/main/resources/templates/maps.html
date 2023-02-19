@@ -41,24 +41,6 @@
                             <option value="Мои" selected>Мои</option>
                         </select>
                     </div>
-
-                    <!--                <div class="form-group col">-->
-                    <!--                    <label for="conditionMapFilter" x-placement="">Состояние:</label>-->
-                    <!--                    <select class="form-control" type="number" id="conditionMapFilter" name="conditionMapFilter">-->
-                    <!--                        <option value="-1">Неизвестно</option>-->
-                    <!--                        <option value="0">Новый заказ</option>-->
-                    <!--                        <option value="1">В очереди на резку</option>-->
-                    <!--                        <option value="2">Пилится</option>-->
-                    <!--                        <option value="4">Выпилен</option>-->
-                    <!--                        <option value="5">На покраске</option>-->
-                    <!--                        <option value="6">Красится</option>-->
-                    <!--                        <option value="8">Покрашен</option>-->
-                    <!--                        <option value="10">На приклейки</option>-->
-                    <!--                        <option value="12">На запаковке</option>-->
-                    <!--                        <option value="14">Готов к отправке</option>-->
-                    <!--                        <option value="16">Отправлен</option>-->
-                    <!--                    </select>-->
-                    <!--                </div>-->
                 </div>
             </form>
             <div class="row">
@@ -166,8 +148,6 @@
                             <input type="datetime-local" class="form-control" id="dateTime" name="dateTime"
                                    placeholder="Время">
                         </div>
-
-
                         <div class="form-group col">
                             <label for="isPlexiglass" class="col-form-label">Оргстекло</label>
                             <select class="form-control" id="isPlexiglass" name="isPlexiglass">
@@ -175,34 +155,8 @@
                                 <option value="true">Да</option>
                             </select>
                         </div>
-
                     </div>
                     <div class="row">
-                        <div class="form-group col">
-                            <label for="light" class="col-form-label">Подсветка</label>
-                            <input type="text" class="form-control" id="light" name="light" list="lightOption">
-                            <datalist id="lightOption">
-                                <option>Без подсветки</option>
-                                <option>Холодная подсветка</option>
-                                <option>Нейтральная подсветка</option>
-                                <option>Тёплая подсветка</option>
-                                <option>Беспроводная подсветка</option>
-                                <option>RGB подсветка</option>
-                            </datalist>
-                        </div>
-                        <div class="form-group col">
-                            <label for="typeMap" class="col-form-label">Тип</label>
-                            <input type="text" class="form-control" id="typeMap" name="typeMap" list="typeMapOptional"
-                                   placeholder="Тип">
-                            <datalist id="typeMapOptional">
-                                <option>Мир</option>
-                                <option>Россия</option>
-                            </datalist>
-                        </div>
-
-
-
-
                         <div class="form-group col">
                             <label for="size" class="col-form-label">Размер</label>
                             <input type="number" class="form-control" id="size" name="size" list="sizeOption"
@@ -230,10 +184,26 @@
                                 <option>Английский</option>
                             </datalist>
                         </div>
+                        <div class="form-group col">
+                            <label for="typeMap" class="col-form-label">Тип</label>
+                            <input type="text" class="form-control" id="typeMap" name="typeMap" list="typeMapOptional"
+                                   placeholder="Тип">
+                            <datalist id="typeMapOptional">
+                                <option>Мир</option>
+                                <option>Россия</option>
+                            </datalist>
+                        </div>
+                        <div class="form-group col">
+                            <label for="isState" class="col-form-label">Штаты</label>
+                            <select class="form-control" id="isState" name="isState">
+                                <option value="true">Со штатами</option>
+                                <option value="false">Со столицами</option>
+                            </select>
+                        </div>
                     </div>
 
-
                     <div class="row">
+
                         <div class="form-group col">
                             <label for="isMultiLevel" class="col-form-label">Многоур</label>
                             <select type="text" class="form-control" id="isMultiLevel" name="isMultiLevel">
@@ -242,20 +212,28 @@
                             </select>
                         </div>
 
+<!--                        -->
+<!--                        <div class="form-group col">-->
+<!--                            <label for="isCapital" class="col-form-label">Столицы</label>-->
+<!--                            <select type="text" class="form-control" id="isCapital" name="isCapital">-->
+<!--                                <option value="true">Со столицами</option>-->
+<!--                                <option value="false">Без столиц</option>-->
+<!--                            </select>-->
+<!--                        </div>-->
+
                         <div class="form-group col">
-                            <label for="isState" class="col-form-label">Штаты</label>
-                            <select class="form-control" id="isState" name="isState">
-                                <option value="true">Со штатами</option>
-                                <option value="false">Без штатов</option>
-                            </select>
+                            <label for="light" class="col-form-label">Подсветка</label>
+                            <input type="text" class="form-control" id="light" name="light" list="lightOption">
+                            <datalist id="lightOption">
+                                <option>Без подсветки</option>
+                                <option>Холодная подсветка</option>
+                                <option>Нейтральная подсветка</option>
+                                <option>Тёплая подсветка</option>
+                                <option>Беспроводная подсветка</option>
+                                <option>RGB подсветка</option>
+                            </datalist>
                         </div>
-                        <div class="form-group col">
-                            <label for="isCapital" class="col-form-label">Столицы</label>
-                            <select type="text" class="form-control" id="isCapital" name="isCapital">
-                                <option value="true">Со столицами</option>
-                                <option value="false">Без столиц</option>
-                            </select>
-                        </div>
+
 
                         <div class="form-group col">
                             <label for="isMonochromatic" class="col-form-label">Однотонная</label>
@@ -333,8 +311,8 @@
                         <div class="form-group col">
                             <label for="isMarketPlace" class="col-form-label">Тип заказа</label>
                             <select class="form-control" id="isMarketPlace" name="isMarketPlace">
-                                <option value="true">Маркетплейс</option>
                                 <option value="false">Обычный заказ</option>
+                                <option value="true">Маркетплейс</option>
                             </select>
                         </div>
 

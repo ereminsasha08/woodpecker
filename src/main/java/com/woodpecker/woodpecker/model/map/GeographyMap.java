@@ -7,7 +7,6 @@ import com.woodpecker.woodpecker.model.abstractentity.Product;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.id.enhanced.SequenceStyleGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -56,8 +55,7 @@ public class GeographyMap extends Product {
     private Boolean isState;
 
     @Column(name = "is_capital", columnDefinition = "boolean default true")
-    @NotNull
-    private Boolean isCapital;
+    private boolean isCapital = true;
 
     @Column(name = "light", nullable = false)
     @NotNull

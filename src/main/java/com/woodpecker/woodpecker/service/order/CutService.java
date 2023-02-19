@@ -5,7 +5,6 @@ import com.woodpecker.woodpecker.model.map.Stage;
 import com.woodpecker.woodpecker.model.support.Laser;
 import com.woodpecker.woodpecker.model.support.PlywoodList;
 import com.woodpecker.woodpecker.repository.LaserRepository;
-import com.woodpecker.woodpecker.repository.OrderRepository;
 import com.woodpecker.woodpecker.repository.PlywoodListRepository;
 import com.woodpecker.woodpecker.util.exception.ApplicationException;
 import com.woodpecker.woodpecker.util.exception.ErrorType;
@@ -32,7 +31,6 @@ public class CutService {
     private final LaserRepository laserRepository;
 
     private final PlywoodListRepository plywoodListRepository;
-    private final OrderRepository orderRepository;
 
 
     public List<OrderMap> sortedForCut() {
@@ -142,7 +140,7 @@ public class CutService {
         }
     }
 
-    private void refreshCapacity(OrderMap orderById) {
+    public void refreshCapacity(OrderMap orderById) {
         String laserName = orderById.getLaser();
         Laser laser = laserRepository.findByName(laserName).orElseThrow(() -> new ApplicationException("Лазер не найден", ErrorType.DATA_NOT_FOUND));
         laser.setCapacity(orderById.getGeographyMap(), -1);

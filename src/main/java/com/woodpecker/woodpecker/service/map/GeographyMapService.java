@@ -2,9 +2,10 @@ package com.woodpecker.woodpecker.service.map;
 
 import com.woodpecker.woodpecker.model.map.GeographyMap;
 import com.woodpecker.woodpecker.model.map.OrderMap;
+import com.woodpecker.woodpecker.model.map.Stage;
 import com.woodpecker.woodpecker.model.user.User;
 import com.woodpecker.woodpecker.repository.GeographyMapRepository;
-import com.woodpecker.woodpecker.service.order.OrderService;
+import com.woodpecker.woodpecker.service.order.CutService;
 import com.woodpecker.woodpecker.util.exception.ApplicationException;
 import com.woodpecker.woodpecker.util.exception.ErrorType;
 import com.woodpecker.woodpecker.web.AuthUser;
@@ -22,6 +23,8 @@ import java.util.stream.Stream;
 public class GeographyMapService {
 
     private final GeographyMapRepository geographyMapRepository;
+
+    private final CutService cutService;
 
 
     public GeographyMap getById(Integer id) {
@@ -88,12 +91,19 @@ public class GeographyMapService {
     @Transactional
     public void delete(int id) {
         GeographyMap byId = getById(id);
+
         byId.setView(false);
         OrderMap orderMap = byId.getOrderMap();
         if (orderMap != null) {
             orderMap.setCompleted(true);
             orderMap.setIsAvailability(false);
+            if (orderMap.getStage() == Stage.ПИЛИТСЯ.ordinal()) {
+
+
+                cutService.refreshCapacity(orderMap);
+            }
         }
+
     }
 
 

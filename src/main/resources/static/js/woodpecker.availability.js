@@ -22,16 +22,6 @@ $(function () {
                 }
             },
             {
-                "data": "orderTerm",
-                "render": function (date, type, row) {
-                    if (type === "display") {
-                        return date.substring(0, 10).replaceAll("-", ".");
-                    }
-                    return date;
-
-                }
-            },
-            {
                 "data": "geographyMap.typeMap"
             },
             {
@@ -40,7 +30,7 @@ $(function () {
             {
                 "data": "geographyMap.language",
                 "render": function (data, type, row) {
-                   return renderLanguageState(data, row);
+                    return renderLanguageState(data, row);
                 }
             },
             {
@@ -50,6 +40,14 @@ $(function () {
                         return "Многоур."
                     }
                     return "Одноур.";
+                }
+            },
+            {
+                "data": "geographyMap.light",
+                "render": function (date, type, row) {
+                    if (type === "display")
+                        return date;
+                    else return "";
                 }
             },
             {
@@ -65,6 +63,7 @@ $(function () {
                     // return "Одноур.";
                 }
             },
+
             {
                 "data": "geographyMap.color",
                 "render": function (date, type, row) {
@@ -126,6 +125,7 @@ function saveAvailability() {
     });
 
 }
+
 function getInfoCut(id) {
     $("#info-cut").modal();
     $.get("rest/cut/info/" + id,

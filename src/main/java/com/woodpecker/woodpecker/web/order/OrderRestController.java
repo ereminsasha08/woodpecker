@@ -46,9 +46,8 @@ public class OrderRestController {
                                                 @RequestParam String contact,
                                                 @RequestParam Integer price,
                                                 @RequestParam Boolean isMarketPlace,
-                                                @RequestParam Boolean isAvailability,
-                                                @RequestParam Boolean isColorPlywood) {
-        return orderService.modifyOrder(authUser, id, orderTerm, light, additional, description, contact, price, isMarketPlace, isAvailability, isColorPlywood);
+                                                @RequestParam Boolean isAvailability) {
+        return orderService.modifyOrder(authUser, id, orderTerm, light, additional, description, contact, price, isMarketPlace, isAvailability);
     }
 
     @PatchMapping("/{id}")

@@ -78,7 +78,7 @@ $(function () {
                 "render": function (data, type, row) {
                     if (data.toString().length < 15)
                         return data;
-                    else return '<div class="overflow-auto" style="max-width: 240px; max-height: 40px">' +  data + '</div>';
+                    else return '<div class="overflow-auto" style="max-width: 240px; max-height: 40px">' + data + '</div>';
                 }
             },
             {
@@ -133,14 +133,16 @@ function setIsColorPlywood(id) {
 }
 
 function setStagePaint(id) {
-    $.ajax({
-        type: "PATCH",
-        url: ctx.ajaxUrl + "stage/" + id,
-    }).done(function () {
-        ctx.updateTable();
-        successNoty("Покрашенно");
-        $('#info-cut').modal("hide");
-    });
+    if (confirm('Вы уверенны?')) {
+        $.ajax({
+            type: "PATCH",
+            url: ctx.ajaxUrl + "stage/" + id,
+        }).done(function () {
+            ctx.updateTable();
+            successNoty("Покрашенно");
+            $('#info-cut').modal("hide");
+        });
+    }
 }
 
 function setPainter(id) {
