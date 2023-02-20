@@ -97,11 +97,11 @@
             <div class="modal-body container-fluid">
                 <form id="formAvailability">
                     <input type="hidden" id="availability_price" name="price">
+                    <input type="hidden" id="availability_contact" name="contact">
                     <div class="row">
                         <div class="form-group col">
                             <label for="availability_dateTime" class="col-form-label">Дата</label>
-                            <input type="datetime-local" class="form-control" id="availability_dateTime" name="dateTime"
-                                   placeholder="Время">
+                            <input type="datetime-local" class="form-control" id="availability_dateTime" name="dateTime">
                         </div>
 
 
@@ -117,8 +117,7 @@
                     <div class="row">
                         <div class="form-group col">
                             <label for="size" class="col-form-label">Размер</label>
-                            <input type="number" class="form-control" id="size" name="size" list="sizeOption"
-                                   placeholder="Размер">
+                            <input type="number" class="form-control" id="size" name="size" list="sizeOption">
                             <datalist id="sizeOption">
                                 <option>100</option>
                                 <option>120</option>
@@ -135,8 +134,7 @@
                         <div class="form-group col">
                             <label for="language" class="col-form-label">Язык</label>
                             <input type="text" class="form-control" id="language" name="language"
-                                   list="languageOption"
-                                   placeholder="Язык">
+                                   list="languageOption">
                             <datalist id="languageOption">
                                 <option>Русский</option>
                                 <option>Английский</option>
@@ -145,8 +143,7 @@
 
                         <div class="form-group col">
                             <label for="typeMap" class="col-form-label">Тип</label>
-                            <input type="text" class="form-control" id="typeMap" name="typeMap" list="typeMapOptional"
-                                   placeholder="Тип">
+                            <input type="text" class="form-control" id="typeMap" name="typeMap" list="typeMapOptional">
                             <datalist id="typeMapOptional">
                                 <option>Мир</option>
                                 <option>Россия</option>
@@ -223,8 +220,8 @@
                         <div class="form-group col">
                             <label for="stage" class="col-form-label">Стадия</label>
                             <select class="form-control" type="number" id="stage" name="stage">
-                                <option value="16">Жду покраску</option>
-                                <option value="17">Жду приклейки</option>
+                                <option value="14">Жду покраску</option>
+                                <option value="15">Жду приклейки</option>
                                 <option value="12">Наличие</option>
                             </select>
                         </div>
@@ -232,8 +229,7 @@
 
                     <div class="form-group col">
                         <label for="color" class="col-form-label">Цвет</label>
-                        <input type="text" class="form-control" id="color" name="color"
-                               placeholder="Цвет">
+                        <input type="text" class="form-control" id="color" name="color">
                     </div>
                 </form>
             </div>

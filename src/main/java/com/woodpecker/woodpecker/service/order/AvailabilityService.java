@@ -29,7 +29,7 @@ public class AvailabilityService {
 
     @Transactional
     public GeographyMap createAvailabilityMap(AuthUser authUser, GeographyMap geographyMap, Integer stage, Boolean isColorPlywood, String laser) {
-        if (isColorPlywood && stage == Stage.ЗАКАЗ_ИЗ_НАЛИЧИЯ_НЕ_ПОКРАШЕННЫЙ.ordinal())
+        if (isColorPlywood && stage == Stage.ЖДУ_ПОКРАСКУ_НАЛИЧИЕ.ordinal())
             throw new IllegalArgumentException("Карта из покрашенных досок не может быть на покраске");
         geographyMap.setManager(authUser.getUser());
         geographyMap.setDescription("Карта из наличия в момент создания была на стадии: " + Stage.values()[stage].name() + geographyMap.getDescription() == null ? "" : geographyMap.getDescription());
@@ -40,7 +40,7 @@ public class AvailabilityService {
         geographyMap.setOrderMap(orderMap);
         orderMap.setLaser(laser);
         orderMap.setCompleted(true);
-        orderMap.setIsColorPlywood(geographyMap.getIsColorPlywood());
+        orderMap.setIsColorPlywood(false);
         orderMap.setPlywoodList(List.of("Готов"));
         orderMap.setAllTime();
         return save;

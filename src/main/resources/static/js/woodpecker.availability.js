@@ -1,11 +1,11 @@
-const mapsAjaxUrl = "rest/availability/";
+const availabilityAjax = "rest/availability/";
 // https://stackoverflow.com/a/5064235/548473
 const ctx = {
-    ajaxUrl: mapsAjaxUrl,
+    ajaxUrl: availabilityAjax,
     updateTable: function () {
         $.ajax({
             type: 'GET',
-            url: mapsAjaxUrl,
+            url: availabilityAjax,
         }).done(updateTableByData);
     }
 }
@@ -45,9 +45,9 @@ $(function () {
             {
                 "data": "geographyMap.light",
                 "render": function (date, type, row) {
-                    if (type === "display")
+                    if (type === "display" && !date.toString().toLowerCase().startsWith("без"))
                         return date;
-                    else return "";
+                    else return "Нет";
                 }
             },
             {
@@ -109,13 +109,14 @@ function add() {
     document.getElementById('availability_isPlexiglass').value = "false";
     document.getElementById('availability_isMonochromatic').value = "false";
     document.getElementById('availability_price').value = "1000";
+    document.getElementById('availability_contact').value = "Нет";
     $("#createAvailability").modal();
 }
 
 function saveAvailability() {
     $.ajax({
         type: "POST",
-        url: mapsAjaxUrl,
+        url: availabilityAjax,
         data: $('#formAvailability').serialize()
     }).done(function () {
         $("#createAvailability").modal("hide");

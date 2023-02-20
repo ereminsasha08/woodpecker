@@ -7,19 +7,21 @@
             </div>
             <div class="modal-body container-fluid">
                 <form id="modify_orderForm">
-                    <input type="hidden" id="modify_id" name="id">
+<!--                    <input type="hidden" id="modify_id" name="id">-->
                     <div class="row">
                         <div class="form-group col">
+                            <label for="modify_id" class="col-form-label">Номер</label>
+                            <input type="text" class="form-control" id="modify_id" name="id" disabled>
+                        </div>
+                        <div class="form-group col">
                             <label for="modify_orderTerm" class="col-form-label">Дата отправки</label>
-                            <input type="datetime-local" class="form-control" id="modify_orderTerm" name="orderTerm"
-                                   placeholder="Время">
+                            <input type="datetime-local" class="form-control" id="modify_orderTerm" name="orderTerm">
                         </div>
 
                         <div class="form-group col">
                             <label for="modify_light" class="col-form-label">Подсветка</label>
                             <input type="text" class="form-control" id="modify_light" name="light"
-                                   list="lightOption"
-                                   placeholder="Подсветка">
+                                   list="lightOption">
                             <datalist id="lightOption">
                                 <option>Без подсветки</option>
                                 <option>Холодная подсветка</option>
@@ -51,24 +53,20 @@
 
                     <div class="form-group col">
                         <label for="modify_additional" class="col-form-label">Дополнительные товары, услуги</label>
-                        <textarea class="form-control overflow-auto" rows="2" id="modify_additional" name="additional"
-                                  placeholder="Дополнительные товары, услуги"></textarea>
+                        <textarea class="form-control overflow-auto" rows="2" id="modify_additional" name="additional"></textarea>
                     </div>
 
                     <div class="form-group col">
                         <label for="modify_description" class="col-form-label">Описание</label>
-                        <textarea class="form-control overflow-auto" rows="2" id="modify_description" name="description"
-                                  placeholder="Описание"></textarea>
+                        <textarea class="form-control overflow-auto" rows="2" id="modify_description" name="description"></textarea>
                     </div>
                     <div class="form-group col">
                         <label for="modify_contact" class="col-form-label">Контактные данные. Адресс</label>
-                        <textarea class="form-control overflow-auto" rows="2" id="modify_contact" name="contact"
-                                  placeholder="Контактные данные. Адресс"></textarea>
+                        <textarea class="form-control overflow-auto" rows="2" id="modify_contact" name="contact"></textarea>
                     </div>
                     <div class="form-group col">
                         <label for="modify_price" class="col-form-label">Цена</label>
-                        <input type="number" class="form-control" id="modify_price" name="price"
-                               placeholder="Цена">
+                        <input type="number" class="form-control" id="modify_price" name="price">
                     </div>
                 </form>
             </div>

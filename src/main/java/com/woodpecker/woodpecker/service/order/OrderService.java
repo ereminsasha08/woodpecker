@@ -45,7 +45,6 @@ public class OrderService {
             orderTerm = Objects.isNull(orderTerm) ? LocalDateTime.now() : orderTerm;
         else orderTerm = Objects.isNull(orderTerm) ? LocalDateTime.now().plusWeeks(2).plusDays(3) : orderTerm;
 
-
         OrderMap orderMap = new OrderMap(orderTerm, map, marketPlace, Stage.В_ОЧЕРЕДИ_НА_РЕЗКУ.ordinal(), isAvailability);
         map.setOrderMap(orderMap);
         return orderRepository.save(orderMap);
@@ -59,7 +58,6 @@ public class OrderService {
 //            throw new IllegalArgumentException("Изменять можно только свои заказы");
         modifyOrder.setMarketPlace(isMarketPlace);
         modifyOrder.setIsPaid(isMarketPlace);
-
         orderTerm = Objects.isNull(orderTerm) ? LocalDateTime.now().plusWeeks(2).plusDays(3) : orderTerm;
         modifyOrder.setOrderTerm(orderTerm);
 
@@ -70,8 +68,10 @@ public class OrderService {
         modifyGeographyMap.setDescription(description);
         modifyGeographyMap.setContact(contact);
         modifyGeographyMap.setPrice(price);
-
-        checkIsAvailability(modifyOrder);
+        if (!isAvailability) {
+            modifyGeographyMap.setManager(authUser.getUser());
+            checkIsAvailability(modifyOrder);
+        }
         return orderRepository.save(modifyOrder);
     }
 

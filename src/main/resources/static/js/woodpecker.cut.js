@@ -165,7 +165,7 @@ function getInfoCut(id, isColorPlywood, laserName) {
                     '</output>' +
                     '</div>' +
                     '<div class="form-group col-6">' +
-                    "<input " + ' class="form-check-input"' + "type='checkbox'" + ' id="' + index + '"' + (value.endsWith("Лист готов") ? "checked" : "") + " onclick='updateInfoAboutCut($(this)," + id + "," + index + "," + isColorPlywood + ");'/>" +
+                    "<input " + ' class="form-check-input"' + "type='checkbox'" + ' id="' + index + '"' + (value.endsWith("Лист готов") ? "checked" : "") + " onclick='updateInfoAboutCut($(this)," + id + "," + index + "," + isColorPlywood + ",\"" + laserName +"\");'/>" +
                     '<label for="' + id + '" class="form-check-label">' + (value.endsWith("Лист загравирован") || value.endsWith("Лист готов") ? '  Выпилен?' : '  Загравирован?') + '</label>' +
                     '</div>' +
                     '</div>'
@@ -180,7 +180,7 @@ function getInfoCut(id, isColorPlywood, laserName) {
 }
 
 
-function updateInfoAboutCut(chkbox, id, index, isColorPlywood) {
+function updateInfoAboutCut(chkbox, id, index, isColorPlywood, laserName) {
     const enabled = chkbox.is(":checked");
     $.ajax({
         url: cutAjaxUrl + "info/" + id,
@@ -195,6 +195,6 @@ function updateInfoAboutCut(chkbox, id, index, isColorPlywood) {
     }).fail(function () {
         $(chkbox).prop("checked", !enabled);
     });
-    setTimeout(() => getInfoCut(id, isColorPlywood), 400)
+    setTimeout(() => getInfoCut(id, isColorPlywood, laserName), 400)
 
 }

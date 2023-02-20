@@ -27,8 +27,20 @@ $(function () {
             {
                 "data": "id",
                 "render": function (data, type, row) {
-                    let ref = "<button class='btn btn-info' onclick='getInfoMap(" + data + ");' data-placement=\"top\" title=\"" + data + "\">";
-                    return ref + data + "</a>";
+                    let description = row.geographyMap.description;
+                    let ref = "";
+
+                    if (description != null && description.toString().length >= 4) {
+                        ref = "<button class='btn btn-info' onclick='getInfoMap(" + data + ");' data-placement=\"top\" title=\"" + data + "\">";
+                        return ref + description.toString().substring(0, 4) + "</a>";
+                    } else {
+                        ref = "<button class='btn btn-info' onclick='getInfoMap(" + data + ");' data-placement=\"top\" title=\"" + data + "\">";
+                        return ref + data + "</a>";
+                    }
+
+
+
+
                 }
             },
             {
@@ -50,7 +62,21 @@ $(function () {
             {
                 "data": "geographyMap.language",
                 "render": function (data, type, row) {
-                   return renderLanguageState(data, row);
+                    return renderLanguageState(data, row);
+                }
+            },
+            {
+                "data": "geographyMap.color",
+                "render": function (data, type, row) {
+                    if (data.toString().length < 15)
+                        return data;
+                    else return '<div class="overflow-auto" style="max-width: 240px; max-height: 40px">' + data + '</div>';
+                }
+            },
+            {
+                "data": "geographyMap.light",
+                "render": function (data, type, row) {
+                     return data;
                 }
             },
             {
@@ -79,14 +105,7 @@ $(function () {
                     // return "Одноур.";
                 }
             },
-            {
-                "data": "geographyMap.color",
-                "render": function (data, type, row) {
-                    if (data.toString().length < 15)
-                        return data;
-                    else return '<div class="overflow-auto" style="max-width: 240px; max-height: 40px">' +  data + '</div>';
-                }
-            },
+
             {
                 "data": "laser",
                 "render": function (data, type, row) {
@@ -100,8 +119,12 @@ $(function () {
             {
                 "data": "stage",
                 "render": function (data, type, row) {
+                    let msg = 'Вы уверенны, что заказ отправлен?';
                     if (data >= 6) {
-                        return "<button class='btn btn-danger' onclick='setCondition(" + row.id + "," + data + ");'>" + getCondition(data) + "</button>";
+                        if (data === 9 && row.isAvailability) {
+                            msg = "Вы уверены, что заказ готов для наличия?"
+                            return "<button class='btn btn-danger' onclick='setCondition(" + row.id + "," + 10 + ",\"" + msg + "\");'>Внести в наличие" + "</button>";
+                        } else return "<button class='btn btn-danger' onclick='setCondition(" + row.id + "," + data + ",\"" + msg + "\");'>" + getCondition(data) + "</button>";
                     } else {
                         return getCondition(data)
                     }
@@ -111,7 +134,10 @@ $(function () {
     });
 });
 
-function setCondition(id, conditionMap) {
+function setCondition(id, conditionMap, msg) {
+    if (conditionMap === 10 && !confirm(msg)) {
+        return;
+    }
     $.ajax({
         type: "PATCH",
         url: ctx.ajaxUrl + id,
@@ -122,6 +148,7 @@ function setCondition(id, conditionMap) {
         ctx.updateTable();
         successNoty(getCondition(conditionMap));
     });
+
 }
 
 function getInfoCut(id) {
@@ -132,12 +159,12 @@ function getInfoCut(id) {
             $.each(data, function (index, value) {
                 listSelect +=
                     '<div class="row">' +
-                    '<div class="form-group col-3"></div>'+
+                    '<div class="form-group col-3"></div>' +
                     '<div class="form-group col-6">' +
                     '<output type="text" class="form-control" id="list" name="list"> ' +
                     '<span id ="' + index + '">"' + value + '"</span>' +
                     '</output>' +
-                    '</div>'+
+                    '</div>' +
                     '</div>'
             });
             document.getElementById("info").innerHTML = listSelect;
