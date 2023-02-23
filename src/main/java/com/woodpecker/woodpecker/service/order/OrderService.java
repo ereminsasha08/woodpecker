@@ -9,6 +9,9 @@ import com.woodpecker.woodpecker.util.exception.ApplicationException;
 import com.woodpecker.woodpecker.util.exception.ErrorType;
 import com.woodpecker.woodpecker.web.AuthUser;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +30,7 @@ public class OrderService {
 
     final private GeographyMapRepository geographyMapRepository;
 
+    @Cacheable("orders")
     public List<OrderMap> getAll(Boolean isCompleted) {
         return orderRepository.findByCompleted(isCompleted);
     }
@@ -36,6 +40,9 @@ public class OrderService {
     }
 
     @Transactional(isolation = Isolation.REPEATABLE_READ)
+    @Caching(evict = {
+            @CacheEvict(value = "orders", allEntries = true),
+            @CacheEvict(value = "mapsByManager", allEntries = true)})
     public OrderMap create(AuthUser authUser, Integer id, LocalDateTime orderTerm, boolean marketPlace, boolean isAvailability) {
 
         GeographyMap map = geographyMapRepository.getById(id);
@@ -51,6 +58,9 @@ public class OrderService {
     }
 
     @Transactional
+    @Caching(evict = {
+            @CacheEvict(value = "orders", allEntries = true),
+            @CacheEvict(value = "mapsByManager", allEntries = true)})
     public OrderMap modifyOrder(AuthUser authUser, Integer id, LocalDateTime orderTerm, String light, String additional, String description,
                                 String contact, Integer price, Boolean isMarketPlace, Boolean isAvailability) {
         OrderMap modifyOrder = findOrderById(id);
@@ -91,6 +101,9 @@ public class OrderService {
     }
 
     @Transactional
+    @Caching(evict = {
+            @CacheEvict(value = "orders", allEntries = true),
+            @CacheEvict(value = "mapsByManager", allEntries = true)})
     public void setPaid(Integer id, Boolean isPaid) {
         OrderMap orderMap = orderRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Заказ не найден"));
         orderMap.setIsPaid(isPaid);

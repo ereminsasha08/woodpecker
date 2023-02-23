@@ -10,6 +10,9 @@ import com.woodpecker.woodpecker.util.exception.ApplicationException;
 import com.woodpecker.woodpecker.util.exception.ErrorType;
 import com.woodpecker.woodpecker.web.AuthUser;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +34,7 @@ public class GeographyMapService {
         return geographyMapRepository.findById(id).orElseThrow(() -> new ApplicationException("Карты не существует", ErrorType.DATA_NOT_FOUND));
     }
 
+    @Cacheable("mapsByManager")
     public List<GeographyMap> findByManager(User user) {
         return geographyMapRepository.findByManagerAndIsView(user, true).stream()
                 .filter(
@@ -75,6 +79,9 @@ public class GeographyMapService {
 
 
     @Transactional
+    @Caching(evict = {
+            @CacheEvict(value = "orders", allEntries = true),
+            @CacheEvict(value = "mapsByManager", allEntries = true)})
     public void create(GeographyMap geographyMap, AuthUser authUser) {
         if (geographyMap.isNew()) {
             geographyMap.setManager(authUser.getUser());
@@ -93,6 +100,9 @@ public class GeographyMapService {
     }
 
     @Transactional
+    @Caching(evict = {
+            @CacheEvict(value = "orders", allEntries = true),
+            @CacheEvict(value = "mapsByManager", allEntries = true)})
     public void delete(int id) {
         GeographyMap byId = getById(id);
 

@@ -29,8 +29,14 @@ $(function () {
                 "data": "id",
                 "orderable": false,
                 "render": function (data, type, row) {
+                    let description = row.geographyMap.description;
                     let ref = "<button class='btn btn-info' onclick='getInfoMap(" + data + ");' data-placement=\"top\" title=\"" + data + "\">";
-                    return ref + data + "</a>";
+                    if (description != null && description.toString().length >= 4) {
+                        ref += description.toString().substring(0, 4);
+                    } else {
+                        ref += data;
+                    }
+                    return ref + "</a>"
                 }
             },
             {
@@ -89,7 +95,7 @@ $(function () {
                 "render": function (data, type, row) {
                     if (data.toString().length < 15)
                         return data;
-                    else return '<div class="overflow-auto" style="max-width: 180px; max-height: 40px">' + data + '</div>';
+                    else return '<div class="overflow-auto" style="max-width: 170px; max-height: 40px">' + data + '</div>';
                 }
             },
             {

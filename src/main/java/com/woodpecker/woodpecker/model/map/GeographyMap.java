@@ -12,6 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Getter
@@ -19,7 +20,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "maps")
 @NoArgsConstructor
-public class GeographyMap extends Product {
+public class GeographyMap extends Product implements Serializable {
 
 
     @Column(name = "type_map", nullable = false)

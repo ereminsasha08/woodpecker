@@ -9,12 +9,13 @@ import org.hibernate.annotations.FetchMode;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 
 @MappedSuperclass
 @Getter
 @Setter
-public abstract class Product extends BaseEntity {
+public abstract class Product extends BaseEntity implements Serializable {
 
     @Column(name = "description", length = 800)
     private String description;

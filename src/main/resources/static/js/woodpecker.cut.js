@@ -92,7 +92,7 @@ $(function () {
                 "render": function (data, type, row) {
                     if (data.toString().length < 15)
                         return data;
-                    else return '<div class="overflow-auto" style="max-width: 240px; max-height: 40px">' + data + '</div>';
+                    else return '<div class="overflow-auto" style="max-width: 170px; max-height: 40px">' + data + '</div>';
                 }
             },
             {

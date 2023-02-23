@@ -5,6 +5,8 @@ import com.woodpecker.woodpecker.model.map.Stage;
 import com.woodpecker.woodpecker.util.exception.ApplicationException;
 import com.woodpecker.woodpecker.util.exception.ErrorType;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +35,9 @@ public class ProductionService {
     }
 
     @Transactional
+    @Caching(evict = {
+            @CacheEvict(value = "orders", allEntries = true),
+            @CacheEvict(value = "mapsByManager", allEntries = true)})
     public void updateConditionOrder(Integer id, Integer conditionMap) {
         if (conditionMap < Stage.ЖДЕТ_ПРИКЛЕЙКИ.ordinal())
             throw new ApplicationException("Нельзя менять состояния заказа до покраски", ErrorType.WRONG_REQUEST);

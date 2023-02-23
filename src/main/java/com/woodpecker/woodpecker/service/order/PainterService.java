@@ -3,6 +3,8 @@ package com.woodpecker.woodpecker.service.order;
 import com.woodpecker.woodpecker.model.map.OrderMap;
 import com.woodpecker.woodpecker.model.map.Stage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +37,9 @@ public class PainterService {
     }
 
     @Transactional
+    @Caching(evict = {
+            @CacheEvict(value = "orders", allEntries = true),
+            @CacheEvict(value = "mapsByManager", allEntries = true)})
     public void setColorPlywood(Integer id) {
         OrderMap orderMap = orderService.findOrderById(id);
         orderMap.setIsColorPlywood(false);
@@ -43,6 +48,9 @@ public class PainterService {
     }
 
     @Transactional
+    @Caching(evict = {
+            @CacheEvict(value = "orders", allEntries = true),
+            @CacheEvict(value = "mapsByManager", allEntries = true)})
     public void setPainter(Integer id, String namePainter) {
         OrderMap orderMap = orderService.findOrderById(id);
         orderMap.setNamePainter(namePainter);
@@ -51,6 +59,9 @@ public class PainterService {
     }
 
     @Transactional
+    @Caching(evict = {
+            @CacheEvict(value = "orders", allEntries = true),
+            @CacheEvict(value = "mapsByManager", allEntries = true)})
     public void setStage(Integer id) {
         OrderMap orderMap = orderService.findOrderById(id);
         orderMap.setPainting_end(LocalDateTime.now());

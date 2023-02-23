@@ -4,13 +4,17 @@ spring:
 #  sql:
 #    init:
 #      mode: always
+  cache:
+    cache-names: {"userByMail", "orders", "mapsByManager"}
+    redis:
+      time-to-live: 10M
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     username: user
     password: password
 
   jpa:
-#    show-sql: true
+    show-sql: true
     open-in-view: false
     properties:
       #  http://docs.jboss.org/hibernate/orm/5.3/userguide/html_single/Hibernate_User_Guide.html#configurations
@@ -42,6 +46,8 @@ spring:
   # https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#common-application-properties-cache
   flyway:
     baseline-on-migrate: true
+  redis:
+    host:
 
 
 #  cache:

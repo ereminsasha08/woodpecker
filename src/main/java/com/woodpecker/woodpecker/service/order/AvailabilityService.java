@@ -7,6 +7,8 @@ import com.woodpecker.woodpecker.repository.GeographyMapRepository;
 import com.woodpecker.woodpecker.repository.OrderRepository;
 import com.woodpecker.woodpecker.web.AuthUser;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +30,9 @@ public class AvailabilityService {
     }
 
     @Transactional
+    @Caching(evict = {
+            @CacheEvict(value = "orders", allEntries = true),
+            @CacheEvict(value = "mapsByManager", allEntries = true)})
     public GeographyMap createAvailabilityMap(AuthUser authUser, GeographyMap geographyMap, Integer stage, Boolean isColorPlywood, String laser) {
         OrderMap orderMap = new OrderMap(LocalDateTime.now(), geographyMap, false, stage, true);
         if (isColorPlywood && stage == Stage.ЖДУ_ПОКРАСКУ_НАЛИЧИЕ.ordinal())

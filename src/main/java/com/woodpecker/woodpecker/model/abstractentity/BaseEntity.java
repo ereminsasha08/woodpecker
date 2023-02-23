@@ -7,6 +7,7 @@ import org.springframework.data.util.ProxyUtils;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 
 @MappedSuperclass
@@ -16,7 +17,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class BaseEntity implements Persistable<Integer>, HasId {
+public abstract class BaseEntity implements Persistable<Integer>, HasId, Serializable {
 
     @Id
     @SequenceGenerator(name = "my_sequence", sequenceName = "my_sequence", initialValue = 8000, allocationSize = 1)

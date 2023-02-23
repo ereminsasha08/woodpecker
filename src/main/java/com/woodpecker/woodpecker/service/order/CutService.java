@@ -10,6 +10,8 @@ import com.woodpecker.woodpecker.util.exception.ApplicationException;
 import com.woodpecker.woodpecker.util.exception.ErrorType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,8 +52,14 @@ public class CutService {
     }
 
     @Transactional(isolation = Isolation.REPEATABLE_READ)
+    @Caching(evict = {
+            @CacheEvict(value = "orders", allEntries = true),
+            @CacheEvict(value = "mapsByManager", allEntries = true)})
     public void setLaserAndList(Integer id, Boolean isColorPlywood, Boolean isWoodStain) {
         OrderMap orderMap = orderService.findOrderById(id);
+        if (!orderMap.getPlywoodList().isEmpty() && checkAllPlywoodList(orderMap.getPlywoodList())) {
+            throw new ApplicationException("Нельзя менять тип производства выпиленной карты", ErrorType.DATA_NOT_FOUND);
+        }
         if (orderMap.getPlywoodList().isEmpty()) {
             orderMap.setLaser(chooseLaser(orderMap));
         }
@@ -112,6 +120,9 @@ public class CutService {
     }
 
     @Transactional(isolation = Isolation.REPEATABLE_READ)
+    @Caching(evict = {
+            @CacheEvict(value = "orders", allEntries = true),
+            @CacheEvict(value = "mapsByManager", allEntries = true)})
     public void cutComplete(Integer id, Boolean listIsComplete, Integer numberList) {
         OrderMap orderById = orderService.findOrderById(id);
         if (orderById.getStage() >= Stage.ЖДЕТ_ПОКРАСКИ.ordinal())
@@ -154,6 +165,9 @@ public class CutService {
     }
 
     @Transactional
+    @Caching(evict = {
+            @CacheEvict(value = "orders", allEntries = true),
+            @CacheEvict(value = "mapsByManager", allEntries = true)})
     public void changeLaser(Integer id, String laserName) {
         OrderMap orderById = orderService.findOrderById(id);
         if (orderById.getLaser().equalsIgnoreCase(laserName) || checkAllPlywoodList(orderById.getPlywoodList())) {
