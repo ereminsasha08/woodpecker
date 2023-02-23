@@ -2,7 +2,6 @@ package com.woodpecker.woodpecker.service.order;
 
 import com.woodpecker.woodpecker.model.map.OrderMap;
 import com.woodpecker.woodpecker.model.map.Stage;
-import com.woodpecker.woodpecker.repository.OrderRepository;
 import com.woodpecker.woodpecker.util.exception.ApplicationException;
 import com.woodpecker.woodpecker.util.exception.ErrorType;
 import lombok.RequiredArgsConstructor;
@@ -18,11 +17,10 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class ProductionService {
 
-    private final OrderRepository orderRepository;
+    private final OrderService orderService;
 
     public List<OrderMap> getOrderForProduction() {
-        return orderRepository
-                .findAll()
+        return orderService.getAll(false)
                 .stream()
                 .filter(order -> !order.getCompleted())
                 .sorted(
@@ -38,8 +36,7 @@ public class ProductionService {
     public void updateConditionOrder(Integer id, Integer conditionMap) {
         if (conditionMap < Stage.ЖДЕТ_ПРИКЛЕЙКИ.ordinal())
             throw new ApplicationException("Нельзя менять состояния заказа до покраски", ErrorType.WRONG_REQUEST);
-        OrderMap orderMap = orderRepository.findById(id)
-                .orElseThrow(() -> new ApplicationException("Карта не найдена", ErrorType.DATA_NOT_FOUND));
+        OrderMap orderMap = orderService.findOrderById(id);
         int newCondition = conditionMap + 1;
         orderMap.setStage(newCondition);
         setTimeAndCompleted(orderMap, newCondition);

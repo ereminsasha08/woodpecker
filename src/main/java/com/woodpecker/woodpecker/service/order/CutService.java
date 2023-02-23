@@ -22,7 +22,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 @Slf4j
 public class CutService {
 
@@ -34,7 +34,8 @@ public class CutService {
 
 
     public List<OrderMap> sortedForCut() {
-        return orderService.getAll(false).stream()
+        return orderService.getAll(false)
+                .stream()
                 .filter(
                         order -> !order.getCompleted()
                                 && order.getStage() >= Stage.НОВЫЙ_ЗАКАЗ.ordinal()

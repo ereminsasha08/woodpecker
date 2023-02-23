@@ -38,8 +38,8 @@ $(function () {
             },
             {
                 "data": "geographyMap.isMultiLevel",
-                "render": function (date, type, row) {
-                    if (date) {
+                "render": function (data, type, row) {
+                    if (data) {
                         return "Многоур."
                     }
                     return "Одноур.";
@@ -55,17 +55,17 @@ $(function () {
             },
             {
                 "data": "geographyMap.light",
-                "render": function (date, type, row) {
-                    if (type === "display" && !date.toString().toLowerCase().startsWith("без"))
-                        return date;
+                "render": function (data, type, row) {
+                    if (type === "display" && !data.toString().toLowerCase().startsWith("без"))
+                        return data;
                     else return "Нет";
                 }
             },
             {
                 "data": "laser",
-                "render": function (date, type, row) {
-                    if (date != null) {
-                        return "<button class='btn btn-info' onclick='getInfoCut(" + row.id + ");'>" + date + "</button>";
+                "render": function (data, type, row) {
+                    if (data != null) {
+                        return "<button class='btn btn-info' onclick='getInfoCut(" + row.id + ");'>" + data + "</button>";
                     } else {
                         return "<button class='btn btn-secondary' onclick='setLaser(" + row.id + ");'>Нет</button>";
                     }
@@ -73,8 +73,8 @@ $(function () {
             },
             {
                 "data": "stage",
-                "render": function (date, type, row) {
-                    return "<button class='btn btn-my btn-warning' onclick='getOrderForModify(" + row.id + ");'>" + getCondition(date) + "</button>";
+                "render": function (data, type, row) {
+                    return "<button class='btn btn-my btn-warning' onclick='getOrderForModify(" + row.id + ");'>" + getCondition(data) + "</button>";
 
                 }
             },
@@ -119,7 +119,7 @@ function makeEditable(datatableOpts) {
                 "createdRow": function (row, data, dataIndex) {
                     if (data.orderTerm != null && !(data.marketPlace || data.isAvailability)) {
 
-                        if (date - Date.parse(data.orderTerm) > -350000000) {
+                        if (data - Date.parse(data.orderTerm) > -350000000) {
                             $(row).attr("data-map-info", true);
                             return;
                         }

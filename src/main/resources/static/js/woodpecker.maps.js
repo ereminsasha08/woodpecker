@@ -46,7 +46,8 @@ $(function () {
             {
                 "data": "dateTime",
                 "render": function (data, type, row) {
-                    return data.substring(0, 10).replaceAll("-", ".");
+                    let s = data.substring(2, 10).replaceAll("-", "");
+                    return s.substring(4, 6) + "." + s.substring(2, 4) + "." + s.substring(0,2);
                 }
             },
             {
@@ -133,7 +134,7 @@ $(function () {
 
         "order": [
             [
-                0,
+                1,
                 "desc"
             ]
         ],

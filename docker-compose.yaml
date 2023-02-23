@@ -21,6 +21,13 @@ services:
       - woodpecker_network
     environment:
       - spring.datasource.url=jdbc:postgresql://db_woodpecker:5432/postgres
+  redis-wd:
+    image: redis
+    container_name: "redis_wd"
+    ports:
+      - "6379:6379"
+    networks:
+      - woodpecker_network
 networks:
   woodpecker_network:
 

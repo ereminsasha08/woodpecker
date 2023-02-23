@@ -17,6 +17,7 @@ $(function () {
         "columns": [
             {
                 "data": "geographyMap",
+                "orderable": false,
                 "render": function (data, type, row) {
                     if (data.isMonochromatic) {
                         return '<i class="fa fa-exclamation" aria-hidden="true"></i>';
@@ -26,6 +27,7 @@ $(function () {
             },
             {
                 "data": "id",
+                "orderable": false,
                 "render": function (data, type, row) {
                     let ref = "<button class='btn btn-info' onclick='getInfoMap(" + data + ");' data-placement=\"top\" title=\"" + data + "\">";
                     return ref + data + "</a>";
@@ -33,22 +35,26 @@ $(function () {
             },
             {
                 "data": "orderTerm",
+                "orderable": false,
                 "render": function (data, type, row) {
                     if (type === "display") {
-                        return data.substring(0, 10).replaceAll("-", ".");
+                        let s = data.substring(2, 10).replaceAll("-", "");
+                        return s.substring(4, 6) + "." + s.substring(2, 4) + "." + s.substring(0, 2);
                     }
                     return data;
-
                 }
             },
             {
-                "data": "geographyMap.typeMap"
+                "data": "geographyMap.typeMap",
+                "orderable": false
             },
             {
-                "data": "geographyMap.size"
+                "data": "geographyMap.size",
+                "orderable": false
             },
             {
                 "data": "geographyMap.language",
+                "orderable": false,
                 "render": function (data, type, row) {
                     let language = data;
                     let city = "без ст"
@@ -65,6 +71,7 @@ $(function () {
             },
             {
                 "data": "geographyMap.isMultiLevel",
+                "orderable": false,
                 "render": function (data, type, row) {
                     if (data) {
                         return '<span class="fa fa-check"></span>';
@@ -78,14 +85,16 @@ $(function () {
             },
             {
                 "data": "geographyMap.color",
+                "orderable": false,
                 "render": function (data, type, row) {
                     if (data.toString().length < 15)
                         return data;
-                    else return '<div class="overflow-auto" style="max-width: 240px; max-height: 40px">' + data + '</div>';
+                    else return '<div class="overflow-auto" style="max-width: 180px; max-height: 40px">' + data + '</div>';
                 }
             },
             {
                 "data": "laser",
+                "orderable": false,
                 "render": function (data, type, row) {
                     if (data != null) {
                         if (row.isColorPlywood) {
@@ -102,6 +111,7 @@ $(function () {
             },
             {
                 "data": "namePainter",
+                "orderable": false,
                 "render": function (data, type, row) {
                     if (data != null)
                         return data;
@@ -110,6 +120,7 @@ $(function () {
             },
             {
                 "data": "stage",
+                "orderable": false,
                 "render": function (data, type, row) {
                     if (data === 5)
                         return "<button class='btn btn-danger' onclick='setStagePaint(" + row.id + ");'>Покраненно!</button>";

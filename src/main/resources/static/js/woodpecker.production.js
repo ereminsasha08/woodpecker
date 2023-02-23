@@ -16,64 +16,81 @@ $(function () {
         "order": false,
         "columns": [
             {
-                "data": "id",
+                "data": "geographyMap",
+                "orderable": false,
+                "defaultContent": "",
                 "render": function (data, type, row) {
-                    let gMap = row.geographyMap;
-                    let description = gMap.description;
-
-                    let ref = "<button class='btn btn-info' onclick='getInfoMap(" + data + ");' data-placement=\"top\" title=\"" + data + "\">";;
-
+                    if (data.isPlexiglass || !data.light.toLowerCase().startsWith("без под") || (data.additional != null && data.additional.toString().length > 0)) {
+                        return  '<i class="fa fa-exclamation" aria-hidden="true"></i>';
+                    }
+                }
+            },
+            {
+                "data": "id",
+                "orderable": false,
+                "render": function (data, type, row) {
+                    let description = row.geographyMap.description;
+                    let ref = "<button class='btn btn-info' onclick='getInfoMap(" + data + ");' data-placement=\"top\" title=\"" + data + "\">";
                     if (description != null && description.toString().length >= 4) {
-                         ref += description.toString().substring(0, 4);
+                        ref += description.toString().substring(0, 4);
                     } else {
-                         ref += data;
+                        ref += data;
                     }
-                    if (gMap.isPlexiglass || !gMap.light.toLowerCase().startsWith("без под") || (gMap.additional != null && gMap.additional.toString().length > 0)) {
-                        ref += '<i class="fa fa-exclamation" aria-hidden="true"></i>';
-                    }
-                    return ref +="</a>"
+                    return ref + "</a>"
                 }
             },
             {
                 "data": "orderTerm",
+                "orderable": false,
                 "render": function (data, type, row) {
                     if (type === "display") {
-                        return data.substring(0, 10).replaceAll("-", ".");
+                        let s = data.substring(2, 10).replaceAll("-", "");
+                        return s.substring(4, 6) + "." + s.substring(2, 4) + "." + s.substring(0, 2);
                     }
                     return data;
 
                 }
             },
             {
-                "data": "geographyMap.typeMap"
+                "data": "geographyMap.typeMap",
+                "orderable": false,
             },
             {
-                "data": "geographyMap.size"
+                "data": "geographyMap.size",
+                "orderable": false,
             },
             {
                 "data": "geographyMap.language",
+                "orderable": false,
                 "render": function (data, type, row) {
                     return renderLanguageState(data, row);
                 }
             },
             {
                 "data": "geographyMap.color",
+                "orderable": false,
                 "render": function (data, type, row) {
-                    if (data.toString().length < 12)
+                    if (data.toString().length < 10)
                         return data;
-                    else return '<div class="overflow-auto" style="max-width: 200px; max-height: 40px">' + data + '</div>';
+                    else return '<div class="overflow-auto" style="max-width: 100px; max-height: 40px">' + data + '</div>';
                 }
             },
             {
                 "data": "geographyMap.light",
+                "orderable": false,
                 "render": function (data, type, row) {
-                    if (data.toString().length < 12)
-                        return data;
-                    else return '<div class="overflow-auto" style="max-width: 200px; max-height: 40px">' + data + '</div>';
+                    if (data != null && !data.toString().toLowerCase().startsWith("без"))
+                        if (data.toString().length < 10)
+                            return data;
+                        else return '<div class="overflow-auto" style="max-width: 100px; max-height: 40px">' + data + '</div>';
+                    else return "Нет";
+
                 }
+
             },
             {
                 "data": "geographyMap.isMultiLevel",
+                "orderable": false,
                 "render": function (data, type, row) {
                     if (data) {
                         return '<span class="fa fa-check"></span>';
@@ -87,6 +104,7 @@ $(function () {
             },
             {
                 "data": "geographyMap.isColorPlywood",
+                "orderable": false,
                 "render": function (data, type, row) {
                     if (data) {
                         return '<span class="fa fa-check"></span>';
@@ -101,6 +119,7 @@ $(function () {
 
             {
                 "data": "laser",
+                "orderable": false,
                 "render": function (data, type, row) {
                     if (data != null) {
                         return "<button class='btn btn-info' onclick='getInfoCut(" + row.id + ");'>" + data + "</button>";
@@ -111,6 +130,7 @@ $(function () {
             },
             {
                 "data": "stage",
+                "orderable": false,
                 "render": function (data, type, row) {
                     let msg = 'Вы уверенны, что заказ отправлен?';
                     if (data >= 6) {

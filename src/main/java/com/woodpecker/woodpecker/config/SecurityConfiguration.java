@@ -1,9 +1,8 @@
 package com.woodpecker.woodpecker.config;
 
 import com.woodpecker.woodpecker.model.user.User;
-import com.woodpecker.woodpecker.repository.UserRepository;
+import com.woodpecker.woodpecker.service.user.UserService;
 import com.woodpecker.woodpecker.web.AuthUser;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,12 +12,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
-import java.util.Optional;
 
 @Configuration
 @EnableWebSecurity
@@ -30,20 +26,20 @@ public class SecurityConfiguration {
 
     public static final PasswordEncoder PASSWORD_ENCODER = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PASSWORD_ENCODER;
     }
 
+
     @Bean
     public UserDetailsService userDetailsService() {
         return email -> {
             log.debug("Authenticating '{}'", email);
-            Optional<User> optionalUser = userRepository.findByEmailIgnoreCase(email);
-            return new AuthUser(optionalUser.orElseThrow(
-                    () -> new UsernameNotFoundException("User '" + email + "' was not found")));
+            User user = userService.findByEmail(email);
+            return new AuthUser(user);
         };
     }
 

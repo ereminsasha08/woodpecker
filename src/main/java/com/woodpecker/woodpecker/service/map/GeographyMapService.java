@@ -31,7 +31,6 @@ public class GeographyMapService {
         return geographyMapRepository.findById(id).orElseThrow(() -> new ApplicationException("Карты не существует", ErrorType.DATA_NOT_FOUND));
     }
 
-
     public List<GeographyMap> findByManager(User user) {
         return geographyMapRepository.findByManagerAndIsView(user, true).stream()
                 .filter(
@@ -64,9 +63,14 @@ public class GeographyMapService {
                                     || !(map.getOrderMap().getIsAvailability()
                                     || map.getOrderMap().getCompleted())
                     );
+        } else {
+            byDateTimeBetween = byDateTimeBetween
+                    .filter(
+                            map -> map.getOrderMap() != null
+                                    && map.getOrderMap().getCompleted()
+                                    && !map.getOrderMap().getIsAvailability());
         }
-        return byDateTimeBetween
-                .toList();
+        return byDateTimeBetween.toList();
     }
 
 
@@ -105,6 +109,4 @@ public class GeographyMapService {
         }
 
     }
-
-
 }
