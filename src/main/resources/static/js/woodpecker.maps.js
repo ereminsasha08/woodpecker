@@ -21,14 +21,17 @@ function clearFilter() {
 // $(document).ready(function () {
 $(function () {
     makeEditable({
+        lengthMenu: [
+            [50, -1],
+            [50, 'All'],
+        ],
         "columns": [
             {
                 "data": "orderMap",
                 "render": function (data, type, row) {
-                    if (data != null){
+                    if (data != null) {
                         return "<input type='checkbox' " + (data.isPaid ? "checked" : "") + " onclick='setPaid($(this)," + row.id + ");'/>";
-                    }
-                    else return "";
+                    } else return "";
                 }
             },
             {
@@ -56,29 +59,27 @@ $(function () {
                 "data": "language",
                 "render": function (data, type, row) {
                     let language = data;
-                    let city = "без ст"
                     if (data.includes("Русский")) {
                         language = "Рус";
                     } else if (data.includes("Английский"))
                         language = "Анг"
-                    if (row.isState)
-                        city = "шт";
-                    else if (row.isCapital)
-                        city = "ст";
-                    return language + " " + city;
+                    if (row.typeMap.toString().toLowerCase().includes("мир")) {
+                        let city = "без ст"
+                        if (row.isState)
+                            city = "шт";
+                        else if (row.isCapital)
+                            city = "ст";
+                        return language + " " + city;
+                    } else return language;
                 }
             },
             {
                 "data": "isMultiLevel",
                 "render": function (data, type, row) {
-                    // if (data) {
-                    //     return  '<span class="fa fa-check"></span>';
-                    // }
-                    // return '<span class="fa fa-close"></span>';
                     if (data) {
-                        return "Многоур"
+                        return "Мнг"
                     }
-                    return "Одноур";
+                    return "Одн";
                 }
             },
             {
@@ -100,8 +101,7 @@ $(function () {
                             data = data.substring(0, 7) + "...";
                         }
                         return ref + data + "</a>";
-                    }
-                    else return "";
+                    } else return "";
                 }
             },
             {
@@ -109,10 +109,10 @@ $(function () {
                 "render": function (data, type, row) {
                     if (data !== null) {
                         if (!getCondition(data.stage).toLowerCase().startsWith("отправлен")) {
-                            return "<button class='btn btn-warning' onclick='getOrderForModify(" + row.id + ");'>" + getCondition(data.stage) + "</button>";
+                            return "<button class='btn btn-my btn-warning' onclick='getOrderForModify(" + row.id + ");'>" + getCondition(data.stage) + "</button>";
                         } else return getCondition(data.stage);
                     } else {
-                        return "<button class='btn btn-warning' onclick='createOrder(" + row.id + ");'>Начать</button>";
+                        return "<button class='btn btn-my btn-warning' onclick='createOrder(" + row.id + ");'>Начать</button>";
                     }
                 }
             },
@@ -138,7 +138,8 @@ $(function () {
             ]
         ],
     });
-});
+})
+;
 
 function setPaid(chkbox, id) {
     var enabled = chkbox.is(":checked");
@@ -202,7 +203,7 @@ function makeEditable(datatableOpts) {
                 "info": true,
                 "createdRow": function (row, data, dataIndex) {
                     if (data.orderMap != null) {
-                        if(!data.orderMap.isPaid){
+                        if (!data.orderMap.isPaid) {
                             $(row).attr("data-order-paid", false);
                         }
                         if (data.orderMap.orderTerm != null && !(data.orderMap.marketPlace || data.orderMap.isAvailability)) {

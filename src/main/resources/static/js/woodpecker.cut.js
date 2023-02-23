@@ -29,7 +29,7 @@ $(function () {
             {
                 "data": "id",
                 "render": function (data, type, row) {
-                    let ref = "<button class='btn btn-info' onclick='getInfoMap(" + data + ");' data-placement=\"top\" title=\"" + data + "\">";
+                    let ref = "<button class='btn  btn-info' onclick='getInfoMap(" + data + ");' data-placement=\"top\" title=\"" + data + "\">";
                     return ref + data + "</a>";
                 }
             },
@@ -93,9 +93,9 @@ $(function () {
                 "data": "laser",
                 "render": function (data, type, row) {
                     if (data != null) {
-                        return "<button class='btn btn-warning' onclick='getInfoCut(" + row.id + "," + row.geographyMap.isColorPlywood + ",\""+data+"\");'>" + data + "</button>";
+                        return "<button class='btn btn-my btn-warning' onclick='getInfoCut(" + row.id + "," + row.geographyMap.isColorPlywood + ",\""+data+"\");'>" + data + "</button>";
                     } else {
-                        return "<button class='btn btn-warning' onclick='setLaser(" + row.id + ");'>Пилить</button>";
+                        return "<button  class='btn btn-my btn-warning' onclick='setLaser(" + row.id + ");'>Пилить</button>";
                     }
                 }
             },

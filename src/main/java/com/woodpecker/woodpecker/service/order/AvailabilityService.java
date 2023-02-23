@@ -29,20 +29,29 @@ public class AvailabilityService {
 
     @Transactional
     public GeographyMap createAvailabilityMap(AuthUser authUser, GeographyMap geographyMap, Integer stage, Boolean isColorPlywood, String laser) {
+        OrderMap orderMap = new OrderMap(LocalDateTime.now(), geographyMap, false, stage, true);
         if (isColorPlywood && stage == Stage.ЖДУ_ПОКРАСКУ_НАЛИЧИЕ.ordinal())
             throw new IllegalArgumentException("Карта из покрашенных досок не может быть на покраске");
-        geographyMap.setManager(authUser.getUser());
-        geographyMap.setDescription("Карта из наличия в момент создания была на стадии: " + Stage.values()[stage].name() + geographyMap.getDescription() == null ? "" : geographyMap.getDescription());
-        GeographyMap save = geographyMapRepository.save(geographyMap);
-        save.setIsColorPlywood(isColorPlywood);
-        OrderMap orderMap = new OrderMap(LocalDateTime.now(), geographyMap, false, stage, true);
-        orderRepository.save(orderMap);
-        geographyMap.setOrderMap(orderMap);
+        if (geographyMap.isNew()) {
+            geographyMap.setManager(authUser.getUser());
+            geographyMap.setDescription("Карта из наличия в момент создания была на стадии: " +
+                    Stage.values()[stage].name());
+            orderMap.setCompleted(true);
+            orderMap.setIsColorPlywood(false);
+            orderMap.setPlywoodList(List.of("Готов"));
+            orderMap.setAllTime();
+            geographyMap.setOrderMap(orderMap);
+
+        } else {
+            GeographyMap byId = geographyMapRepository.findById(geographyMap.id()).get();
+            geographyMap.setManager(byId.getManager());
+            orderMap = byId.getOrderMap();
+            geographyMap.setOrderMap(orderMap);
+        }
         orderMap.setLaser(laser);
-        orderMap.setCompleted(true);
-        orderMap.setIsColorPlywood(false);
-        orderMap.setPlywoodList(List.of("Готов"));
-        orderMap.setAllTime();
+        geographyMap.setIsColorPlywood(isColorPlywood);
+        GeographyMap save = geographyMapRepository.save(geographyMap);
+        orderRepository.save(orderMap);
         return save;
     }
 

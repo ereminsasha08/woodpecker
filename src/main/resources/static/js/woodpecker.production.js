@@ -16,31 +16,22 @@ $(function () {
         "order": false,
         "columns": [
             {
-                "data": "geographyMap",
-                "render": function (data, type, row) {
-                    if (data.isPlexiglass || !data.light.toLowerCase().startsWith("без под") || (data.additional != null && data.additional.toString().length > 0)) {
-                        return '<i class="fa fa-exclamation" aria-hidden="true"></i>';
-                    }
-                    return '';
-                }
-            },
-            {
                 "data": "id",
                 "render": function (data, type, row) {
-                    let description = row.geographyMap.description;
-                    let ref = "";
+                    let gMap = row.geographyMap;
+                    let description = gMap.description;
+
+                    let ref = "<button class='btn btn-info' onclick='getInfoMap(" + data + ");' data-placement=\"top\" title=\"" + data + "\">";;
 
                     if (description != null && description.toString().length >= 4) {
-                        ref = "<button class='btn btn-info' onclick='getInfoMap(" + data + ");' data-placement=\"top\" title=\"" + data + "\">";
-                        return ref + description.toString().substring(0, 4) + "</a>";
+                         ref += description.toString().substring(0, 4);
                     } else {
-                        ref = "<button class='btn btn-info' onclick='getInfoMap(" + data + ");' data-placement=\"top\" title=\"" + data + "\">";
-                        return ref + data + "</a>";
+                         ref += data;
                     }
-
-
-
-
+                    if (gMap.isPlexiglass || !gMap.light.toLowerCase().startsWith("без под") || (gMap.additional != null && gMap.additional.toString().length > 0)) {
+                        ref += '<i class="fa fa-exclamation" aria-hidden="true"></i>';
+                    }
+                    return ref +="</a>"
                 }
             },
             {
@@ -68,15 +59,17 @@ $(function () {
             {
                 "data": "geographyMap.color",
                 "render": function (data, type, row) {
-                    if (data.toString().length < 15)
+                    if (data.toString().length < 12)
                         return data;
-                    else return '<div class="overflow-auto" style="max-width: 240px; max-height: 40px">' + data + '</div>';
+                    else return '<div class="overflow-auto" style="max-width: 200px; max-height: 40px">' + data + '</div>';
                 }
             },
             {
                 "data": "geographyMap.light",
                 "render": function (data, type, row) {
-                     return data;
+                    if (data.toString().length < 12)
+                        return data;
+                    else return '<div class="overflow-auto" style="max-width: 200px; max-height: 40px">' + data + '</div>';
                 }
             },
             {
@@ -123,8 +116,8 @@ $(function () {
                     if (data >= 6) {
                         if (data === 9 && row.isAvailability) {
                             msg = "Вы уверены, что заказ готов для наличия?"
-                            return "<button class='btn btn-danger' onclick='setCondition(" + row.id + "," + 10 + ",\"" + msg + "\");'>Внести в наличие" + "</button>";
-                        } else return "<button class='btn btn-danger' onclick='setCondition(" + row.id + "," + data + ",\"" + msg + "\");'>" + getCondition(data) + "</button>";
+                            return "<button class='btn btn-my btn-danger' onclick='setCondition(" + row.id + "," + 10 + ",\"" + msg + "\");'>Внести в наличие" + "</button>";
+                        } else return "<button class='btn btn-my btn-danger' onclick='setCondition(" + row.id + "," + data + ",\"" + msg + "\");'>" + getCondition(data) + "</button>";
                     } else {
                         return getCondition(data)
                     }

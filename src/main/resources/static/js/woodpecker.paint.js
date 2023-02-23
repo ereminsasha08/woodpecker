@@ -42,6 +42,9 @@ $(function () {
                 }
             },
             {
+                "data": "geographyMap.typeMap"
+            },
+            {
                 "data": "geographyMap.size"
             },
             {

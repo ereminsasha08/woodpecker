@@ -7,6 +7,10 @@ function makeEditable(datatableOpts) {
         // https://api.jquery.com/jquery.extend/#jQuery-extend-deep-target-object1-objectN
         $.extend(true, datatableOpts,
             {
+                lengthMenu: [
+                    [50, -1],
+                    [50, 'All'],
+                ],
                 "ajax": {
                     "url": ctx.ajaxUrl,
                     "dataSrc": ""
@@ -174,15 +178,15 @@ function getCondition(date) {
         case 12:
             return "Наличие";
         case 13:
-            return "Из наличия готова";
+            return "Нал. готова";
         case 14:
-            return "Из наличия не покрашена"
+            return "Нал. не покрашена"
         case 15:
-            return "Из наличия не приклеена"
+            return "Нал. не приклеена"
         case 16:
-            return "Из наличия жду покраску"
+            return "Нал. жду покраску"
         case 17:
-            return "Из наличия жду приклейку"
+            return "Нал. жду приклейку"
 
     }
 
@@ -202,6 +206,7 @@ function renderLanguageState(data, row) {
         city = "ст";
     return language + " " + city;
 }
+
 function getInfoMap(id) {
     $("#modalInfoMap").modal();
     $.get("rest/orders/" + id, function (data) {

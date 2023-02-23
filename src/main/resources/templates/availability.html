@@ -21,19 +21,20 @@
                 Добавить
             </button>
             <h3 class="text-center">Наличие</h3>
-            <table class="hover" style="width: 95%" id="datatable">
+            <table class="compact row-border" style="width: 95%" id="datatable">
                 <thead>
                 <tr>
                     <th>Номер</th>
                     <th>Тип</th>
-                    <th>Размер</th>
+                    <th>Разм</th>
                     <th>Яз.Гор.</th>
                     <th>Многур</th>
-                    <th>Подсветка</th>
-                    <th>Кр.Дк</th>
                     <th>Цвет</th>
+                    <th>Подсветка</th>
                     <th>Лазер</th>
                     <th>Cостояние</th>
+                    <th></th>
+                    <th></th>
                 </tr>
                 </thead>
             </table>
@@ -100,8 +101,13 @@
                     <input type="hidden" id="availability_contact" name="contact">
                     <div class="row">
                         <div class="form-group col">
+                            <label for="availability_id" class="col-form-label">Номер</label>
+                            <input type="text" class="form-control" id="availability_id" name="id" readonly="">
+                        </div>
+                        <div class="form-group col">
                             <label for="availability_dateTime" class="col-form-label">Дата</label>
-                            <input type="datetime-local" class="form-control" id="availability_dateTime" name="dateTime">
+                            <input type="datetime-local" class="form-control" id="availability_dateTime"
+                                   name="dateTime">
                         </div>
 
 
@@ -116,8 +122,8 @@
                     </div>
                     <div class="row">
                         <div class="form-group col">
-                            <label for="size" class="col-form-label">Размер</label>
-                            <input type="number" class="form-control" id="size" name="size" list="sizeOption">
+                            <label for="availability_size" class="col-form-label">Размер</label>
+                            <input type="number" class="form-control" id="availability_size" name="size" list="sizeOption">
                             <datalist id="sizeOption">
                                 <option>100</option>
                                 <option>120</option>
@@ -132,53 +138,41 @@
                             </datalist>
                         </div>
                         <div class="form-group col">
-                            <label for="language" class="col-form-label">Язык</label>
-                            <input type="text" class="form-control" id="language" name="language"
+                            <label for="availability_language" class="col-form-label">Язык</label>
+                            <input type="text" class="form-control" id="availability_language" name="language"
                                    list="languageOption">
                             <datalist id="languageOption">
                                 <option>Русский</option>
                                 <option>Английский</option>
                             </datalist>
                         </div>
-
                         <div class="form-group col">
-                            <label for="typeMap" class="col-form-label">Тип</label>
-                            <input type="text" class="form-control" id="typeMap" name="typeMap" list="typeMapOptional">
+                            <label for="availability_isState" class="col-form-label">Штаты</label>
+                            <select class="form-control" id="availability_isState" name="isState">
+                                <option value="true">Со штатами</option>
+                                <option value="false">Со столицами</option>
+                            </select>
+                        </div>
+                        <div class="form-group col">
+                            <label for="availability_typeMap" class="col-form-label">Тип</label>
+                            <input type="text" class="form-control" id="availability_typeMap" name="typeMap" list="typeMapOptional">
                             <datalist id="typeMapOptional">
                                 <option>Мир</option>
                                 <option>Россия</option>
                             </datalist>
                         </div>
-                        <div class="form-group col">
-                            <label for="isState" class="col-form-label">Штаты</label>
-                            <select class="form-control" id="isState" name="isState">
-                                <option value="true">Со штатами</option>
-                                <option value="false">Без штатов</option>
-                            </select>
-                        </div>
-
                     </div>
-
                     <div class="row">
-
-
                         <div class="form-group col">
-                            <label for="isCapital" class="col-form-label">Столицы</label>
-                            <select type="text" class="form-control" id="isCapital" name="isCapital">
-                                <option value="true">Со столицами</option>
-                                <option value="false">Без столиц</option>
-                            </select>
-                        </div>
-                        <div class="form-group col">
-                            <label for="isMultiLevel" class="col-form-label">Многоур</label>
-                            <select type="text" class="form-control" id="isMultiLevel" name="isMultiLevel">
+                            <label for="availability_isMultiLevel" class="col-form-label">Многоур</label>
+                            <select type="text" class="form-control" id="availability_isMultiLevel" name="isMultiLevel">
                                 <option value="true">Многоуровневая</option>
                                 <option value="false">Одноуровневая</option>
                             </select>
                         </div>
                         <div class="form-group col">
-                            <label for="light" class="col-form-label">Подсветка</label>
-                            <input type="text" class="form-control" id="light" name="light" list="lightOption">
+                            <label for="availability_light" class="col-form-label">Подсветка</label>
+                            <input type="text" class="form-control" id="availability_light" name="light" list="lightOption">
                             <datalist id="lightOption">
                                 <option>Без подсветки</option>
                                 <option>Холодная подсветка</option>
@@ -199,16 +193,16 @@
 
                     <div class="row">
                         <div class="form-group col">
-                            <label for="isColorPlywood" class="col-form-label">Тип покраски</label>
-                            <select class="form-control" id="isColorPlywood" name="isColorPlywood">
+                            <label for="availability_isColorPlywood" class="col-form-label">Тип покраски</label>
+                            <select class="form-control" id="availability_isColorPlywood" name="isColorPlywood">
                                 <option value="true">Крашенные доски</option>
                                 <option value="false">Ручная покраска</option>
                             </select>
                         </div>
                         <div class="form-group col">
-                            <label for="laser" class="col-form-label">Лазер</label>
-                            <select class="form-control" id="laser" name="laser">
-
+                            <label for="availability_laser" class="col-form-label">Лазер</label>
+                            <select class="form-control" id="availability_laser" name="laser">
+                                <option value="1л">1л</option>
                                 <option value="2л">2л</option>
                                 <option value="3л">3л</option>
                                 <option value="4л">4л</option>
@@ -218,8 +212,8 @@
                             </select>
                         </div>
                         <div class="form-group col">
-                            <label for="stage" class="col-form-label">Стадия</label>
-                            <select class="form-control" type="number" id="stage" name="stage">
+                            <label for="availability_stage" class="col-form-label">Стадия</label>
+                            <select class="form-control" type="number" id="availability_stage" name="stage">
                                 <option value="14">Жду покраску</option>
                                 <option value="15">Жду приклейки</option>
                                 <option value="12">Наличие</option>
@@ -228,8 +222,8 @@
                     </div>
 
                     <div class="form-group col">
-                        <label for="color" class="col-form-label">Цвет</label>
-                        <input type="text" class="form-control" id="color" name="color">
+                        <label for="availability_color" class="col-form-label">Цвет</label>
+                        <input type="text" class="form-control" id="availability_color" name="color">
                     </div>
                 </form>
             </div>
@@ -241,6 +235,144 @@
                 <button type="button" class="btn btn-primary" onclick="saveAvailability()">
                     <span class="fa fa-check"></span>
                     Сохранить наличие
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="editRow">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Добавить карту</h4>
+                <button type="button" class="close" data-dismiss="modal" onclick="closeNoty()">&times;</button>
+            </div>
+            <div class="modal-body container-fluid">
+                <form id="detailsForm">
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="update_id" class="col-form-label">Номер</label>
+                            <input type="text" class="form-control" id="update_id" name="id" readonly="">
+                        </div>
+                        <div class="form-group col">
+                            <label for="update_dateTime" class="col-form-label">Дата</label>
+                            <input type="datetime-local" class="form-control" id="update_dateTime" name="dateTime">
+                        </div>
+                        <div class="form-group col">
+                            <label for="update_isPlexiglass" class="col-form-label">Оргстекло</label>
+                            <select class="form-control" id="update_isPlexiglass" name="isPlexiglass">
+                                <option value="false">Нет</option>
+                                <option value="true">Да</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="update_size" class="col-form-label">Размер</label>
+                            <input type="number" class="form-control" id="update_size" name="size" list="update_sizeOption">
+                            <datalist id="update_sizeOption">
+                                <option>100</option>
+                                <option>120</option>
+                                <option>140</option>
+                                <option>160</option>
+                                <option>180</option>
+                                <option>200</option>
+                                <option>220</option>
+                                <option>250</option>
+                                <option>300</option>
+                                <option>350</option>
+                            </datalist>
+                        </div>
+                        <div class="form-group col">
+                            <label for="update_language" class="col-form-label">Язык</label>
+                            <input type="text" class="form-control" id="update_language" name="language"
+                                   list="update_languageOption">
+                            <datalist id="update_languageOption">
+                                <option>Русский</option>
+                                <option>Английский</option>
+                            </datalist>
+                        </div>
+                        <div class="form-group col">
+                            <label for="update_isState" class="col-form-label">Штаты</label>
+                            <select class="form-control" id="update_isState" name="isState">
+                                <option value="true">Со штатами</option>
+                                <option value="false">Со столицами</option>
+                            </select>
+                        </div>
+                        <div class="form-group col">
+                            <label for="update_typeMap" class="col-form-label">Тип</label>
+                            <input type="text" class="form-control" id="update_typeMap" name="typeMap" list="update_typeMapOptional">
+                            <datalist id="update_typeMapOptional">
+                                <option>Мир</option>
+                                <option>Россия</option>
+                            </datalist>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="form-group col">
+                            <label for="update_isMultiLevel" class="col-form-label">Многоур</label>
+                            <select type="text" class="form-control" id="update_isMultiLevel" name="isMultiLevel">
+                                <option value="true">Многоуровневая</option>
+                                <option value="false">Одноуровневая</option>
+                            </select>
+                        </div>
+                        <div class="form-group col">
+                            <label for="update_light" class="col-form-label">Подсветка</label>
+                            <input type="text" class="form-control" id="update_light" name="light" list="update_lightOption">
+                            <datalist id="update_lightOption">
+                                <option>Без подсветки</option>
+                                <option>Холодная подсветка</option>
+                                <option>Нейтральная подсветка</option>
+                                <option>Тёплая подсветка</option>
+                                <option>Беспроводная подсветка</option>
+                                <option>RGB подсветка</option>
+                            </datalist>
+                        </div>
+
+
+                        <div class="form-group col">
+                            <label for="update_isMonochromatic" class="col-form-label">Однотонная</label>
+                            <select class="form-control" id="update_isMonochromatic" name="isMonochromatic">
+                                <option value="false">Нет</option>
+                                <option value="true">Да</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group col">
+                        <label for="update_color" class="col-form-label">Цвет</label>
+                        <input type="text" class="form-control" id="update_color" name="color">
+                    </div>
+                    <div class="form-group col">
+                        <label for="update_additional" class="col-form-label">Дополнительные товары, услуги</label>
+                        <textarea class="form-control overflow-auto" rows="2" id="update_additional" name="additional"></textarea>
+                    </div>
+
+                    <div class="form-group col">
+                        <label for="update_description" class="col-form-label">Описание</label>
+                        <textarea class="form-control overflow-auto" rows="2" id="update_description" name="description"></textarea>
+                    </div>
+                    <div class="form-group col">
+                        <label for="update_contact" class="col-form-label">Контактные данные. Адресс</label>
+                        <textarea class="form-control overflow-auto" rows="2" id="update_contact" name="contact"></textarea>
+                    </div>
+                    <div class="form-group col">
+                        <label for="update_price" class="col-form-label">Цена</label>
+                        <input type="number" class="form-control" id="update_price" name="price">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeNoty()">
+                    <span class="fa fa-close"></span>
+                    Отмена
+                </button>
+                <button type="button" class="btn btn-primary" onclick="save()">
+                    <span class="fa fa-check"></span>
+                    Сохранить карту
                 </button>
             </div>
         </div>

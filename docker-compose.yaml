@@ -15,7 +15,6 @@ services:
   woodpecker:
     image: sashaeremin/mywood:0.0.5
     container_name: "woodpecker_app"
-    restart: always
     ports:
       - "8080:8080"
     networks:
