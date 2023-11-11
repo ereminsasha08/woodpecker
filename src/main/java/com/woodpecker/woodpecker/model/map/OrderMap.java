@@ -32,8 +32,6 @@ public class OrderMap implements Serializable {
     private Boolean completed;
     @Column(name = "is_color_plywood")
     private Boolean isColorPlywood;
-
-
     @OneToOne
     @MapsId
     @JoinColumn(name = "id")
@@ -86,7 +84,8 @@ public class OrderMap implements Serializable {
 
     @Column(name = "stage", nullable = false)
     @NotNull
-    private Integer stage;
+    @Enumerated(EnumType.STRING)
+    private Stage stage;
 
     @Column(name = "availability")
     private Boolean isAvailability;
@@ -94,7 +93,7 @@ public class OrderMap implements Serializable {
     @Column(name = "is_paid", columnDefinition = "boolean default false")
     private Boolean isPaid;
 
-    public OrderMap(LocalDateTime orderTerm, GeographyMap geographyMap, Boolean marketPlace, Integer stage, Boolean isAvailability) {
+    public OrderMap(LocalDateTime orderTerm, GeographyMap geographyMap, Boolean marketPlace, Stage stage, Boolean isAvailability) {
         this.isPaid = marketPlace;
         this.orderTerm = orderTerm;
         this.geographyMap = geographyMap;

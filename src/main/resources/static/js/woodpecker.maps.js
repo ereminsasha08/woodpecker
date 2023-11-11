@@ -59,19 +59,7 @@ $(function () {
             {
                 "data": "language",
                 "render": function (data, type, row) {
-                    let language = data;
-                    if (data.includes("Русский")) {
-                        language = "Рус";
-                    } else if (data.includes("Английский"))
-                        language = "Анг"
-                    if (row.typeMap.toString().toLowerCase().includes("мир")) {
-                        let city = "без ст"
-                        if (row.isState)
-                            city = "шт";
-                        else if (row.isCapital)
-                            city = "ст";
-                        return language + " " + city;
-                    } else return language;
+                return renderLanguageState(data, row);
                 }
             },
             {
@@ -109,9 +97,9 @@ $(function () {
                 "data": "orderMap",
                 "render": function (data, type, row) {
                     if (data !== null) {
-                        if (!getCondition(data.stage).toLowerCase().startsWith("отправлен")) {
-                            return "<button class='btn btn-my btn-warning' onclick='getOrderForModify(" + row.id + ");'>" + getCondition(data.stage) + "</button>";
-                        } else return getCondition(data.stage);
+                        if (!getCondition(data.stage.ordersOperation).toLowerCase().startsWith("отправлен")) {
+                            return "<button class='btn btn-my btn-warning' onclick='getOrderForModify(" + row.id + ");'>" + getCondition(data.stage.ordersOperation) + "</button>";
+                        } else return getCondition(data.stage.ordersOperation);
                     } else {
                         return "<button class='btn btn-my btn-warning' onclick='createOrder(" + row.id + ");'>Начать</button>";
                     }

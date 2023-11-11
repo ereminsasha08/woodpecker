@@ -34,8 +34,8 @@ public class AvailabilityService {
             @CacheEvict(value = "orders", allEntries = true),
             @CacheEvict(value = "mapsByManager", allEntries = true)})
     public GeographyMap createAvailabilityMap(AuthUser authUser, GeographyMap geographyMap, Integer stage, Boolean isColorPlywood, String laser) {
-        OrderMap orderMap = new OrderMap(LocalDateTime.now(), geographyMap, false, stage, true);
-        if (isColorPlywood && stage == Stage.ЖДУ_ПОКРАСКУ_НАЛИЧИЕ.ordinal())
+        OrderMap orderMap = new OrderMap(LocalDateTime.now(), geographyMap, false, Stage.values()[stage], true);
+        if (isColorPlywood && stage == Stage.WAITING_PAINT_AVAILABILITY.getOrdersOperation())
             throw new IllegalArgumentException("Карта из покрашенных досок не может быть на покраске");
         if (geographyMap.isNew()) {
             geographyMap.setManager(authUser.getUser());

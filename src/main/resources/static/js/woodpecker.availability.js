@@ -19,7 +19,7 @@ $(function () {
         "columns": [
             {
                 "data": "id",
-                "render": function (data, type, row) {
+                "render": function (data) {
                     let ref = "<button class='btn btn-info' onclick='getInfoMap(" + data + ");' data-placement=\"top\" title=\"" + data + "\">";
                     return ref + data + "</a>";
                 }
@@ -33,12 +33,12 @@ $(function () {
             {
                 "data": "geographyMap.language",
                 "render": function (data, type, row) {
-                    return renderLanguageState(data, row);
+                    return renderLanguageState(data, row.geographyMap);
                 }
             },
             {
                 "data": "geographyMap.isMultiLevel",
-                "render": function (data, type, row) {
+                "render": function (data) {
                     if (data) {
                         return "Многоур."
                     }
@@ -47,7 +47,7 @@ $(function () {
             },
             {
                 "data": "geographyMap.color",
-                "render": function (data, type, row) {
+                "render": function (data) {
                     if (data.toString().length < 15)
                         return data;
                     else return '<div class="overflow-auto" style="max-width: 240px; max-height: 40px">' + data + '</div>';
@@ -55,7 +55,7 @@ $(function () {
             },
             {
                 "data": "geographyMap.light",
-                "render": function (data, type, row) {
+                "render": function (data, type) {
                     if (type === "display" && !data.toString().toLowerCase().startsWith("без"))
                         return data;
                     else return "Нет";
@@ -74,7 +74,7 @@ $(function () {
             {
                 "data": "stage",
                 "render": function (data, type, row) {
-                    return "<button class='btn btn-my btn-warning' onclick='getOrderForModify(" + row.id + ");'>" + getCondition(data) + "</button>";
+                    return "<button class='btn btn-my btn-warning' onclick='getOrderForModify(" + row.id + ");'>" + getCondition(data.ordersOperation) + "</button>";
 
                 }
             },

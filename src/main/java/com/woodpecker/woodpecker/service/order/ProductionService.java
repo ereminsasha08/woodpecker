@@ -39,43 +39,43 @@ public class ProductionService {
             @CacheEvict(value = "orders", allEntries = true),
             @CacheEvict(value = "mapsByManager", allEntries = true)})
     public void updateConditionOrder(Integer id, Integer conditionMap) {
-        if (conditionMap < Stage.ЖДЕТ_ПРИКЛЕЙКИ.ordinal())
+        if (conditionMap < Stage.WAITING_GLUE.getOrdersOperation())
             throw new ApplicationException("Нельзя менять состояния заказа до покраски", ErrorType.WRONG_REQUEST);
         OrderMap orderMap = orderService.findOrderById(id);
         int newCondition = conditionMap + 1;
-        orderMap.setStage(newCondition);
+        orderMap.setStage(Stage.values()[newCondition]);
         setTimeAndCompleted(orderMap, newCondition);
         updateStatusForAvailability(conditionMap, orderMap);
     }
 
     private static void setTimeAndCompleted(OrderMap orderMap, int newCondition) {
-        if (newCondition == Stage.ДОДЕЛЫВАЕТСЯ.ordinal())
+        if (newCondition == Stage.BEING_COMPLETED.getOrdersOperation())
             orderMap.setGluing_end(LocalDateTime.now());
-        if (newCondition == Stage.ЗАПАКОВЫВАЕТСЯ.ordinal())
+        if (newCondition == Stage.PACKAGING.getOrdersOperation())
             orderMap.setPacked_end(LocalDateTime.now());
-        if (newCondition == Stage.ОТПРАВЛЕН.ordinal() && orderMap.getIsAvailability()) {
-            orderMap.setStage(Stage.НАЛИЧИЕ.ordinal());
+        if (newCondition == Stage.SENDING.getOrdersOperation() && orderMap.getIsAvailability()) {
+            orderMap.setStage(Stage.AVAILABILITY);
             orderMap.setCompleted(true);
-        } else if (newCondition == Stage.ОТПРАВЛЕН.ordinal()) {
+        } else if (newCondition == Stage.SENDING.getOrdersOperation()) {
             orderMap.setPost_end(LocalDateTime.now());
             orderMap.setCompleted(true);
         }
     }
 
     private static void updateStatusForAvailability(Integer conditionMap, OrderMap orderMap) {
-        if (conditionMap == Stage.ЗАКАЗ_ИЗ_НАЛИЧИЯ.ordinal())
+        if (conditionMap == Stage.ORDERS_FROM_AVAILABILITY.getOrdersOperation())
         {
-            orderMap.setStage(Stage.ЗАПАКОВЫВАЕТСЯ.ordinal());
+            orderMap.setStage(Stage.PACKAGING);
             orderMap.setPacked_end(LocalDateTime.now());
         }
-        if (conditionMap == Stage.ЗАКАЗ_ИЗ_НАЛИЧИЯ_НЕ_ПОКРАШЕННЫЙ.ordinal())
+        if (conditionMap == Stage.ORDER_FROM_AVAILABILITY_NO_PAINT.getOrdersOperation())
         {
-            orderMap.setStage(Stage.ЖДЕТ_ПОКРАСКИ.ordinal());
+            orderMap.setStage(Stage.WAITING_PAINT);
             orderMap.setCut_end(LocalDateTime.now());
         }
-        if (conditionMap == Stage.ЗАКАЗ_ИЗ_НАЛИЧИЯ_НЕ_ПРИКЛЕЕННЫЙ.ordinal())
+        if (conditionMap == Stage.ORDER_FROM_AVAILABILITY_NO_GLUE.getOrdersOperation())
         {
-            orderMap.setStage(Stage.ЖДЕТ_ПРИКЛЕЙКИ.ordinal());
+            orderMap.setStage(Stage.WAITING_GLUE);
             orderMap.setPainting_end(LocalDateTime.now());
         }
     }

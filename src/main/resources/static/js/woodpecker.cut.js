@@ -59,7 +59,7 @@ $(function () {
                 "data": "geographyMap.language",
                 "orderable": false,
                 "render": function (data, type, row) {
-                    return renderLanguageState(data, row);
+                    return renderLanguageState(data, row.geographyMap);
                 }
             },
             {

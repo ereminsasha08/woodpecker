@@ -52,7 +52,7 @@ public class OrderService {
             orderTerm = Objects.isNull(orderTerm) ? LocalDateTime.now() : orderTerm;
         else orderTerm = Objects.isNull(orderTerm) ? LocalDateTime.now().plusWeeks(2).plusDays(3) : orderTerm;
 
-        OrderMap orderMap = new OrderMap(orderTerm, map, marketPlace, Stage.В_ОЧЕРЕДИ_НА_РЕЗКУ.ordinal(), isAvailability);
+        OrderMap orderMap = new OrderMap(orderTerm, map, marketPlace, Stage.SEQUENCING_CUT, isAvailability);
         map.setOrderMap(orderMap);
         return orderRepository.save(orderMap);
     }
@@ -86,16 +86,16 @@ public class OrderService {
     }
 
     private static void checkIsAvailability(OrderMap modifyOrder) {
-        if (modifyOrder.getStage() == Stage.НАЛИЧИЕ.ordinal()) {
-            modifyOrder.setStage(Stage.ЗАКАЗ_ИЗ_НАЛИЧИЯ.ordinal());
+        if (modifyOrder.getStage().getOrdersOperation() == Stage.AVAILABILITY.getOrdersOperation()) {
+            modifyOrder.setStage(Stage.ORDERS_FROM_AVAILABILITY);
             modifyOrder.setCompleted(false);
         }
-        if (modifyOrder.getStage() == Stage.ЖДУ_ПРИКЛЕЙКУ_НАЛИЧИЕ.ordinal()) {
-            modifyOrder.setStage(Stage.ЗАКАЗ_ИЗ_НАЛИЧИЯ_НЕ_ПРИКЛЕЕННЫЙ.ordinal());
+        if (modifyOrder.getStage().getOrdersOperation() == Stage.WAITING_GLUE_AVAILABILITY.getOrdersOperation()) {
+            modifyOrder.setStage(Stage.ORDER_FROM_AVAILABILITY_NO_GLUE);
             modifyOrder.setCompleted(false);
         }
-        if (modifyOrder.getStage() == Stage.ЖДУ_ПОКРАСКУ_НАЛИЧИЕ.ordinal()) {
-            modifyOrder.setStage(Stage.ЗАКАЗ_ИЗ_НАЛИЧИЯ_НЕ_ПОКРАШЕННЫЙ.ordinal());
+        if (modifyOrder.getStage().getOrdersOperation() == Stage.WAITING_PAINT_AVAILABILITY.getOrdersOperation()) {
+            modifyOrder.setStage(Stage.ORDER_FROM_AVAILABILITY_NO_PAINT);
             modifyOrder.setCompleted(false);
         }
     }

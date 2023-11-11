@@ -25,7 +25,7 @@ public class PainterService {
                         order ->
                                 order.getIsColorPlywood() != null && (
                                         order.getIsColorPlywood() ||
-                                                order.getStage() >= Stage.ЖДЕТ_ПОКРАСКИ.ordinal() && order.getStage() <= Stage.КРАСИТСЯ.ordinal())
+                                                order.getStage().getOrdersOperation() >= Stage.WAITING_PAINT.getOrdersOperation() && order.getStage().getOrdersOperation() <= Stage.PAINTING.getOrdersOperation())
                 )
                 .sorted(
                         Comparator.comparing(OrderMap::getMarketPlace).reversed()
@@ -55,7 +55,7 @@ public class PainterService {
         OrderMap orderMap = orderService.findOrderById(id);
         orderMap.setNamePainter(namePainter);
         orderMap.setPainting_begin(LocalDateTime.now());
-        orderMap.setStage(Stage.КРАСИТСЯ.ordinal());
+        orderMap.setStage(Stage.PAINTING);
     }
 
     @Transactional
@@ -65,6 +65,6 @@ public class PainterService {
     public void setStage(Integer id) {
         OrderMap orderMap = orderService.findOrderById(id);
         orderMap.setPainting_end(LocalDateTime.now());
-        orderMap.setStage(Stage.ЖДЕТ_ПРИКЛЕЙКИ.ordinal());
+        orderMap.setStage(Stage.WAITING_GLUE);
     }
 }

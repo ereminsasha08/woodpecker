@@ -62,17 +62,7 @@ $(function () {
                 "data": "geographyMap.language",
                 "orderable": false,
                 "render": function (data, type, row) {
-                    let language = data;
-                    let city = "без ст"
-                    if (data.includes("Русский")) {
-                        language = "Рус";
-                    } else if (data.includes("Английский"))
-                        language = "Анг"
-                    if (row.geographyMap.isState)
-                        city = "шт";
-                    else if (row.geographyMap.isCapital)
-                        city = "ст";
-                    return language + " " + city;
+                    return renderLanguageState(data, row.geographyMap);
                 }
             },
             {
@@ -133,7 +123,7 @@ $(function () {
                     if (data === 4)
                         return "<button class='btn btn-warning' onclick='setPainter(" + row.id + ");'>Назначить художника</button>";
                     else
-                        return getCondition(data);
+                        return getCondition(data.ordersOperation);
 
                 }
             },

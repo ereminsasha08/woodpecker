@@ -63,7 +63,7 @@ $(function () {
                 "data": "geographyMap.language",
                 "orderable": false,
                 "render": function (data, type, row) {
-                    return renderLanguageState(data, row);
+                    return renderLanguageState(data, row.geographyMap);
                 }
             },
             {
@@ -133,13 +133,13 @@ $(function () {
                 "orderable": false,
                 "render": function (data, type, row) {
                     let msg = 'Вы уверенны, что заказ отправлен?';
-                    if (data >= 6) {
-                        if (data === 9 && row.isAvailability) {
+                    if (data.ordersOperation >= 6) {
+                        if (data.ordersOperation === 9 && row.isAvailability) {
                             msg = "Вы уверены, что заказ готов для наличия?"
                             return "<button class='btn btn-my btn-danger' onclick='setCondition(" + row.id + "," + 10 + ",\"" + msg + "\");'>Внести в наличие" + "</button>";
-                        } else return "<button class='btn btn-my btn-danger' onclick='setCondition(" + row.id + "," + data + ",\"" + msg + "\");'>" + getCondition(data) + "</button>";
+                        } else return "<button class='btn btn-my btn-danger' onclick='setCondition(" + row.id + "," + data.ordersOperation + ",\"" + msg + "\");'>" + getCondition(data.ordersOperation) + "</button>";
                     } else {
-                        return getCondition(data)
+                        return getCondition(data.ordersOperation)
                     }
                 }
             },

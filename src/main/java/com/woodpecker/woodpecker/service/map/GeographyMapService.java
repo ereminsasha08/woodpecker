@@ -111,9 +111,7 @@ public class GeographyMapService {
         if (orderMap != null) {
             orderMap.setCompleted(true);
             orderMap.setIsAvailability(false);
-            if (orderMap.getStage() == Stage.ПИЛИТСЯ.ordinal()) {
-
-
+            if (Stage.CUTTING.equals(orderMap.getStage())) {
                 cutService.refreshCapacity(orderMap);
             }
         }

@@ -40,8 +40,8 @@ public class CutService {
                 .stream()
                 .filter(
                         order -> !order.getCompleted()
-                                && order.getStage() >= Stage.НОВЫЙ_ЗАКАЗ.ordinal()
-                                && order.getStage() < Stage.ЖДЕТ_ПОКРАСКИ.ordinal())
+                                && order.getStage().getOrdersOperation() >= Stage.NEW_ORDER.getOrdersOperation()
+                                && order.getStage().getOrdersOperation() < Stage.WAITING_PAINT.getOrdersOperation())
                 .sorted(
                         Comparator.comparing(OrderMap::getMarketPlace).reversed()
                                 .thenComparing(OrderMap::getIsAvailability)
@@ -66,7 +66,7 @@ public class CutService {
         setListsForMap(orderMap, new LinkedList<>(), isColorPlywood, isWoodStain);
         orderMap.setIsColorPlywood(isColorPlywood);
         orderMap.getGeographyMap().setIsColorPlywood(isColorPlywood);
-        orderMap.setStage(Stage.ПИЛИТСЯ.ordinal());
+        orderMap.setStage(Stage.CUTTING);
         orderMap.setCut_begin(LocalDateTime.now());
     }
 
@@ -125,7 +125,7 @@ public class CutService {
             @CacheEvict(value = "mapsByManager", allEntries = true)})
     public void cutComplete(Integer id, Boolean listIsComplete, Integer numberList) {
         OrderMap orderById = orderService.findOrderById(id);
-        if (orderById.getStage() >= Stage.ЖДЕТ_ПОКРАСКИ.ordinal())
+        if (orderById.getStage().getOrdersOperation() >= Stage.WAITING_PAINT.getOrdersOperation())
             throw new ApplicationException("Карта выпиленна, обновите страницу", ErrorType.APP_ERROR);
         List<String> plywoodList = orderById.getPlywoodList();
         String element = plywoodList.get(numberList);
@@ -143,9 +143,9 @@ public class CutService {
         }
         if (checkAllPlywoodList(plywoodList)) {
             if (orderById.getGeographyMap().getIsColorPlywood()) {
-                orderById.setStage(Stage.ЖДЕТ_ПРИКЛЕЙКИ.ordinal());
+                orderById.setStage(Stage.WAITING_GLUE);
             } else {
-                orderById.setStage(Stage.ЖДЕТ_ПОКРАСКИ.ordinal());
+                orderById.setStage(Stage.WAITING_PAINT);
             }
             orderById.setCut_end(LocalDateTime.now());
             refreshCapacity(orderById);

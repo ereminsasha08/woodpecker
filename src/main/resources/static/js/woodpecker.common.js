@@ -193,18 +193,21 @@ function getCondition(date) {
 }
 
 
-function renderLanguageState(data, row) {
+function renderLanguageState(data, geographyMap) {
     let language = data;
-    let city = "без ст"
     if (data.includes("Русский")) {
         language = "Рус";
     } else if (data.includes("Английский"))
         language = "Анг"
-    if (row.geographyMap.isState)
-        city = "шт";
-    else if (row.geographyMap.isCapital)
-        city = "ст";
-    return language + " " + city;
+    if (geographyMap.typeMap.toString().toLowerCase().includes("мир")) {
+        let city = "без ст"
+        if (geographyMap.isState)
+            city = "шт";
+        else if (geographyMap.isCapital)
+            city = "ст";
+        return language + " " + city;
+    } else return language;
+
 }
 
 function getInfoMap(id) {
