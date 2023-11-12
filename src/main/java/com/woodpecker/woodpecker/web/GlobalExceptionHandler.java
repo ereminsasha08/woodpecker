@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import javax.persistence.EntityNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -33,7 +33,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(AppException.class)
     public ResponseEntity<?> appException(WebRequest request, AppException ex) {
         log.error("ApplicationException: {}", ex.getMessage());
-        return createResponseEntity(request, ex.getOptions(), null, ex.getStatus());
+        return createResponseEntity(request, ex.getOptions(), null, HttpStatus.resolve(ex.getStatusCode().value()));
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
@@ -43,7 +43,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @NonNull
-    @Override
     protected ResponseEntity<Object> handleExceptionInternal(
             @NonNull Exception ex, Object body, @NonNull HttpHeaders headers, @NonNull HttpStatus status, @NonNull WebRequest request) {
         log.error("Exception", ex);
@@ -52,7 +51,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @NonNull
-    @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex,
             @NonNull HttpHeaders headers, @NonNull HttpStatus status, @NonNull WebRequest request) {
@@ -60,7 +58,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @NonNull
-    @Override
     protected ResponseEntity<Object> handleBindException(
             BindException ex, @NonNull HttpHeaders headers, @NonNull HttpStatus status, @NonNull WebRequest request) {
         return handleBindingErrors(ex.getBindingResult(), request);

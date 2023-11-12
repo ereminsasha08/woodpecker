@@ -1,8 +1,8 @@
 package com.woodpecker.woodpecker.model.support;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 
-import javax.persistence.*;
 import java.util.List;
 
 @Entity
