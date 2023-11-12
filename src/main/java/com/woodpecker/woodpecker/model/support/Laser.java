@@ -2,13 +2,12 @@ package com.woodpecker.woodpecker.model.support;
 
 import com.woodpecker.woodpecker.model.abstractentity.NamedEntity;
 import com.woodpecker.woodpecker.model.map.GeographyMap;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
 
 @Entity
 @Getter
@@ -20,7 +19,7 @@ public class Laser extends NamedEntity {
     @Column(name = "capacity")
     private Integer capacity;
 
-        public void setCapacity(GeographyMap geographyMap, Integer coefficient) {
+    public void setCapacity(GeographyMap geographyMap, Integer coefficient) {
 
         Integer addedCapacity = coefficient;
 

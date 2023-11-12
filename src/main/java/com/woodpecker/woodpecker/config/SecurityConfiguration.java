@@ -8,13 +8,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
+import static org.springframework.security.authorization.AuthenticatedAuthorizationManager.rememberMe;
 
 @Configuration
 @EnableWebSecurity
@@ -45,18 +49,24 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http
+                .authorizeHttpRequests(request -> {
+                    request.requestMatchers("/rest/admin/**").hasRole("ADMIN")
+                            .requestMatchers("/admin/**").hasRole("ADMIN")
+                            .anyRequest().authenticated();
+                })
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                .formLogin(httpSecurityFormLoginConfigurer -> {
+                    httpSecurityFormLoginConfigurer.defaultSuccessUrl("/maps");
+                })
+                .csrf(AbstractHttpConfigurer::disable)
+                .rememberMe(rememberMe -> {
+                    rememberMe.key(key);
+                    rememberMe.alwaysRemember(true);
+                });
 
-
-                .antMatchers("/rest/admin/**").hasRole("ADMIN")
-                .antMatchers("/admin/**").hasRole("ADMIN")
-
-                .anyRequest().authenticated()
-
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().formLogin().defaultSuccessUrl("/maps")
-                .and().rememberMe().alwaysRemember(true).key(key)
-                .and().csrf().disable();
         return http.build();
     }
 }

@@ -2,6 +2,7 @@ package com.woodpecker.woodpecker.web;
 
 import com.woodpecker.woodpecker.util.exception.*;
 import com.woodpecker.woodpecker.util.validation.ValidationUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 import static com.woodpecker.woodpecker.util.exception.ErrorType.*;

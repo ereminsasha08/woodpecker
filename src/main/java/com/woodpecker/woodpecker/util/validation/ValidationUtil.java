@@ -4,12 +4,12 @@ import com.woodpecker.woodpecker.HasId;
 import com.woodpecker.woodpecker.util.exception.ErrorType;
 import com.woodpecker.woodpecker.util.exception.IllegalRequestDataException;
 import com.woodpecker.woodpecker.util.exception.NotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.*;
 import org.slf4j.Logger;
 import org.springframework.core.NestedExceptionUtils;
 import org.springframework.lang.NonNull;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.*;
 import java.util.Set;
 
 public class ValidationUtil {
