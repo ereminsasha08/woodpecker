@@ -12,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PaintRestController {
 
-    public static final String REST_URL = "rest/paints";
+    public static final String REST_URL = "rest/paints/";
 
     private final PainterService painterService;
 

@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @RequestMapping(OrderRestController.REST_URL)
 @RequiredArgsConstructor
 public class OrderRestController {
-    public final static String REST_URL = "rest/orders";
+    public final static String REST_URL = "rest/orders/";
 
     private final OrderService orderService;
 

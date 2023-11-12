@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping(value = GeographyMapRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class GeographyMapRestController {
-    static final String REST_URL = "/rest/maps";
+    static final String REST_URL = "/rest/maps/";
 
     private final GeographyMapService mapService;
 
@@ -38,7 +38,6 @@ public class GeographyMapRestController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void create(@Valid GeographyMap geographyMap, @AuthenticationPrincipal AuthUser authUser) {
         mapService.create(geographyMap, authUser);
-
     }
 
     @DeleteMapping("/{id}")

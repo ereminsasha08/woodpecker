@@ -12,9 +12,6 @@ const ctx = {
 
 // $(document).ready(function () {
 $(function () {
-
-
-
     makeEditable({
         "columns": [
             {

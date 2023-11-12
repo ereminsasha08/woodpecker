@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping(AvailabilityController.REST_URL)
 @RequiredArgsConstructor
 public class AvailabilityController {
-    public static final String REST_URL = "rest/availability";
+    public static final String REST_URL = "rest/availability/";
 
     private final AvailabilityService availabilityService;
 

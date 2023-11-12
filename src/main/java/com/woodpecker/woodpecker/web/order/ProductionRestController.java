@@ -11,7 +11,7 @@ import java.util.List;
 @RequestMapping(ProductionRestController.REST_URL)
 @RequiredArgsConstructor
 public class ProductionRestController {
-    public final static String REST_URL = "rest/production";
+    public final static String REST_URL = "rest/production/";
 
     private final ProductionService productionService;
 

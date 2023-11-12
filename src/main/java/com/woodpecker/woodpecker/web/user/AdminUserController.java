@@ -23,7 +23,7 @@ import static com.woodpecker.woodpecker.util.validation.ValidationUtil.checkNew;
 @Slf4j
 public class AdminUserController extends AbstractUserController {
 
-    static final String REST_URL = "/admin/users";
+    static final String REST_URL = "/admin/users/";
 
     @Override
     @GetMapping("/{id}")

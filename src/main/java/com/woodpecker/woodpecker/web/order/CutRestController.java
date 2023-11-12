@@ -14,7 +14,7 @@ import java.util.List;
 public class CutRestController {
     private final CutService cutService;
 
-    public final static String REST_URL = "rest/cut";
+    public final static String REST_URL = "rest/cut/";
 
     @GetMapping
     public List<OrderMap> getOrdersForCut() {
