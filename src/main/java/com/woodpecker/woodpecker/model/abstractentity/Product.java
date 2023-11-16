@@ -24,7 +24,7 @@ public abstract class Product extends BaseEntity implements Serializable {
     @NotNull
     int price;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     @Fetch(FetchMode.JOIN)
 //    @NotNull

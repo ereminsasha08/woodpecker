@@ -115,7 +115,7 @@ $(function () {
 function setLaser(id) {
     $('#setLaserForm').find(":input").val("");
     document.getElementById('orderId').value = id;
-    $("#setLaser").modal();
+    $("#setLaser").modal("show");
 }
 
 function saveLaserForm() {
@@ -135,7 +135,7 @@ function changeList() {
         $("#infoListCut").modal("hide");
         document.getElementById("isColorPlywood").value = "";
         document.getElementById('isWoodStain').value = "";
-        $("#setLaser").modal();
+        $("#setLaser").modal("show");
     }
 }
 
@@ -153,7 +153,7 @@ function changeLaser() {
 }
 
 function getInfoCut(id, isColorPlywood, laserName) {
-    $("#infoListCut").modal();
+    $("#infoListCut").modal("show");
     $.get(cutAjaxUrl + "info/" + id,
         function (data) {
             let listSelect = "";

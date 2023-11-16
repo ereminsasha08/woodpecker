@@ -91,45 +91,43 @@
             </table>
         </div>
     </div>
-    <footer class="page-footer">
-        <div class="footer-copyright jumbotron pt-1 ">
-            <table align ="center">
-                <tr>
-                    <th>Цветовая маркировка</th>
-                </tr>
-            </table>
-            <table align ="center">
-                <tr>
-                    <th>ᅠ ᅠ </th>
-                </tr>
-            </table>
-            <table align ="center">
-                <tr data-map-urgent="true">
-                    <th>МАРКЕТПЛЕЙС</th>
-                </tr>
-            </table>
-            <table align ="center">
-                <tr data-map-urgent-availability="true">
-                    <th>НАЛИЧИЕ МАРКЕТПЛЕЙС</th>
-                </tr>
-            </table>
-            <table align ="center">
-                <tr data-map-info="true">
-                    <th>ОБЫЧНЫЙ ЗАКАЗ, ОТПРАВКА В ТЕЧЕНИЕ 5 ДНЕЙ</th>
-                </tr>
-            </table>
-            <table align ="center">
-                <tr>
-                    <th>ОБЫЧНЫЙ ЗАКАЗ</th>
-                </tr>
-            </table>
-            <table align ="center">
-                <tr data-map-availability="true">
-                    <th>НАЛИЧИЕ</th>
-                </tr>
-            </table>
-        </div>
-    </footer>
+    <div class="jumbotron pt-1 card border-dark">
+        <table align="center">
+            <tr>
+                <th>Цветовая маркировка</th>
+            </tr>
+        </table>
+        <table align="center">
+            <tr>
+                <th>ᅠ ᅠ</th>
+            </tr>
+        </table>
+        <table align="center">
+            <tr data-map-urgent="true">
+                <th>МАРКЕТПЛЕЙС</th>
+            </tr>
+        </table>
+        <table align="center">
+            <tr data-map-urgent-availability="true">
+                <th>НАЛИЧИЕ МАРКЕТПЛЕЙС</th>
+            </tr>
+        </table>
+        <table align="center">
+            <tr data-map-info="true">
+                <th>ОБЫЧНЫЙ ЗАКАЗ, ОТПРАВКА В ТЕЧЕНИЕ 5 ДНЕЙ</th>
+            </tr>
+        </table>
+        <table align="center">
+            <tr>
+                <th>ОБЫЧНЫЙ ЗАКАЗ</th>
+            </tr>
+        </table>
+        <table align="center">
+            <tr data-map-availability="true">
+                <th>НАЛИЧИЕ</th>
+            </tr>
+        </table>
+    </div>
 </div>
 
 <div class="modal fade" tabindex="-1" id="editRow">
@@ -137,11 +135,11 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Добавить карту</h4>
-                <button type="button" class="close" data-dismiss="modal" onclick="closeNoty()">&times;</button>
+                <button type="button" class="close" data-bs-dismiss="modal" onclick="closeNoty()">&times;</button>
             </div>
             <div class="modal-body container-fluid">
                 <form id="detailsForm">
-<!--                    <input type="hidden" id="id" name="id">-->
+                    <!--                    <input type="hidden" id="id" name="id">-->
                     <div class="row">
                         <div class="form-group col">
                             <label for="id" class="col-form-label">Номер</label>
@@ -213,14 +211,14 @@
                             </select>
                         </div>
 
-<!--                        -->
-<!--                        <div class="form-group col">-->
-<!--                            <label for="isCapital" class="col-form-label">Столицы</label>-->
-<!--                            <select type="text" class="form-control" id="isCapital" name="isCapital">-->
-<!--                                <option value="true">Со столицами</option>-->
-<!--                                <option value="false">Без столиц</option>-->
-<!--                            </select>-->
-<!--                        </div>-->
+                        <!--                        -->
+                        <!--                        <div class="form-group col">-->
+                        <!--                            <label for="isCapital" class="col-form-label">Столицы</label>-->
+                        <!--                            <select type="text" class="form-control" id="isCapital" name="isCapital">-->
+                        <!--                                <option value="true">Со столицами</option>-->
+                        <!--                                <option value="false">Без столиц</option>-->
+                        <!--                            </select>-->
+                        <!--                        </div>-->
 
                         <div class="form-group col">
                             <label for="light" class="col-form-label">Подсветка</label>
@@ -250,12 +248,14 @@
                     </div>
                     <div class="form-group col">
                         <label for="additional" class="col-form-label">Дополнительные товары, услуги</label>
-                        <textarea class="form-control overflow-auto" rows="2" id="additional" name="additional"></textarea>
+                        <textarea class="form-control overflow-auto" rows="2" id="additional"
+                                  name="additional"></textarea>
                     </div>
 
                     <div class="form-group col">
                         <label for="description" class="col-form-label">Описание</label>
-                        <textarea class="form-control overflow-auto" rows="2" id="description" name="description"></textarea>
+                        <textarea class="form-control overflow-auto" rows="2" id="description"
+                                  name="description"></textarea>
                     </div>
                     <div class="form-group col">
                         <label for="contact" class="col-form-label">Контактные данные. Адресс</label>
@@ -268,7 +268,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeNoty()">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="closeNoty()">
                     <span class="fa fa-close"></span>
                     Отмена
                 </button>
@@ -286,7 +286,7 @@
         <div class="modal-content ">
             <div class="modal-header">
                 <h4 class="modal-title">Создать заказ</h4>
-                <button type="button" class="close" data-dismiss="modal" onclick="closeNoty()">&times;</button>
+                <button type="button" class="close" data-bs-dismiss="modal" onclick="closeNoty()">&times;</button>
             </div>
             <div class="modal-body container-fluid">
                 <form id="orderForm">
@@ -315,7 +315,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeNoty()">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="closeNoty()">
                     <span class="fa fa-close"></span>
                     Отмена
                 </button>
@@ -327,6 +327,5 @@
         </div>
     </div>
 </div>
-
 </body>
 </html>

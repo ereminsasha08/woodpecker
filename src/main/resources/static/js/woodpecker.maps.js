@@ -153,13 +153,13 @@ function add() {
     // document.getElementById('isCapital').value = "true"
     document.getElementById('isMultiLevel').value = "true";
     document.getElementById('isMonochromatic').value = "false";
-    $("#editRow").modal();
+    $("#editRow").modal("show");
 }
 
 
 function createOrder(id) {
     form.find(":input").val("");
-    $("#createOrder").modal();
+    $("#createOrder").modal("show");
     document.getElementById('order-Id').value = id;
 
 }

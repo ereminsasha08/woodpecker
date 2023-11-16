@@ -165,7 +165,7 @@ function setCondition(id, conditionMap, msg) {
 }
 
 function getInfoCut(id) {
-    $("#info-cut").modal();
+    $("#info-cut").modal("show");
     $.get("rest/cut/info/" + id,
         function (data) {
             let listSelect = "";
@@ -181,7 +181,7 @@ function getInfoCut(id) {
                     '</div>'
             });
             document.getElementById("info").innerHTML = listSelect;
-            $('#info-cut').modal();
+            $('#info-cut').modal("show");
         });
 }
 

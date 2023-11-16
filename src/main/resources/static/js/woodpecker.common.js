@@ -58,7 +58,7 @@ function makeEditable(datatableOpts) {
 function add() {
     $("#modalTitle").html("addTitle");
     form.find(":input").val("");
-    $("#editRow").modal();
+    $("#editRow").modal("show");
 }
 
 
@@ -73,7 +73,7 @@ function updateRow(id) {
                     elementById.value = value;
             }
         });
-        $('#editRow').modal();
+        $('#editRow').modal("show");
     });
 }
 
@@ -140,12 +140,12 @@ function renderDeleteBtn(data, type, row) {
 function failNoty(jqXHR) {
     closeNoty();
     let errorInfo = jqXHR.responseJSON;
-    // failedNote = new Noty({
-    //     text: "<span class='fa fa-lg fa-exclamation-circle'></span> &nbsp;" + errorInfo.typeMessage + "<br>" + errorInfo.details.join("<br>"),
-    //     type: "error",
-    //     layout: "bottomRight"
-    // });
-    // failedNote.show()
+    failedNote = new Noty({
+        text: "<span class='fa fa-lg fa-exclamation-circle'></span> &nbsp;" + errorInfo.typeMessage + "<br>" + errorInfo.details.join("<br>"),
+        type: "error",
+        layout: "bottomRight"
+    });
+    failedNote.show()
 }
 
 
@@ -211,7 +211,7 @@ function renderLanguageState(data, geographyMap) {
 }
 
 function getInfoMap(id) {
-    $("#modalInfoMap").modal();
+    $("#modalInfoMap").modal("show");
     $.get("rest/orders/" + id, function (data) {
         $.each(data, function (key, value) {
             if (value != null)
@@ -238,7 +238,7 @@ function getInfoMap(id) {
 
 function getOrderForModify(id) {
     $('#modify_orderForm').find(":input").val("");
-    $("#modify_editRow").modal();
+    $("#modify_editRow").modal("show");
     $.get("rest/orders/" + id, function (data) {
         $.each(data, function (key, value) {
                 if (value != null)

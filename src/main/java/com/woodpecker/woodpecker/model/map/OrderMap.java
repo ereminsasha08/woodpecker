@@ -42,32 +42,32 @@ public class OrderMap implements Serializable {
 
     @Column(name = "cut_begin")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime cut_begin;
+    private LocalDateTime cutBegin;
 
 
     @Column(name = "cut_end")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime cut_end;
+    private LocalDateTime cutEnd;
     @Column(name = "painting_begin")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime painting_begin;
+    private LocalDateTime paintingBegin;
 
     @Column(name = "painting_end")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime painting_end;
+    private LocalDateTime paintingEnd;
 
     @Column(name = "gluing_end")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime gluing_end;
+    private LocalDateTime gluingEnd;
 
 
     @Column(name = "packed_end")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime packed_end;
+    private LocalDateTime packedEnd;
 
     @Column(name = "post_end")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime post_end;
+    private LocalDateTime postEnd;
 
     @Column(name = "laser")
     private String laser;
@@ -104,10 +104,10 @@ public class OrderMap implements Serializable {
     }
 
     public void setAllTime() {
-        cut_begin = orderTerm;
-        cut_end = orderTerm;
-        painting_begin = orderTerm;
-        gluing_end = orderTerm;
-        packed_end = orderTerm;
+        cutBegin = orderTerm;
+        cutEnd = orderTerm;
+        paintingBegin = orderTerm;
+        gluingEnd = orderTerm;
+        packedEnd = orderTerm;
     }
 }

@@ -50,14 +50,14 @@ public class ProductionService {
 
     private static void setTimeAndCompleted(OrderMap orderMap, int newCondition) {
         if (newCondition == Stage.BEING_COMPLETED.getOrdersOperation())
-            orderMap.setGluing_end(LocalDateTime.now());
+            orderMap.setGluingEnd(LocalDateTime.now());
         if (newCondition == Stage.PACKAGING.getOrdersOperation())
-            orderMap.setPacked_end(LocalDateTime.now());
+            orderMap.setPackedEnd(LocalDateTime.now());
         if (newCondition == Stage.SENDING.getOrdersOperation() && orderMap.getIsAvailability()) {
             orderMap.setStage(Stage.AVAILABILITY);
             orderMap.setCompleted(true);
         } else if (newCondition == Stage.SENDING.getOrdersOperation()) {
-            orderMap.setPost_end(LocalDateTime.now());
+            orderMap.setPostEnd(LocalDateTime.now());
             orderMap.setCompleted(true);
         }
     }
@@ -66,17 +66,17 @@ public class ProductionService {
         if (conditionMap == Stage.ORDERS_FROM_AVAILABILITY.getOrdersOperation())
         {
             orderMap.setStage(Stage.PACKAGING);
-            orderMap.setPacked_end(LocalDateTime.now());
+            orderMap.setPackedEnd(LocalDateTime.now());
         }
         if (conditionMap == Stage.ORDER_FROM_AVAILABILITY_NO_PAINT.getOrdersOperation())
         {
             orderMap.setStage(Stage.WAITING_PAINT);
-            orderMap.setCut_end(LocalDateTime.now());
+            orderMap.setCutEnd(LocalDateTime.now());
         }
         if (conditionMap == Stage.ORDER_FROM_AVAILABILITY_NO_GLUE.getOrdersOperation())
         {
             orderMap.setStage(Stage.WAITING_GLUE);
-            orderMap.setPainting_end(LocalDateTime.now());
+            orderMap.setPaintingEnd(LocalDateTime.now());
         }
     }
 }

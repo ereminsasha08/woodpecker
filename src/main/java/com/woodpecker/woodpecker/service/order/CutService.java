@@ -22,6 +22,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.woodpecker.woodpecker.model.map.Stage.*;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -40,8 +42,8 @@ public class CutService {
                 .stream()
                 .filter(
                         order -> !order.getCompleted()
-                                && order.getStage().getOrdersOperation() >= Stage.NEW_ORDER.getOrdersOperation()
-                                && order.getStage().getOrdersOperation() < Stage.WAITING_PAINT.getOrdersOperation())
+                                && order.getStage().getOrdersOperation() >= NEW_ORDER.getOrdersOperation()
+                                && order.getStage().getOrdersOperation() < WAITING_PAINT.getOrdersOperation())
                 .sorted(
                         Comparator.comparing(OrderMap::getMarketPlace).reversed()
                                 .thenComparing(OrderMap::getIsAvailability)
@@ -66,8 +68,8 @@ public class CutService {
         setListsForMap(orderMap, new LinkedList<>(), isColorPlywood, isWoodStain);
         orderMap.setIsColorPlywood(isColorPlywood);
         orderMap.getGeographyMap().setIsColorPlywood(isColorPlywood);
-        orderMap.setStage(Stage.CUTTING);
-        orderMap.setCut_begin(LocalDateTime.now());
+        orderMap.setStage(CUTTING);
+        orderMap.setCutBegin(LocalDateTime.now());
     }
 
     private String chooseLaser(OrderMap order) {
@@ -125,7 +127,7 @@ public class CutService {
             @CacheEvict(value = "mapsByManager", allEntries = true)})
     public void cutComplete(Integer id, Boolean listIsComplete, Integer numberList) {
         OrderMap orderById = orderService.findOrderById(id);
-        if (orderById.getStage().getOrdersOperation() >= Stage.WAITING_PAINT.getOrdersOperation())
+        if (orderById.getStage().getOrdersOperation() >= WAITING_PAINT.getOrdersOperation())
             throw new ApplicationException("Карта выпиленна, обновите страницу", ErrorType.APP_ERROR);
         List<String> plywoodList = orderById.getPlywoodList();
         String element = plywoodList.get(numberList);
@@ -143,11 +145,11 @@ public class CutService {
         }
         if (checkAllPlywoodList(plywoodList)) {
             if (orderById.getGeographyMap().getIsColorPlywood()) {
-                orderById.setStage(Stage.WAITING_GLUE);
+                orderById.setStage(WAITING_GLUE);
             } else {
-                orderById.setStage(Stage.WAITING_PAINT);
+                orderById.setStage(WAITING_PAINT);
             }
-            orderById.setCut_end(LocalDateTime.now());
+            orderById.setCutEnd(LocalDateTime.now());
             refreshCapacity(orderById);
         }
     }

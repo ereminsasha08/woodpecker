@@ -40,30 +40,29 @@
             </table>
         </div>
     </div>
-    <footer class="page-footer">
-        <div class="footer-copyright jumbotron pt-1 ">
-            <table align="center">
-                <tr>
-                    <th>Цветовая маркировка</th>
-                </tr>
-            </table>
-            <table align="center">
-                <tr data-map-urgent-availability="true">
-                    <th>ᅠ ᅠ</th>
-                </tr>
-            </table>
-            <table align="center">
-                <tr data-map-urgent-availability="true">
-                    <th>НАЛИЧИЕ МАРКЕТПЛЕЙС</th>
-                </tr>
-            </table>
-            <table align="center">
-                <tr data-map-availability="true">
-                    <th>НАЛИЧИЕ</th>
-                </tr>
-            </table>
-        </div>
-    </footer>
+
+    <div class="jumbotron pt-1 card border-dark">
+        <table align="center">
+            <tr>
+                <th>Цветовая маркировка</th>
+            </tr>
+        </table>
+        <table align="center">
+            <tr data-map-urgent-availability="true">
+                <th>ᅠ ᅠ</th>
+            </tr>
+        </table>
+        <table align="center">
+            <tr data-map-urgent-availability="true">
+                <th>НАЛИЧИЕ МАРКЕТПЛЕЙС</th>
+            </tr>
+        </table>
+        <table align="center">
+            <tr data-map-availability="true">
+                <th>НАЛИЧИЕ</th>
+            </tr>
+        </table>
+    </div>
 </div>
 
 <div class="modal fade" tabindex="-1" id="info-cut">
@@ -71,13 +70,13 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="modalTitle1">Готовность листов</h4>
-                <button type="button" class="close" data-dismiss="modal" onclick="closeNoty()">&times;</button>
+                <button type="button" class="close" data-bs-dismiss="modal" onclick="closeNoty()">&times;</button>
             </div>
             <div class="modal-body" id="info">
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeNoty()">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="closeNoty()">
                     <span class="fa fa-close"></span>
                     Отмена
                 </button>
@@ -93,7 +92,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Добавить карту в наличие</h4>
-                <button type="button" class="close" data-dismiss="modal" onclick="closeNoty()">&times;</button>
+                <button type="button" class="close" data-bs-dismiss="modal" onclick="closeNoty()">&times;</button>
             </div>
             <div class="modal-body container-fluid">
                 <form id="formAvailability">
@@ -123,7 +122,8 @@
                     <div class="row">
                         <div class="form-group col">
                             <label for="availability_size" class="col-form-label">Размер</label>
-                            <input type="number" class="form-control" id="availability_size" name="size" list="sizeOption">
+                            <input type="number" class="form-control" id="availability_size" name="size"
+                                   list="sizeOption">
                             <datalist id="sizeOption">
                                 <option>100</option>
                                 <option>120</option>
@@ -155,7 +155,8 @@
                         </div>
                         <div class="form-group col">
                             <label for="availability_typeMap" class="col-form-label">Тип</label>
-                            <input type="text" class="form-control" id="availability_typeMap" name="typeMap" list="typeMapOptional">
+                            <input type="text" class="form-control" id="availability_typeMap" name="typeMap"
+                                   list="typeMapOptional">
                             <datalist id="typeMapOptional">
                                 <option>Мир</option>
                                 <option>Россия</option>
@@ -172,7 +173,8 @@
                         </div>
                         <div class="form-group col">
                             <label for="availability_light" class="col-form-label">Подсветка</label>
-                            <input type="text" class="form-control" id="availability_light" name="light" list="lightOption">
+                            <input type="text" class="form-control" id="availability_light" name="light"
+                                   list="lightOption">
                             <datalist id="lightOption">
                                 <option>Без подсветки</option>
                                 <option>Холодная подсветка</option>
@@ -228,7 +230,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeNoty()">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="closeNoty()">
                     <span class="fa fa-close"></span>
                     Отмена
                 </button>
@@ -246,7 +248,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Добавить карту</h4>
-                <button type="button" class="close" data-dismiss="modal" onclick="closeNoty()">&times;</button>
+                <button type="button" class="close" data-bs-dismiss="modal" onclick="closeNoty()">&times;</button>
             </div>
             <div class="modal-body container-fluid">
                 <form id="detailsForm">
@@ -270,7 +272,8 @@
                     <div class="row">
                         <div class="form-group col">
                             <label for="update_size" class="col-form-label">Размер</label>
-                            <input type="number" class="form-control" id="update_size" name="size" list="update_sizeOption">
+                            <input type="number" class="form-control" id="update_size" name="size"
+                                   list="update_sizeOption">
                             <datalist id="update_sizeOption">
                                 <option>100</option>
                                 <option>120</option>
@@ -302,7 +305,8 @@
                         </div>
                         <div class="form-group col">
                             <label for="update_typeMap" class="col-form-label">Тип</label>
-                            <input type="text" class="form-control" id="update_typeMap" name="typeMap" list="update_typeMapOptional">
+                            <input type="text" class="form-control" id="update_typeMap" name="typeMap"
+                                   list="update_typeMapOptional">
                             <datalist id="update_typeMapOptional">
                                 <option>Мир</option>
                                 <option>Россия</option>
@@ -322,7 +326,8 @@
                         </div>
                         <div class="form-group col">
                             <label for="update_light" class="col-form-label">Подсветка</label>
-                            <input type="text" class="form-control" id="update_light" name="light" list="update_lightOption">
+                            <input type="text" class="form-control" id="update_light" name="light"
+                                   list="update_lightOption">
                             <datalist id="update_lightOption">
                                 <option>Без подсветки</option>
                                 <option>Холодная подсветка</option>
@@ -348,16 +353,19 @@
                     </div>
                     <div class="form-group col">
                         <label for="update_additional" class="col-form-label">Дополнительные товары, услуги</label>
-                        <textarea class="form-control overflow-auto" rows="2" id="update_additional" name="additional"></textarea>
+                        <textarea class="form-control overflow-auto" rows="2" id="update_additional"
+                                  name="additional"></textarea>
                     </div>
 
                     <div class="form-group col">
                         <label for="update_description" class="col-form-label">Описание</label>
-                        <textarea class="form-control overflow-auto" rows="2" id="update_description" name="description"></textarea>
+                        <textarea class="form-control overflow-auto" rows="2" id="update_description"
+                                  name="description"></textarea>
                     </div>
                     <div class="form-group col">
                         <label for="update_contact" class="col-form-label">Контактные данные. Адресс</label>
-                        <textarea class="form-control overflow-auto" rows="2" id="update_contact" name="contact"></textarea>
+                        <textarea class="form-control overflow-auto" rows="2" id="update_contact"
+                                  name="contact"></textarea>
                     </div>
                     <div class="form-group col">
                         <label for="update_price" class="col-form-label">Цена</label>
@@ -366,7 +374,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeNoty()">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="closeNoty()">
                     <span class="fa fa-close"></span>
                     Отмена
                 </button>

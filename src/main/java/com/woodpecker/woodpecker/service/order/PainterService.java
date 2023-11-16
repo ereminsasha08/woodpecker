@@ -43,8 +43,8 @@ public class PainterService {
     public void setColorPlywood(Integer id) {
         OrderMap orderMap = orderService.findOrderById(id);
         orderMap.setIsColorPlywood(false);
-        orderMap.setPainting_begin(LocalDateTime.now());
-        orderMap.setPainting_end(LocalDateTime.now());
+        orderMap.setPaintingBegin(LocalDateTime.now());
+        orderMap.setPaintingEnd(LocalDateTime.now());
     }
 
     @Transactional
@@ -54,7 +54,7 @@ public class PainterService {
     public void setPainter(Integer id, String namePainter) {
         OrderMap orderMap = orderService.findOrderById(id);
         orderMap.setNamePainter(namePainter);
-        orderMap.setPainting_begin(LocalDateTime.now());
+        orderMap.setPaintingBegin(LocalDateTime.now());
         orderMap.setStage(Stage.PAINTING);
     }
 
@@ -64,7 +64,7 @@ public class PainterService {
             @CacheEvict(value = "mapsByManager", allEntries = true)})
     public void setStage(Integer id) {
         OrderMap orderMap = orderService.findOrderById(id);
-        orderMap.setPainting_end(LocalDateTime.now());
+        orderMap.setPaintingEnd(LocalDateTime.now());
         orderMap.setStage(Stage.WAITING_GLUE);
     }
 }

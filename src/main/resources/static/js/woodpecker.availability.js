@@ -164,7 +164,7 @@ function add() {
     document.getElementById('availability_isMonochromatic').value = "false";
     document.getElementById('availability_price').value = "1000";
     document.getElementById('availability_contact').value = "Нет";
-    $("#createAvailability").modal();
+    $("#createAvailability").modal("show");
 }
 
 function saveAvailability() {
@@ -182,7 +182,7 @@ function saveAvailability() {
 }
 
 function getInfoCut(id) {
-    $("#info-cut").modal();
+    $("#info-cut").modal("show");
     $.get("rest/cut/info/" + id,
         function (data) {
             let listSelect = "";
@@ -198,7 +198,7 @@ function getInfoCut(id) {
                     '</div>'
             });
             document.getElementById("info").innerHTML = listSelect;
-            $('#info-cut').modal();
+            $('#info-cut').modal("show");
         });
 }
 
@@ -218,7 +218,7 @@ function renderDeleteBtn(data, type, row) {
 
 function updateRow(id) {
     form.find(":input").val("");
-    $("#createAvailability").modal();
+    $("#createAvailability").modal("show");
     $.get("rest/orders/" + id, function (data) {
         $.each(data, function (key, value) {
             if (value != null)

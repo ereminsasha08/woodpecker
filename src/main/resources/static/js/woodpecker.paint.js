@@ -159,7 +159,7 @@ function setPainter(id) {
     form = $('#formNamePainter');
     form.find(":input").val("");
     document.getElementById('id').value = id;
-    $("#modalNamePainter").modal();
+    $("#modalNamePainter").modal("show");
 }
 
 function savePainter() {
@@ -176,7 +176,7 @@ function savePainter() {
 }
 
 function getInfoCut(id, isColor) {
-    $("#info-cut").modal();
+    $("#info-cut").modal("show");
     $.get("rest/cut/info/" + id,
         function (data) {
             let listSelect = "";
@@ -193,7 +193,7 @@ function getInfoCut(id, isColor) {
 
             });
             document.getElementById("info").innerHTML = listSelect;
-            let cancel = "<button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" onclick=\"closeNoty()\"><span class=\"fa fa-close\"></span>Отмена</button>";
+            let cancel = "<button type=\"button\" class=\"btn btn-secondary\" data-bs-dismiss=\"modal\" onclick=\"closeNoty()\"><span class=\"fa fa-close\"></span>Отмена</button>";
             let paint = "<button class=\'btn btn-danger\' onclick=\'setIsColorPlywood(" + id + ");\'>Покрасить доски</button>";
             if (isColor)
                 cancel += paint;
