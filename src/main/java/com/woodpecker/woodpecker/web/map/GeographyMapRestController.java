@@ -3,6 +3,7 @@ package com.woodpecker.woodpecker.web.map;
 import com.woodpecker.woodpecker.model.map.GeographyMap;
 import com.woodpecker.woodpecker.service.map.GeographyMapService;
 import com.woodpecker.woodpecker.web.AuthUser;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -11,13 +12,13 @@ import org.springframework.lang.Nullable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
 @RequestMapping(value = GeographyMapRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class GeographyMapRestController {
     static final String REST_URL = "/rest/maps/";
 

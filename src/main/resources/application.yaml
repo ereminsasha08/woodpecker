@@ -1,6 +1,8 @@
 #  https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
-
 spring:
+  security:
+    ignored:
+      - "*.bundle.*"
   profiles:
     default: prod
   #  sql:
@@ -52,7 +54,6 @@ spring:
   redis:
     host:
 
-
 #  cache:
 #    cache-names: users
 #    caffeine.spec: maximumSize=5000,expireAfterAccess=60s
@@ -67,3 +68,5 @@ server.servlet:
   encoding:
     charset: UTF-8 # Charset of HTTP requests and responses. Added to the "Content-Type" header if not set explicitly
     enabled: true # Enable http encoding support
+server:
+  port: 9090
