@@ -21,8 +21,9 @@ import static com.woodpecker.woodpecker.util.validation.ValidationUtil.checkNew;
 @RestController
 @RequestMapping(value = ProfileController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
+@CrossOrigin("*")
 public class ProfileController extends AbstractUserController {
-    static final String REST_URL = "/profile/";
+    static final String REST_URL = "/rest/profile/";
 
     @GetMapping
     public User get(@AuthenticationPrincipal AuthUser authUser) {
