@@ -1,7 +1,7 @@
 package com.woodpecker.woodpecker.service.map;
 
 import com.woodpecker.woodpecker.model.map.GeographyMap;
-import com.woodpecker.woodpecker.model.map.OrderMap;
+import com.woodpecker.woodpecker.model.order.Order;
 import com.woodpecker.woodpecker.model.map.Stage;
 import com.woodpecker.woodpecker.model.user.User;
 import com.woodpecker.woodpecker.repository.GeographyMapRepository;
@@ -36,13 +36,14 @@ public class GeographyMapService {
 
     @Cacheable("mapsByManager")
     public List<GeographyMap> findByManager(User user) {
-        return geographyMapRepository.findByManagerAndIsView(user, true).stream()
-                .filter(
-                        map -> map.getOrderMap() == null
-                                || !(map.getOrderMap().getIsAvailability()
-                                || map.getOrderMap().getCompleted())
-                )
-                .toList();
+        return geographyMapRepository.findByManagerAndIsView(user, true);
+//                .stream()
+//                .filter(
+//                        map -> map.getOrder() == null
+//                                || !(map.getOrder().getIsAvailability()
+//                                || map.getOrder().getCompleted())
+//                )
+//                .toList();
     }
 
     public List<GeographyMap> getByDateTimeBetween(AuthUser authUser, LocalDateTime startDate, LocalDateTime endDate, String nameManager, boolean isPost) {
@@ -61,18 +62,18 @@ public class GeographyMapService {
                     );
         }
         if (!isPost) {
-            byDateTimeBetween = byDateTimeBetween
-                    .filter(
-                            map -> map.getOrderMap() == null
-                                    || !(map.getOrderMap().getIsAvailability()
-                                    || map.getOrderMap().getCompleted())
-                    );
+//            byDateTimeBetween = byDateTimeBetween
+//                    .filter(
+//                            map -> map.getOrder() == null
+//                                    || !(map.getOrder().getIsAvailability()
+//                                    || map.getOrder().getCompleted())
+//                    );
         } else {
-            byDateTimeBetween = byDateTimeBetween
-                    .filter(
-                            map -> map.getOrderMap() != null
-                                    && map.getOrderMap().getCompleted()
-                                    && !map.getOrderMap().getIsAvailability());
+//            byDateTimeBetween = byDateTimeBetween
+//                    .filter(
+//                            map -> map.getOrder() != null
+//                                    && map.getOrder().getCompleted()
+//                                    && !map.getOrder().getIsAvailability());
         }
         return byDateTimeBetween.toList();
     }
@@ -93,7 +94,7 @@ public class GeographyMapService {
 //            else {
             geographyMap.setManager(byId.getManager());
             geographyMap.setIsColorPlywood(byId.getIsColorPlywood());
-            geographyMap.setOrderMap(byId.getOrderMap());
+//            geographyMap.setOrder(byId.getOrder());
 //            }
         }
         geographyMapRepository.save(geographyMap);
@@ -104,17 +105,16 @@ public class GeographyMapService {
             @CacheEvict(value = "orders", allEntries = true),
             @CacheEvict(value = "mapsByManager", allEntries = true)})
     public void delete(int id) {
-        GeographyMap byId = getById(id);
-
-        byId.setView(false);
-        OrderMap orderMap = byId.getOrderMap();
-        if (orderMap != null) {
-            orderMap.setCompleted(true);
-            orderMap.setIsAvailability(false);
-            if (Stage.CUTTING.equals(orderMap.getStage())) {
-                cutService.refreshCapacity(orderMap);
-            }
-        }
-
+//        GeographyMap byId = getById(id);
+//
+//        byId.setView(false);
+//        Order order = byId.getOrder();
+//        if (order != null) {
+//            order.setCompleted(true);
+//            order.setIsAvailability(false);
+//            if (Stage.CUTTING.equals(order.getStage())) {
+//                cutService.refreshCapacity(order);
+//            }
+//        }
     }
 }

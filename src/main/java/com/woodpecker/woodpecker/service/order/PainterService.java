@@ -1,6 +1,6 @@
 package com.woodpecker.woodpecker.service.order;
 
-import com.woodpecker.woodpecker.model.map.OrderMap;
+import com.woodpecker.woodpecker.model.order.Order;
 import com.woodpecker.woodpecker.model.map.Stage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
@@ -19,19 +19,19 @@ public class PainterService {
 
     private final OrderService orderService;
 
-    public List<OrderMap> getPaint() {
+    public List<Order> getPaint() {
         return orderService.getAll(false).stream()
-                .filter(
-                        order ->
-                                order.getIsColorPlywood() != null && (
-                                        order.getIsColorPlywood() ||
-                                                order.getStage().getOrdersOperation() >= Stage.WAITING_PAINT.getOrdersOperation() && order.getStage().getOrdersOperation() <= Stage.PAINTING.getOrdersOperation())
-                )
+//                .filter(
+//                        order ->
+//                                order.getIsColorPlywood() != null && (
+//                                        order.getIsColorPlywood() ||
+//                                                order.getStage().getOrdersOperation() >= Stage.WAITING_PAINT.getOrdersOperation() && order.getStage().getOrdersOperation() <= Stage.PAINTING.getOrdersOperation())
+//                )
                 .sorted(
-                        Comparator.comparing(OrderMap::getMarketPlace).reversed()
-                                .thenComparing(OrderMap::getIsAvailability)
-                                .thenComparing(OrderMap::getOrderTerm)
-                                .thenComparing(OrderMap::getId)
+                        Comparator.comparing(Order::getMarketPlace).reversed()
+//                                .thenComparing(Order::getIsAvailability)
+                                .thenComparing(Order::getDateCreate)
+                                .thenComparing(Order::getId)
                 )
                 .toList();
     }
@@ -41,21 +41,20 @@ public class PainterService {
             @CacheEvict(value = "orders", allEntries = true),
             @CacheEvict(value = "mapsByManager", allEntries = true)})
     public void setColorPlywood(Integer id) {
-        OrderMap orderMap = orderService.findOrderById(id);
-        orderMap.setIsColorPlywood(false);
-        orderMap.setPaintingBegin(LocalDateTime.now());
-        orderMap.setPaintingEnd(LocalDateTime.now());
+        Order order = orderService.findOrderById(id);
+//        order.setIsColorPlywood(false);
+//        order.setPaintingBegin(LocalDateTime.now());
+//        order.setPaintingEnd(LocalDateTime.now());
     }
-
     @Transactional
     @Caching(evict = {
             @CacheEvict(value = "orders", allEntries = true),
             @CacheEvict(value = "mapsByManager", allEntries = true)})
     public void setPainter(Integer id, String namePainter) {
-        OrderMap orderMap = orderService.findOrderById(id);
-        orderMap.setNamePainter(namePainter);
-        orderMap.setPaintingBegin(LocalDateTime.now());
-        orderMap.setStage(Stage.PAINTING);
+        Order order = orderService.findOrderById(id);
+//        order.setNamePainter(namePainter);
+//        order.setPaintingBegin(LocalDateTime.now());
+//        order.setStage(Stage.PAINTING);
     }
 
     @Transactional
@@ -63,8 +62,8 @@ public class PainterService {
             @CacheEvict(value = "orders", allEntries = true),
             @CacheEvict(value = "mapsByManager", allEntries = true)})
     public void setStage(Integer id) {
-        OrderMap orderMap = orderService.findOrderById(id);
-        orderMap.setPaintingEnd(LocalDateTime.now());
-        orderMap.setStage(Stage.WAITING_GLUE);
+        Order order = orderService.findOrderById(id);
+//        order.setPaintingEnd(LocalDateTime.now());
+//        order.setStage(Stage.WAITING_GLUE);
     }
 }

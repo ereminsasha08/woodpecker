@@ -1,6 +1,6 @@
 package com.woodpecker.woodpecker.service.order;
 
-import com.woodpecker.woodpecker.model.map.OrderMap;
+import com.woodpecker.woodpecker.model.order.Order;
 import com.woodpecker.woodpecker.model.map.Stage;
 import com.woodpecker.woodpecker.util.exception.ApplicationException;
 import com.woodpecker.woodpecker.util.exception.ErrorType;
@@ -21,15 +21,15 @@ public class ProductionService {
 
     private final OrderService orderService;
 
-    public List<OrderMap> getOrderForProduction() {
+    public List<Order> getOrderForProduction() {
         return orderService.getAll(false)
                 .stream()
                 .filter(order -> !order.getCompleted())
                 .sorted(
-                        Comparator.comparing(OrderMap::getMarketPlace).reversed()
-                                .thenComparing(OrderMap::getIsAvailability)
-                                .thenComparing(OrderMap::getOrderTerm)
-                                .thenComparing(OrderMap::getId)
+                        Comparator.comparing(Order::getMarketPlace).reversed()
+//                                .thenComparing(Order::getIsAvailability)
+                                .thenComparing(Order::getDateCreate)
+                                .thenComparing(Order::getId)
                 )
                 .toList();
     }
@@ -41,42 +41,42 @@ public class ProductionService {
     public void updateConditionOrder(Integer id, Integer conditionMap) {
         if (conditionMap < Stage.WAITING_GLUE.getOrdersOperation())
             throw new ApplicationException("Нельзя менять состояния заказа до покраски", ErrorType.WRONG_REQUEST);
-        OrderMap orderMap = orderService.findOrderById(id);
+        Order order = orderService.findOrderById(id);
         int newCondition = conditionMap + 1;
-        orderMap.setStage(Stage.values()[newCondition]);
-        setTimeAndCompleted(orderMap, newCondition);
-        updateStatusForAvailability(conditionMap, orderMap);
+//        order.setStage(Stage.values()[newCondition]);
+        setTimeAndCompleted(order, newCondition);
+        updateStatusForAvailability(conditionMap, order);
     }
 
-    private static void setTimeAndCompleted(OrderMap orderMap, int newCondition) {
-        if (newCondition == Stage.BEING_COMPLETED.getOrdersOperation())
-            orderMap.setGluingEnd(LocalDateTime.now());
-        if (newCondition == Stage.PACKAGING.getOrdersOperation())
-            orderMap.setPackedEnd(LocalDateTime.now());
-        if (newCondition == Stage.SENDING.getOrdersOperation() && orderMap.getIsAvailability()) {
-            orderMap.setStage(Stage.AVAILABILITY);
-            orderMap.setCompleted(true);
-        } else if (newCondition == Stage.SENDING.getOrdersOperation()) {
-            orderMap.setPostEnd(LocalDateTime.now());
-            orderMap.setCompleted(true);
-        }
+    private static void setTimeAndCompleted(Order order, int newCondition) {
+//        if (newCondition == Stage.BEING_COMPLETED.getOrdersOperation())
+//            order.setGluingEnd(LocalDateTime.now());
+//        if (newCondition == Stage.PACKAGING.getOrdersOperation())
+//            order.setPackedEnd(LocalDateTime.now());
+//        if (newCondition == Stage.SENDING.getOrdersOperation() && order.getIsAvailability()) {
+//            order.setStage(Stage.AVAILABILITY);
+//            order.setCompleted(true);
+//        } else if (newCondition == Stage.SENDING.getOrdersOperation()) {
+//            order.setPostEnd(LocalDateTime.now());
+//            order.setCompleted(true);
+//        }
     }
 
-    private static void updateStatusForAvailability(Integer conditionMap, OrderMap orderMap) {
-        if (conditionMap == Stage.ORDERS_FROM_AVAILABILITY.getOrdersOperation())
-        {
-            orderMap.setStage(Stage.PACKAGING);
-            orderMap.setPackedEnd(LocalDateTime.now());
-        }
-        if (conditionMap == Stage.ORDER_FROM_AVAILABILITY_NO_PAINT.getOrdersOperation())
-        {
-            orderMap.setStage(Stage.WAITING_PAINT);
-            orderMap.setCutEnd(LocalDateTime.now());
-        }
-        if (conditionMap == Stage.ORDER_FROM_AVAILABILITY_NO_GLUE.getOrdersOperation())
-        {
-            orderMap.setStage(Stage.WAITING_GLUE);
-            orderMap.setPaintingEnd(LocalDateTime.now());
-        }
+    private static void updateStatusForAvailability(Integer conditionMap, Order order) {
+//        if (conditionMap == Stage.ORDERS_FROM_AVAILABILITY.getOrdersOperation())
+//        {
+//            order.setStage(Stage.PACKAGING);
+//            order.setPackedEnd(LocalDateTime.now());
+//        }
+//        if (conditionMap == Stage.ORDER_FROM_AVAILABILITY_NO_PAINT.getOrdersOperation())
+//        {
+//            order.setStage(Stage.WAITING_PAINT);
+//            order.setCutEnd(LocalDateTime.now());
+//        }
+//        if (conditionMap == Stage.ORDER_FROM_AVAILABILITY_NO_GLUE.getOrdersOperation())
+//        {
+//            order.setStage(Stage.WAITING_GLUE);
+//            order.setPaintingEnd(LocalDateTime.now());
+//        }
     }
 }

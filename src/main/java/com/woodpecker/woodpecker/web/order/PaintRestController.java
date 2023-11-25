@@ -1,6 +1,6 @@
 package com.woodpecker.woodpecker.web.order;
 
-import com.woodpecker.woodpecker.model.map.OrderMap;
+import com.woodpecker.woodpecker.model.order.Order;
 import com.woodpecker.woodpecker.service.order.PainterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +18,7 @@ public class PaintRestController {
 
 
     @GetMapping
-    public List<OrderMap> paintOrder() {
+    public List<Order> paintOrder() {
         return painterService.getPaint();
     }
 

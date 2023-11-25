@@ -1,7 +1,7 @@
 package com.woodpecker.woodpecker.service.order;
 
 import com.woodpecker.woodpecker.model.map.GeographyMap;
-import com.woodpecker.woodpecker.model.map.OrderMap;
+import com.woodpecker.woodpecker.model.order.Order;
 import com.woodpecker.woodpecker.model.map.Stage;
 import com.woodpecker.woodpecker.repository.GeographyMapRepository;
 import com.woodpecker.woodpecker.repository.OrderRepository;
@@ -25,8 +25,8 @@ public class AvailabilityService {
     private final GeographyMapRepository geographyMapRepository;
 
 
-    public List<OrderMap> getAvailability() {
-        return orderRepository.findByIsAvailability(true);
+    public List<Order> getAvailability() {
+        return null;
     }
 
     @Transactional
@@ -34,29 +34,29 @@ public class AvailabilityService {
             @CacheEvict(value = "orders", allEntries = true),
             @CacheEvict(value = "mapsByManager", allEntries = true)})
     public GeographyMap createAvailabilityMap(AuthUser authUser, GeographyMap geographyMap, Integer stage, Boolean isColorPlywood, String laser) {
-        OrderMap orderMap = new OrderMap(LocalDateTime.now(), geographyMap, false, Stage.values()[stage], true);
+        Order order = new Order(LocalDateTime.now(), geographyMap, false, Stage.values()[stage], true);
         if (isColorPlywood && stage == Stage.WAITING_PAINT_AVAILABILITY.getOrdersOperation())
             throw new IllegalArgumentException("Карта из покрашенных досок не может быть на покраске");
         if (geographyMap.isNew()) {
             geographyMap.setManager(authUser.getUser());
             geographyMap.setDescription("Карта из наличия в момент создания была на стадии: " +
                     Stage.values()[stage].name());
-            orderMap.setCompleted(true);
-            orderMap.setIsColorPlywood(false);
-            orderMap.setPlywoodList(List.of("Готов"));
-            orderMap.setAllTime();
-            geographyMap.setOrderMap(orderMap);
+            order.setCompleted(true);
+//            order.setIsColorPlywood(false);
+//            order.setPlywoodList(List.of("Готов"));
+            order.setAllTime();
+//            geographyMap.setOrder(order);
 
         } else {
             GeographyMap byId = geographyMapRepository.findById(geographyMap.id()).get();
             geographyMap.setManager(byId.getManager());
-            orderMap = byId.getOrderMap();
-            geographyMap.setOrderMap(orderMap);
+//            order = byId.getOrder();
+//            geographyMap.setOrder(order);
         }
-        orderMap.setLaser(laser);
+//        order.setLaser(laser);
         geographyMap.setIsColorPlywood(isColorPlywood);
         GeographyMap save = geographyMapRepository.save(geographyMap);
-        orderRepository.save(orderMap);
+        orderRepository.save(order);
         return save;
     }
 

@@ -1,7 +1,7 @@
 package com.woodpecker.woodpecker.web.order;
 
 import com.woodpecker.woodpecker.model.map.GeographyMap;
-import com.woodpecker.woodpecker.model.map.OrderMap;
+import com.woodpecker.woodpecker.model.order.Order;
 import com.woodpecker.woodpecker.service.order.AvailabilityService;
 import com.woodpecker.woodpecker.web.AuthUser;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class AvailabilityController {
 
 
     @GetMapping
-    public List<OrderMap> getAvailability() {
+    public List<Order> getAvailability() {
         return availabilityService.getAvailability();
     }
 

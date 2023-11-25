@@ -1,6 +1,6 @@
 package com.woodpecker.woodpecker.web.order;
 
-import com.woodpecker.woodpecker.model.map.OrderMap;
+import com.woodpecker.woodpecker.model.order.Order;
 import com.woodpecker.woodpecker.service.order.ProductionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +16,7 @@ public class ProductionRestController {
     private final ProductionService productionService;
 
     @GetMapping
-    public List<OrderMap> getOrderForProduction() {
+    public List<Order> getOrderForProduction() {
         return productionService.getOrderForProduction();
     }
 

@@ -1,6 +1,6 @@
 package com.woodpecker.woodpecker.web.order;
 
-import com.woodpecker.woodpecker.model.map.OrderMap;
+import com.woodpecker.woodpecker.model.order.Order;
 import com.woodpecker.woodpecker.service.order.CutService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +17,7 @@ public class CutRestController {
     public final static String REST_URL = "rest/cut/";
 
     @GetMapping
-    public List<OrderMap> getOrdersForCut() {
+    public List<Order> getOrdersForCut() {
         return cutService.sortedForCut();
     }
 

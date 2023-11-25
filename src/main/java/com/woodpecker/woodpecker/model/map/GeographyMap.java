@@ -4,6 +4,8 @@ package com.woodpecker.woodpecker.model.map;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.woodpecker.woodpecker.model.abstractentity.Product;
+import com.woodpecker.woodpecker.model.order.GeographyMapProduction;
+import com.woodpecker.woodpecker.model.order.Order;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -12,7 +14,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Getter
@@ -20,8 +21,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "maps")
 @NoArgsConstructor
-public class GeographyMap extends Product implements Serializable {
-
+public class GeographyMap extends Product {
 
     @Column(name = "type_map", nullable = false)
     @NotNull
@@ -68,11 +68,15 @@ public class GeographyMap extends Product implements Serializable {
 
     @Column(name = "is_color_plywood")
     private Boolean isColorPlywood;
-    @OneToOne
-    @JoinColumn(name = "order_map_id", referencedColumnName = "id")
+    @OneToOne(cascade = {CascadeType.REMOVE})
+    @JoinColumn(name = "geography_map_production_id", referencedColumnName = "geography_map_id")
     @JsonIgnoreProperties("geographyMap")
-    private OrderMap orderMap;
+    private GeographyMapProduction geographyMapProduction;
 
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "id")
+    @JsonIgnore
+    private Order order;
     @Column(name = "is_view", columnDefinition = "boolean default true")
     @JsonIgnore
     private boolean isView = true;
@@ -80,6 +84,6 @@ public class GeographyMap extends Product implements Serializable {
     @Column(name = "is_monochromatic", columnDefinition = "boolean default false")
     private Boolean isMonochromatic;
 
-    @Column(name = "is_Plexiglass", columnDefinition = "boolean default false")
-    private Boolean isPlexiglass;
+    @Column(name = "is_plexiglas", columnDefinition = "boolean default false")
+    private Boolean isPlexiglas;
 }

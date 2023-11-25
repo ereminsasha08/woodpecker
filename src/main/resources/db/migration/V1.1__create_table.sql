@@ -39,7 +39,7 @@ create table maps
     primary key (id)
 );
 
-create table orders
+create table order
 (
     id               int4      not null,
     completed        boolean   not null,
@@ -127,9 +127,9 @@ alter table if exists maps
 alter table if exists maps
     add constraint FKc4wcaxqaw5b7cuvou9ne1o4wf
     foreign key (order_map_id)
-    references orders;
+    references order;
 
-alter table if exists orders
+alter table if exists order
     add constraint FKmbynk042d97r6jgd3i8rqk58u
     foreign key (id)
     references maps;
@@ -137,7 +137,7 @@ alter table if exists orders
 alter table if exists plywood_list_for_map
     add constraint FKcc7w3qf958iw7dfuwev2gxk8r
     foreign key (order_map_id)
-    references orders;
+    references order;
 
 alter table if exists role
     add constraint FKgg3583634e0ydkacyk8wbbm19

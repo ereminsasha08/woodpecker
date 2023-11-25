@@ -1,7 +1,7 @@
 package com.woodpecker.woodpecker.service.order;
 
 import com.woodpecker.woodpecker.model.map.GeographyMap;
-import com.woodpecker.woodpecker.model.map.OrderMap;
+import com.woodpecker.woodpecker.model.order.Order;
 import com.woodpecker.woodpecker.model.map.Stage;
 import com.woodpecker.woodpecker.repository.GeographyMapRepository;
 import com.woodpecker.woodpecker.repository.OrderRepository;
@@ -31,11 +31,11 @@ public class OrderService {
     final private GeographyMapRepository geographyMapRepository;
 
     @Cacheable("orders")
-    public List<OrderMap> getAll(Boolean isCompleted) {
+    public List<Order> getAll(Boolean isCompleted) {
         return orderRepository.findByCompleted(isCompleted);
     }
 
-    public OrderMap findOrderById(Integer id) {
+    public Order findOrderById(Integer id) {
         return orderRepository.findById(id).orElseThrow(() -> new ApplicationException("Карта не найдена", ErrorType.DATA_ERROR));
     }
 
@@ -43,7 +43,7 @@ public class OrderService {
     @Caching(evict = {
             @CacheEvict(value = "orders", allEntries = true),
             @CacheEvict(value = "mapsByManager", allEntries = true)})
-    public OrderMap create(AuthUser authUser, Integer id, LocalDateTime orderTerm, boolean marketPlace, boolean isAvailability) {
+    public Order create(AuthUser authUser, Integer id, LocalDateTime orderTerm, boolean marketPlace, boolean isAvailability) {
 
         GeographyMap map = geographyMapRepository.getById(id);
 //        if (map.getManager().id() != authUser.id())
@@ -52,52 +52,52 @@ public class OrderService {
             orderTerm = Objects.isNull(orderTerm) ? LocalDateTime.now() : orderTerm;
         else orderTerm = Objects.isNull(orderTerm) ? LocalDateTime.now().plusWeeks(2).plusDays(3) : orderTerm;
 
-        OrderMap orderMap = new OrderMap(orderTerm, map, marketPlace, Stage.SEQUENCING_CUT, isAvailability);
-        map.setOrderMap(orderMap);
-        return orderRepository.save(orderMap);
+        Order order = new Order(orderTerm, map, marketPlace, Stage.SEQUENCING_CUT, isAvailability);
+//        map.setOrder(order);
+        return orderRepository.save(order);
     }
 
     @Transactional
     @Caching(evict = {
             @CacheEvict(value = "orders", allEntries = true),
             @CacheEvict(value = "mapsByManager", allEntries = true)})
-    public OrderMap modifyOrder(AuthUser authUser, Integer id, LocalDateTime orderTerm, String light, String additional, String description,
-                                String contact, Integer price, Boolean isMarketPlace, Boolean isAvailability) {
-        OrderMap modifyOrder = findOrderById(id);
+    public Order modifyOrder(AuthUser authUser, Integer id, LocalDateTime orderTerm, String light, String additional, String description,
+                             String contact, Integer price, Boolean isMarketPlace, Boolean isAvailability) {
+        Order modifyOrder = findOrderById(id);
 //        if (!modifyOrder.getIsAvailability() && modifyOrder.getGeographyMap().getManager().id() != authUser.id())
 //            throw new IllegalArgumentException("Изменять можно только свои заказы");
         modifyOrder.setMarketPlace(isMarketPlace);
         modifyOrder.setIsPaid(isMarketPlace);
         orderTerm = Objects.isNull(orderTerm) ? LocalDateTime.now().plusWeeks(2).plusDays(3) : orderTerm;
-        modifyOrder.setOrderTerm(orderTerm);
+        modifyOrder.setDateCreate(orderTerm);
 
-        modifyOrder.setIsAvailability(isAvailability);
-        GeographyMap modifyGeographyMap = modifyOrder.getGeographyMap();
-        modifyGeographyMap.setLight(light);
-        modifyGeographyMap.setAdditional(additional);
-        modifyGeographyMap.setDescription(description);
-        modifyGeographyMap.setContact(contact);
-        modifyGeographyMap.setPrice(price);
+//        modifyOrder.setIsAvailability(isAvailability);
+//        GeographyMap modifyGeographyMap = modifyOrder.getGeographyMap();
+//        modifyGeographyMap.setLight(light);
+//        modifyGeographyMap.setAdditional(additional);
+//        modifyGeographyMap.setDescription(description);
+//        modifyGeographyMap.setContact(contact);
+//        modifyGeographyMap.setPrice(price);
         if (!isAvailability) {
-            modifyGeographyMap.setManager(authUser.getUser());
+//            modifyGeographyMap.setManager(authUser.getUser());
             checkIsAvailability(modifyOrder);
         }
         return orderRepository.save(modifyOrder);
     }
 
-    private static void checkIsAvailability(OrderMap modifyOrder) {
-        if (modifyOrder.getStage().getOrdersOperation() == Stage.AVAILABILITY.getOrdersOperation()) {
-            modifyOrder.setStage(Stage.ORDERS_FROM_AVAILABILITY);
-            modifyOrder.setCompleted(false);
-        }
-        if (modifyOrder.getStage().getOrdersOperation() == Stage.WAITING_GLUE_AVAILABILITY.getOrdersOperation()) {
-            modifyOrder.setStage(Stage.ORDER_FROM_AVAILABILITY_NO_GLUE);
-            modifyOrder.setCompleted(false);
-        }
-        if (modifyOrder.getStage().getOrdersOperation() == Stage.WAITING_PAINT_AVAILABILITY.getOrdersOperation()) {
-            modifyOrder.setStage(Stage.ORDER_FROM_AVAILABILITY_NO_PAINT);
-            modifyOrder.setCompleted(false);
-        }
+    private static void checkIsAvailability(Order modifyOrder) {
+//        if (modifyOrder.getStage().getOrdersOperation() == Stage.AVAILABILITY.getOrdersOperation()) {
+//            modifyOrder.setStage(Stage.ORDERS_FROM_AVAILABILITY);
+//            modifyOrder.setCompleted(false);
+//        }
+//        if (modifyOrder.getStage().getOrdersOperation() == Stage.WAITING_GLUE_AVAILABILITY.getOrdersOperation()) {
+//            modifyOrder.setStage(Stage.ORDER_FROM_AVAILABILITY_NO_GLUE);
+//            modifyOrder.setCompleted(false);
+//        }
+//        if (modifyOrder.getStage().getOrdersOperation() == Stage.WAITING_PAINT_AVAILABILITY.getOrdersOperation()) {
+//            modifyOrder.setStage(Stage.ORDER_FROM_AVAILABILITY_NO_PAINT);
+//            modifyOrder.setCompleted(false);
+//        }
     }
 
     @Transactional
@@ -105,7 +105,7 @@ public class OrderService {
             @CacheEvict(value = "orders", allEntries = true),
             @CacheEvict(value = "mapsByManager", allEntries = true)})
     public void setPaid(Integer id, Boolean isPaid) {
-        OrderMap orderMap = orderRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Заказ не найден"));
-        orderMap.setIsPaid(isPaid);
+        Order order = orderRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Заказ не найден"));
+        order.setIsPaid(isPaid);
     }
 }

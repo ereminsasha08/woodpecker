@@ -1,17 +1,13 @@
 package com.woodpecker.woodpecker.repository;
 
-import com.woodpecker.woodpecker.model.map.OrderMap;
+import com.woodpecker.woodpecker.model.order.Order;
 import org.springframework.data.jpa.repository.EntityGraph;
 
 import java.util.List;
-import java.util.Optional;
 
 
-public interface OrderRepository extends BaseRepository<OrderMap> {
-    @EntityGraph(attributePaths = {"geographyMap"})
-    List<OrderMap> findByCompleted(boolean isCompleted);
-
-    @EntityGraph(attributePaths = {"geographyMap"})
-    List<OrderMap> findByIsAvailability(boolean isAvailability);
+public interface OrderRepository extends BaseRepository<Order> {
+    @EntityGraph(attributePaths = {"geographyMap", "geographyMap.geographyMapProduction"})
+    List<Order> findByCompleted(boolean isCompleted);
 
 }

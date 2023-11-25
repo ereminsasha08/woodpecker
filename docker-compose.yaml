@@ -4,7 +4,7 @@ services:
     image: postgres:13
     container_name: "db_woodpecker"
     ports:
-      - "5432:5432"
+      - "5432:5432woo"
     networks:
       - woodpecker_network
     environment:
