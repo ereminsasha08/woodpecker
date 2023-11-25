@@ -19,7 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @CrossOrigin("*")
 public class OrderRestController {
-    public final static String REST_URL = "rest/orders/";
+    public final static String REST_URL = "rest/orders";
 
     private final OrderService orderService;
 

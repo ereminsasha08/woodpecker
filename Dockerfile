@@ -1,5 +1,5 @@
-FROM eclipse-temurin:17-jre-alpine
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} wood.jar
-EXPOSE 8080
-ENTRYPOINT ["java","-jar","/wood.jar"]
+FROM eclipse-temurin:21-jre-alpine
+ARG JAR_FILE=build/libs/*.jar
+COPY ${JAR_FILE} woodpecker.jar
+EXPOSE 9090
+ENTRYPOINT ["java","-jar","/woodpecker.jar"]

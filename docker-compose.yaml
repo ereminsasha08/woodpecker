@@ -4,7 +4,7 @@ services:
     image: postgres:13
     container_name: "db_woodpecker"
     ports:
-      - "5432:5432woo"
+      - "5432:5432"
     networks:
       - woodpecker_network
     environment:
@@ -12,24 +12,34 @@ services:
       - POSTGRES_PASSWORD=password
     volumes:
       - ./database:/var/lib/postgresql
-  woodpecker:
-    image: sashaeremin/mywood:0.0.5
-    container_name: "woodpecker_app"
+  woodpecker-backend:
+    build: .
+    image: sashaeremin/woodpecker_backend:0.0.1
+    container_name: "woodpecker-backend"
     ports:
-      - "8080:8080"
+      - "9090:9090"
     networks:
       - woodpecker_network
     environment:
       - spring.datasource.url=jdbc:postgresql://db_woodpecker:5432/postgres
-  redis-wd:
-    image: redis
-    container_name: "redis_wd"
+  woodpecker-client:
+    build: /home/kali/IdeaProjects/woodClient
+    image: sashaeremin/mywood_client:0.0.1
+    container_name: "woodpecker-client"
     ports:
-      - "6379:6379"
+      - "80:80"
     networks:
       - woodpecker_network
+#  redis-wd:
+#    image: redis
+#    container_name: "redis_wd"
+#    ports:
+#      - "6379:6379"
+#    networks:
+#      - woodpecker_network
 networks:
   woodpecker_network:
+    driver: bridge
 
 
 
