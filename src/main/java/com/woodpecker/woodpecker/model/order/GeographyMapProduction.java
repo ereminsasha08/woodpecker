@@ -1,33 +1,26 @@
 package com.woodpecker.woodpecker.model.order;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.woodpecker.woodpecker.HasId;
-import com.woodpecker.woodpecker.model.map.GeographyMap;
 import com.woodpecker.woodpecker.model.map.Stage;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static jakarta.persistence.FetchType.*;
-import static org.hibernate.annotations.FetchMode.*;
-
 @Data
 @Entity
-@Table(name = "geograhy_map_production", schema = "production")
+@Table(name = "geography_map_production", schema = "production")
 public class GeographyMapProduction implements HasId {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "geography_map_id")
+    @Column(name = "geography_map_id", nullable = false)
     private Integer geographyMapId;
-
-    @Column(name = "is_color_plywood")
-    private Boolean isColorPlywood;
+    @Column(name = "is_painted", nullable = false)
+    private Boolean isPainted;
     @Column(name = "stage", nullable = false)
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -38,8 +31,8 @@ public class GeographyMapProduction implements HasId {
     @CollectionTable(name = "plywood_list_for_map")
     private List<String> plywoodList;
     @Column(name = "painter")
-    private String namePainter;
-    @Column(name = "availability")
+    private String painter;
+    @Column(name = "is_availability")
     private Boolean isAvailability;
     @Column(name = "cut_begin")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
@@ -53,9 +46,9 @@ public class GeographyMapProduction implements HasId {
     @Column(name = "painting_end")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime paintingEnd;
-    @Column(name = "gluing_start")
+    @Column(name = "gluing_begin")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime gluingStart;
+    private LocalDateTime gluingBegin;
     @Column(name = "gluing_end")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime gluingEnd;

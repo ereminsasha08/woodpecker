@@ -12,9 +12,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -24,66 +21,52 @@ import java.time.LocalDateTime;
 public class GeographyMap extends Product {
 
     @Column(name = "type_map", nullable = false)
+    @Enumerated(EnumType.STRING)
     @NotNull
     @NotBlank
-    private String typeMap;
-
+    private MapType mapType;
     @Column(name = "size", nullable = false)
     @NotNull
-    private int size;
-
-    @Column(name = "language_map", nullable = false)
+    private Integer size;
+    @Column(name = "language", nullable = false)
     @NotNull
     @NotBlank
-    private String language;
-
+    private LanguageType languageType;
     @Column(name = "is_multi_level", nullable = false)
     @NotNull
     private Boolean isMultiLevel;
-
     @Column(name = "color", nullable = false)
     @NotNull
     @NotBlank
     private String color;
-
-    @Column(name = "date_time", nullable = false)
-    @NotNull
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime dateTime;
-
     @Column(name = "is_state", nullable = false)
     @NotNull
     private Boolean isState;
-
-    @Column(name = "is_capital", columnDefinition = "boolean default true")
+    @Column(name = "is_capital", nullable = false)
     private boolean isCapital = true;
-
+    @Column(name = "is_monochromatic", columnDefinition = "boolean default false")
+    private Boolean isMonochromatic;
+    @Column(name = "is_color_plywood")
+    private Boolean isColorPlywood;
+    @Column(name = "is_plexiglas", columnDefinition = "boolean default false")
+    private Boolean isPlexiglas;
     @Column(name = "light", nullable = false)
     @NotNull
     @NotBlank
-    private String light;
-
+    private LightType light;
     @Column(name = "additional", length = 800)
     private String additional;
-
-    @Column(name = "is_color_plywood")
-    private Boolean isColorPlywood;
     @OneToOne(cascade = {CascadeType.REMOVE})
     @JoinColumn(name = "geography_map_production_id", referencedColumnName = "geography_map_id")
     @JsonIgnoreProperties("geographyMap")
     private GeographyMapProduction geographyMapProduction;
-
     @ManyToOne
-    @JoinColumn(referencedColumnName = "id")
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
     @JsonIgnore
     private Order order;
     @Column(name = "is_view", columnDefinition = "boolean default true")
     @JsonIgnore
-    private boolean isView = true;
+    private boolean isView;
 
-    @Column(name = "is_monochromatic", columnDefinition = "boolean default false")
-    private Boolean isMonochromatic;
 
-    @Column(name = "is_plexiglas", columnDefinition = "boolean default false")
-    private Boolean isPlexiglas;
 }

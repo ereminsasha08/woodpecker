@@ -7,7 +7,7 @@ import java.util.List;
 
 
 public interface OrderRepository extends BaseRepository<Order> {
-    @EntityGraph(attributePaths = {"geographyMap", "geographyMap.geographyMapProduction"})
+    @EntityGraph(attributePaths = {"manager", "geographyMap", "geographyMap.geographyMapProduction"})
     List<Order> findByCompleted(boolean isCompleted);
 
 }

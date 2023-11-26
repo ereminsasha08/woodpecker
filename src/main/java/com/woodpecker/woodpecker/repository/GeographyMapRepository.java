@@ -12,14 +12,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface GeographyMapRepository extends BaseRepository<GeographyMap> {
-
-
-
     @EntityGraph(attributePaths = {"orderMap"})
-    List<GeographyMap> findByManagerAndIsView(User user, boolean isView);
-
-    @EntityGraph(attributePaths = {"orderMap"})
-    List<GeographyMap> getByDateTimeBetweenAndIsView(LocalDateTime startDate, LocalDateTime endDate, boolean view);
+    List<GeographyMap> findByIsView(boolean isView);
 
     @EntityGraph(attributePaths = {"orderMap"})
     Optional<GeographyMap> findById(Integer id);

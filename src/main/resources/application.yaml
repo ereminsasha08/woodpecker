@@ -30,8 +30,8 @@ spring:
         # https://stackoverflow.com/questions/21257819/what-is-the-difference-between-hibernate-jdbc-fetch-size-and-hibernate-jdbc-batc
         jdbc.batch_size: 20
 #        show_sql: true
-    hibernate:
-      ddl-auto: create
+#    hibernate:
+#      ddl-auto: create
   #  datasource:
   #    url: jdbc:h2:mem:wood
   #    username: sa

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -36,7 +37,7 @@ public class GeographyMapService {
 
     @Cacheable("mapsByManager")
     public List<GeographyMap> findByManager(User user) {
-        return geographyMapRepository.findByManagerAndIsView(user, true);
+        return geographyMapRepository.findByIsView(true);
 //                .stream()
 //                .filter(
 //                        map -> map.getOrder() == null
@@ -49,33 +50,33 @@ public class GeographyMapService {
     public List<GeographyMap> getByDateTimeBetween(AuthUser authUser, LocalDateTime startDate, LocalDateTime endDate, String nameManager, boolean isPost) {
         startDate = startDate != null ? startDate : LocalDateTime.of(2000, 1, 1, 0, 0);
         endDate = endDate != null ? startDate : LocalDateTime.of(2040, 1, 1, 0, 0);
-        Stream<GeographyMap> byDateTimeBetween = geographyMapRepository.getByDateTimeBetweenAndIsView(startDate, endDate, true).stream();
-        if (!nameManager.isBlank() && "мои".equalsIgnoreCase(nameManager)) {
-            byDateTimeBetween = byDateTimeBetween
-                    .filter(
-                            map -> map.getManager().id() == authUser.id()
-                    );
-        } else if (!nameManager.isBlank() && !"все".equalsIgnoreCase(nameManager)) {
-            byDateTimeBetween = byDateTimeBetween
-                    .filter(
-                            map -> map.getManager().getName().equalsIgnoreCase(nameManager)
-                    );
-        }
-        if (!isPost) {
+//        Stream<GeographyMap> byDateTimeBetween = geographyMapRepository.getByDateTimeBetweenAndIsView(startDate, endDate, true).stream();
+//        if (!nameManager.isBlank() && "мои".equalsIgnoreCase(nameManager)) {
+//            byDateTimeBetween = byDateTimeBetween
+//                    .filter(
+//                            map -> map.getManager().id() == authUser.id()
+//                    );
+//        } else if (!nameManager.isBlank() && !"все".equalsIgnoreCase(nameManager)) {
+//            byDateTimeBetween = byDateTimeBetween
+//                    .filter(
+//                            map -> map.getManager().getName().equalsIgnoreCase(nameManager)
+//                    );
+//        }
+//        if (!isPost) {
 //            byDateTimeBetween = byDateTimeBetween
 //                    .filter(
 //                            map -> map.getOrder() == null
 //                                    || !(map.getOrder().getIsAvailability()
 //                                    || map.getOrder().getCompleted())
 //                    );
-        } else {
+//        } else {
 //            byDateTimeBetween = byDateTimeBetween
 //                    .filter(
 //                            map -> map.getOrder() != null
 //                                    && map.getOrder().getCompleted()
 //                                    && !map.getOrder().getIsAvailability());
-        }
-        return byDateTimeBetween.toList();
+//        }
+        return Collections.emptyList();
     }
 
 
@@ -85,14 +86,14 @@ public class GeographyMapService {
             @CacheEvict(value = "mapsByManager", allEntries = true)})
     public void create(GeographyMap geographyMap, AuthUser authUser) {
         if (geographyMap.isNew()) {
-            geographyMap.setManager(authUser.getUser());
+//            geographyMap.setManager(authUser.getUser());
         } else {
             assert geographyMap.getId() != null;
             GeographyMap byId = getById(geographyMap.id());
 //            if (byId.getManager().id() != authUser.getUser().id())
 //                throw new IllegalArgumentException("Изменять можно только свои заказы");
 //            else {
-            geographyMap.setManager(byId.getManager());
+//            geographyMap.setManager(byId.getManager());
             geographyMap.setIsColorPlywood(byId.getIsColorPlywood());
 //            geographyMap.setOrder(byId.getOrder());
 //            }

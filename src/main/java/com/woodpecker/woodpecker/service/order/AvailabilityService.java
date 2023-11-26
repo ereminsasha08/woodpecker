@@ -38,7 +38,7 @@ public class AvailabilityService {
         if (isColorPlywood && stage == Stage.WAITING_PAINT_AVAILABILITY.getOrdersOperation())
             throw new IllegalArgumentException("Карта из покрашенных досок не может быть на покраске");
         if (geographyMap.isNew()) {
-            geographyMap.setManager(authUser.getUser());
+//            geographyMap.setManager(authUser.getUser());
             geographyMap.setDescription("Карта из наличия в момент создания была на стадии: " +
                     Stage.values()[stage].name());
             order.setCompleted(true);
@@ -49,7 +49,7 @@ public class AvailabilityService {
 
         } else {
             GeographyMap byId = geographyMapRepository.findById(geographyMap.id()).get();
-            geographyMap.setManager(byId.getManager());
+//            geographyMap.setManager(byId.getManager());
 //            order = byId.getOrder();
 //            geographyMap.setOrder(order);
         }
