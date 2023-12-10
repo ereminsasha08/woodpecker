@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: woodpeckerbackend
+  cloud:
+    config:
+      uri: http://localhost:8071
+  security.oauth2:
+    resource-server:
+      jwt:
+        issuer-uri: http://localhost:8100/auth/realms/woodpecker

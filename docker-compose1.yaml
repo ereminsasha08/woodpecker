@@ -8,27 +8,10 @@ services:
     networks:
       - woodpecker_network
     environment:
-      - POSTGRES_DB=keycloak
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password
     volumes:
       - ./database:/var/lib/postgresql
-  keycloak:
-    image: jboss/keycloak
-    restart: always
-    environment:
-      DB_VENDOR: postgres
-      DB_ADDR: db-woodpecker
-      DB_PORT: 5432
-      DB_DATABASE: keycloak
-      DB_USER: user
-      DB_PASSWORD: password
-      KEYCLOAK_USER: admin
-      KEYCLOAK_PASSWORD: admin
-    ports:
-      - "8100:8080"
-    networks:
-      - woodpecker_network
   config-server:
     build: /home/oem/IdeaProjects/configserver
     image: sashaeremin/config_server:0.0.1
@@ -42,7 +25,7 @@ services:
       - spring.cloud.config.server.git.username=sashaeremin08051998@gmail.com
     depends_on: [db-woodpecker]
   eureka-server:
-    build: /home/oem/IdeaProjects/eureka
+#    build: /home/oem/IdeaProjects/eureka
     image: sashaeremin/eureka_server:0.0.1
     container_name: "eureka-server"
     ports:
@@ -53,20 +36,18 @@ services:
       - spring.profiles.active=prod
       - spring.cloud.config.uri=http://config-server:8071
     depends_on: [config-server]
-  gateway:
-    build: /home/oem/IdeaProjects/gateway
-    image: sashaeremin/gateway:0.0.1
-    container_name: "gateway"
+  woodpecker-backend:
+    image: sashaeremin/woodpecker_backend:0.0.1
+    container_name: "woodpecker-backend"
     ports:
-      - "8072:8072"
+      - "9090:9090"
     networks:
       - woodpecker_network
     environment:
       - spring.profiles.active=prod
       - spring.cloud.config.uri=http://config-server:8071
-    depends_on: [ config-server, eureka-server ]
+    depends_on: [eureka-server]
   woodpecker-store:
-    build: /home/oem/IdeaProjects/store
     image: sashaeremin/woodpecker_store:0.0.1
     container_name: "woodpecker-store"
     ports:
@@ -77,6 +58,31 @@ services:
       - spring.profiles.active=prod
       - spring.cloud.config.uri=http://config-server:8071
     depends_on: [ eureka-server ]
+  woodpecker-client:
+    build: /home/oem/IdeaProjects/woodclient
+    image: sashaeremin/woodpecker_client:0.0.1
+    container_name: "woodpecker-client"
+    ports:
+      - "80:80"
+    networks:
+      - woodpecker_network
+#  redis-wd:
+#    image: redis
+#    container_name: "redis_wd"
+#    ports:
+#      - "6379:6379"
+#    networks:
+#      - woodpecker_network
+  keycloak:
+    image: jboss/keycloak
+    restart: always
+    environment:
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+    ports:
+      - "8100:8080"
+    networks:
+      - woodpecker_network
 networks:
   woodpecker_network:
     driver: bridge
