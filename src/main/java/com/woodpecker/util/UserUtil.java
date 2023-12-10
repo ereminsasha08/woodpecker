@@ -19,10 +19,4 @@ public class UserUtil {
         user.setPassword(userTo.getPassword());
         return user;
     }
-
-    public static User prepareToSave(User user) {
-        user.setPassword(SecurityConfiguration.PASSWORD_ENCODER.encode(user.getPassword()));
-        user.setEmail(user.getEmail().toLowerCase());
-        return user;
-    }
 }

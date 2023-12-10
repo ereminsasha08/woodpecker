@@ -35,23 +35,4 @@ public class ProfileController extends AbstractUserController {
         super.delete(authUser.id());
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<User> register(@Valid @RequestBody UserTo userTo) {
-        log.info("register {}", userTo);
-        ValidationUtil.checkNew(userTo);
-        User created = prepareAndSave(UserUtil.createNewFromTo(userTo));
-        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(REST_URL).build().toUri();
-        return ResponseEntity.created(uriOfNewResource).body(created);
-    }
-
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Transactional
-    public void update(@RequestBody @Valid UserTo userTo, @AuthenticationPrincipal AuthUser authUser) {
-        ValidationUtil.assureIdConsistent(userTo, authUser.id());
-        User user = authUser.getUser();
-        prepareAndSave(UserUtil.updateFromTo(user, userTo));
-    }
 }

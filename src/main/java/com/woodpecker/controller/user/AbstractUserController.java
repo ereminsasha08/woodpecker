@@ -33,7 +33,4 @@ public abstract class AbstractUserController {
         repository.deleteExisted(id);
     }
 
-    protected User prepareAndSave(User user) {
-        return repository.save(UserUtil.prepareToSave(user));
-    }
 }

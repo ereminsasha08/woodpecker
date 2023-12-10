@@ -19,39 +19,28 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 //        http
 //                .cors(Customizer.withDefaults())
-//                .httpBasic(Customizer.withDefaults())
 //                .csrf(csrf ->
 //                        csrf
 //                                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-//                )
-//                .rememberMe(rememberMe -> {
-//                    rememberMe.key(key);
-//                    rememberMe.alwaysRemember(true);
-//                });
+//                );
         http
                 .oauth2ResourceServer(resource ->
-                        resource.jwt(jwt -> jwt
-                                .jwtAuthenticationConverter(new KeycloakJwtAuthenticationConverter()))
-                );
-        http
+                        resource
+                                .jwt(jwt ->
+                                        jwt
+                                                .jwtAuthenticationConverter(new KeycloakJwtAuthenticationConverter())))
+
                 .sessionManagement(session ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.NEVER)
-                );
-        http
+                        session
+                                .sessionCreationPolicy(SessionCreationPolicy.NEVER))
+
                 .authorizeHttpRequests(request -> {
                     request
-                            .requestMatchers("/unauthenticated", "/oauth2/**", "/login/**").permitAll()
-                            .requestMatchers("/rest/hello").hasAnyAuthority("USER", "ADMIN")
+                            .requestMatchers("/rest/*").hasAnyAuthority("USER", "ADMIN")
                             .requestMatchers("/rest/admin/**").hasAnyAuthority("ADMIN")
                             .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
                             .anyRequest().fullyAuthenticated();
                 });
-//        http.formLogin(
-//                login ->
-//                        login
-//                                .loginPage("http://localhost:8072/auth")
-//        );
         return http.build();
     }
-
 }

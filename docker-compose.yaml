@@ -77,6 +77,18 @@ services:
       - spring.profiles.active=prod
       - spring.cloud.config.uri=http://config-server:8071
     depends_on: [ eureka-server ]
+  woodpecker-backend:
+    build: .
+    image: sashaeremin/woodpecker_backend:0.0.1
+    container_name: "woodpecker-backend"
+    ports:
+      - "9090:9090"
+    networks:
+      - woodpecker_network
+    environment:
+      - spring.profiles.active=prod
+      - spring.cloud.config.uri=http://config-server:8071
+    depends_on: [ eureka-server ]
 networks:
   woodpecker_network:
     driver: bridge
