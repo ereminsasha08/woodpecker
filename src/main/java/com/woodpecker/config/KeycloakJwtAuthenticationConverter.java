@@ -28,10 +28,9 @@ public class KeycloakJwtAuthenticationConverter implements Converter<Jwt, Abstra
     }
 
     private Collection<? extends GrantedAuthority> extractResourceRoles(Jwt jwt) {
-        HashMap<Object, Object> resourceAccess = new HashMap<>(jwt.getClaim("resource_access"));
-        Object woodpeckerbackend1 = resourceAccess.get("woodpecker");
-        LinkedTreeMap<Object, Object> woodpeckerbackend = (LinkedTreeMap<Object, Object>) woodpeckerbackend1;
-        ArrayList<Object> roles = (ArrayList<Object>) woodpeckerbackend.get("roles");
-        return roles.isEmpty() ? emptySet() : roles.stream().map(r -> new SimpleGrantedAuthority("" + r)).collect(toSet());
+        HashMap<Object, LinkedTreeMap<Object, ArrayList<Object>>> resourceAccess = new HashMap<>(jwt.getClaim("resource_access"));
+        LinkedTreeMap<Object, ArrayList<Object>> woodpecker = resourceAccess.get("woodpecker");
+        ArrayList<Object> roles = woodpecker.get("roles");
+        return roles.isEmpty() ? emptySet() : roles.stream().map(r -> new SimpleGrantedAuthority(r.toString())).collect(toSet());
     }
 }
