@@ -2,6 +2,7 @@ package com.woodpecker.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
@@ -22,8 +23,8 @@ public class EurekaClientConfig {
 
     @LoadBalanced
     @Bean
-    public RestTemplate getRestTemplate() {
-        RestTemplate restTemplate = new RestTemplate();
+    public RestTemplate getRestTemplate(RestTemplateBuilder builder) {
+        RestTemplate restTemplate = builder.build();
         restTemplate.getInterceptors().add(interceptor());
         return restTemplate;
     }

@@ -36,10 +36,11 @@ public class SecurityConfiguration {
 
                 .authorizeHttpRequests(request -> {
                     request
-                            .requestMatchers("/rest/*").hasAnyAuthority("USER", "ADMIN")
-                            .requestMatchers("/rest/admin/**").hasAnyAuthority("ADMIN")
-                            .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
-                            .anyRequest().fullyAuthenticated();
+                            .requestMatchers("/rest/*").permitAll();
+//                            .requestMatchers("/rest/*").hasAnyAuthority("USER", "ADMIN")
+//                            .requestMatchers("/rest/admin/**").hasAnyAuthority("ADMIN")
+//                            .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
+//                            .anyRequest().fullyAuthenticated();
                 });
         return http.build();
     }

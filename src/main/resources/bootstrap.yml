@@ -1,6 +1,0 @@
-spring:
-  application:
-    name: woodpeckerbackend
-  cloud:
-    config:
-      uri: http://localhost:8071

@@ -1,6 +1,5 @@
 package com.woodpecker.util;
 
-import com.woodpecker.config.SecurityConfiguration;
 import com.woodpecker.model.user.Role;
 import com.woodpecker.model.user.User;
 import com.woodpecker.to.UserTo;
