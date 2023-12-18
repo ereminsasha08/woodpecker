@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: configserver
+  profiles:
+#    active: native, git
+    active: git
+  cloud:
+    config:
+      server:
+        native:
+          search-locations:  classpath:/config
+        git:
+          uri: https://github.com/ereminsasha08/config.git
+          username: sashaeremin08051998@gmail.com
+          password: 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
+          search-paths: woodpeckerbackend, eurekaserver, gateway
+          skip-ssl-validation: true
+server:
+  port: 8071
+encrypt:
+  key: secretkey
