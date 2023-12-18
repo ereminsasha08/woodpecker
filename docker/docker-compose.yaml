@@ -100,10 +100,10 @@ services:
       - spring.cloud.config.server.git.password=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
       - spring.cloud.config.server.git.username=sashaeremin08051998@gmail.com
     depends_on: [ db-woodpecker ]
-  eureka-server:
+  eureka:
     #    build: /home/oem/IdeaProjects/eureka
-    image: sashaeremin/eureka_server:0.0.1
-    container_name: "eureka-server"
+    image: sashaeremin/eureka:0.0.1
+    container_name: "eureka"
     ports:
       - "8070:8070"
     networks:
@@ -124,7 +124,7 @@ services:
       - LOGSTASH_URL=logstash
       - spring.profiles.active=prod
       - spring.cloud.config.uri=http://config-server:8071
-    depends_on: [ config-server, eureka-server ]
+    depends_on: [ config-server, eureka ]
   keycloak:
     image: jboss/keycloak:16.1.1
     restart: always
@@ -152,7 +152,7 @@ services:
       - LOGSTASH_URL=logstash
       - spring.profiles.active=prod
       - spring.cloud.config.uri=http://config-server:8071
-    depends_on: [ eureka-server, config-server, rabbit-mq ]
+    depends_on: [ eureka, config-server, rabbit-mq ]
 #  woodpecker-backend:
 ##    build: .
 #    image: sashaeremin/woodpecker/backend:0.0.1
@@ -164,7 +164,7 @@ services:
 #    environment:
 #      - spring.profiles.active=prod
 #      - spring.cloud.config.uri=http://config-server:8071
-#    depends_on: [ eureka-server, config-server, keycloak, rabbit-mq]
+#    depends_on: [ eureka, config-server, keycloak, rabbit-mq]
 networks:
   woodpecker_network:
     driver: bridge
