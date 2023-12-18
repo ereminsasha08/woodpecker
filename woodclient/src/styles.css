@@ -1,0 +1,85 @@
+/* You can add global styles to this file, and also import other style files */
+tr[data-map-availability="true"] {
+  color: darkblue;
+}
+
+tr[data-map-urgent="true"] {
+  color: red;
+}
+
+tr[data-map-urgent-availability="true"] {
+  color: purple;
+}
+
+tr[data-map-info="true"] {
+  color: green;
+}
+
+.fa {
+  cursor: pointer;
+}
+
+tr[data-user-enabled="false"] {
+  opacity: 0.3;
+}
+
+tr[data-order-paid="false"] {
+  opacity: 0.75;
+}
+
+/*https://getbootstrap.com/docs/4.0/examples/sticky-footer/sticky-footer.css*/
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /*background-image: url('../images/wd.png');*/
+  background-size: 100%;
+  background-attachment: fixed;
+  margin-bottom: 60px !important; /* Margin bottom by footer height */
+
+}
+
+.btn-my {
+  padding: 4px 8px;
+  margin-bottom: 0;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 22px;
+
+}
+
+.fa-2x {
+  font-size: 1.5em;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px; /* Set the fixed height of the footer here */
+  line-height: 60px; /* Vertically center the text there */
+  background-color: #f5f5f5;
+}
+
+table td > div div {
+  border: 3px black;
+  padding: 10px;
+  background: #fff;
+  display: block;
+  position: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+table td > div div:hover {
+  white-space: normal;
+  z-index: 1;
+}

@@ -13,3 +13,13 @@ target/
 *.iml
 *.ipr
 
+woodclient/dist
+woodclient/tmp
+woodclient/out-tsc
+woodclient/bazel-out
+woodclient/.angular
+woodclient/.vscode
+woodclient/node_modules
+woodclient/npm-debug.log
+woodclient/yarn-error.log
+

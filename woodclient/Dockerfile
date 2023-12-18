@@ -1,0 +1,12 @@
+FROM node:21-alpine AS build
+WORKDIR /usr/src/app
+COPY package.json package-lock.json ./
+RUN npm install
+COPY . .
+RUN npm run build-production
+
+FROM nginx
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY --from=build /usr/src/app/dist/wood-client/browser /usr/share/nginx/html
+
+EXPOSE 80
