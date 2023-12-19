@@ -1,0 +1,125 @@
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://eureka-server:8070/eureka/
+
+spring:
+  security.oauth2:
+    resource-server:
+      jwt:
+        issuer-uri: http://keycloak:8080/auth/realms/woodpecker
+  security:
+    ignored:
+      - "*.bundle.*"
+  #  sql:
+#    init:
+#      mode: always
+  cache:
+    cache-names: {"userByMail", "orders", "mapsByManager"}
+    redis:
+      time-to-live: 10M
+  datasource:
+    url: jdbc:postgresql://db-woodpecker:5432/postgres
+    username: user
+    password: '{cipher}84deeced2db1597f4e1738eff5de417ada7bbad1e769482e49f850553ae8de79'
+  jpa:
+    show-sql: true
+    open-in-view: false
+    properties:
+      #  http://docs.jboss.org/hibernate/orm/5.3/userguide/html_single/Hibernate_User_Guide.html#configurations
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 20
+        # https://stackoverflow.com/questions/21257819/what-is-the-difference-between-hibernate-jdbc-fetch-size-and-hibernate-jdbc-batc
+        jdbc.batch_size: 20
+#        show_sql: true
+#    hibernate:
+#      ddl-auto: create
+  #  datasource:
+  #    url: jdbc:h2:mem:wood
+  #    username: sa
+  #    password:
+  #    driverClassName: org.h2.Driver
+  #  h2:
+  #    console:
+  #      path: /h2
+  #      enabled: true
+
+  # Jackson Serialization Issue Resolver
+  jackson.visibility:
+    field: any
+    getter: none
+    setter: none
+    is-getter: none
+  # https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#common-application-properties-cache
+  flyway:
+    baseline-on-migrate: true
+    locations: db/migration
+    enabled: true
+  redis:
+    host:
+
+#  cache:
+#    cache-names: users
+#    caffeine.spec: maximumSize=5000,expireAfterAccess=60s
+
+logging:
+  level:
+    root: INFO
+    com.woodpecker: DEBUG
+    org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: INFO
+
+server.servlet:
+  encoding:
+    charset: UTF-8 # Charset of HTTP requests and responses. Added to the "Content-Type" header if not set explicitly
+    enabled: true # Enable http encoding support
+server:
+  port: 9090
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  health:
+    show-details: always
+    circuitbreakers:
+      enabled: true
+    bulkhead:
+      enabled: true
+
+resilience4j.circuitbreaker:
+  instances:
+    hello:
+      registerHealthIndicator: true
+      ringBufferSizeInClosedState: 5
+      ringBufferSizeInHalfOpenState: 3
+      waitDurationInOpenState: 10s
+      failureRateThreshold: 50
+#      recordExceptions:
+#        - org.springframework.web.client.HttpServerErrorException
+#        - java.io.IOException
+#        - java.util.concurrent.TimeoutException
+#        - org.springframework.web.client.ResourceAccessException
+#        - java.lang.IllegalStateException
+resilience4j.bulkhead:
+  instances:
+    bulkheadHello:
+      registerHealthIndicator: true
+      maxWaitDuration: 10ms
+      maxConcurrentCalls: 20
+resilience4j.thread-pool-bulkhead:
+  instances:
+    bulkheadHello:
+      registerHealthIndicator: true
+      maxThreadPoolSize: 1
+      coreThreadPoolSize: 1
+      queueCapacity: 1
+      keepAliveDuration: 20ms

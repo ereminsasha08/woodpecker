@@ -2,7 +2,7 @@ spring:
   zipkin:
     baseUrl: localhost:9411
   application:
-    name: woodpeckerbackend
+    name: backend
   cloud:
     config:
       uri: http://localhost:8071

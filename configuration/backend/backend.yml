@@ -1,0 +1,94 @@
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:8070/eureka/
+
+spring:
+  security.oauth2:
+     resource-server:
+       jwt:
+         issuer-uri: http://localhost:8100/auth/realms/woodpecker
+  security:
+    ignored:
+      - "*.bundle.*"
+  cache:
+    cache-names: {"userByMail", "orders", "mapsByManager"}
+    redis:
+      time-to-live: 10M
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: user
+    password: password
+  jpa:
+    show-sql: true
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 20
+        jdbc.batch_size: 20
+  jackson.visibility:
+    field: any
+    getter: none
+    setter: none
+    is-getter: none
+  flyway:
+    baseline-on-migrate: true
+    locations: db/migration
+    enabled: true
+  redis:
+    host:
+logging:
+  level:
+    root: INFO
+    com.woodpecker: DEBUG
+    org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: INFO
+
+server.servlet:
+  encoding:
+    charset: UTF-8 # Charset of HTTP requests and responses. Added to the "Content-Type" header if not set explicitly
+    enabled: true # Enable http encoding support
+server:
+  port: 9090
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  health:
+    show-details: always
+    circuitbreakers:
+      enabled: true
+    bulkhead:
+      enabled: true
+
+resilience4j.circuitbreaker:
+  instances:
+    hello:
+      registerHealthIndicator: true
+      ringBufferSizeInClosedState: 5
+      ringBufferSizeInHalfOpenState: 3
+      waitDurationInOpenState: 10s
+      failureRateThreshold: 50
+resilience4j.bulkhead:
+  instances:
+    bulkheadHello:
+      registerHealthIndicator: true
+      maxWaitDuration: 10ms
+      maxConcurrentCalls: 20
+resilience4j.thread-pool-bulkhead:
+  instances:
+    bulkheadHello:
+      registerHealthIndicator: true
+      maxThreadPoolSize: 1
+      coreThreadPoolSize: 1
+      queueCapacity: 1
+      keepAliveDuration: 20ms
