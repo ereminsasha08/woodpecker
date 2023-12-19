@@ -101,7 +101,6 @@ services:
       - spring.cloud.config.server.git.username=sashaeremin08051998@gmail.com
     depends_on: [ db-woodpecker ]
   eureka:
-    #    build: /home/oem/IdeaProjects/eureka
     image: sashaeremin/eureka:0.0.1
     container_name: "eureka"
     ports:
