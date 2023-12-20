@@ -88,7 +88,6 @@ services:
     volumes:
       - ../temp/redis:/opt/redis
   config-server:
-    #    build: /home/oem/IdeaProjects/configserver
     image: sashaeremin/config_server:0.0.1
     container_name: "config-server"
     ports:
@@ -97,7 +96,7 @@ services:
       - woodpecker_network
     environment:
       - LOGSTASH_URL=logstash
-      - spring.cloud.config.server.git.password=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
+      - spring.cloud.config.server.git.password=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
       - spring.cloud.config.server.git.username=sashaeremin08051998@gmail.com
     depends_on: [ db-woodpecker ]
   eureka:
