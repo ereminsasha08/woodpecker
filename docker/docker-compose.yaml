@@ -1,5 +1,14 @@
 version: '3.4'
 services:
+  prometheus:
+    image: prom/prometheus:v2.48.0
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ../temp//prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - woodpecker_network
   zipkin:
     image: openzipkin/zipkin:2.25-amd64
     container_name: "zipkin"

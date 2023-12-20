@@ -36,7 +36,7 @@ public class SecurityConfiguration {
 
                 .authorizeHttpRequests(request -> {
                     request
-                            .requestMatchers("/rest/*").permitAll();
+                            .anyRequest().permitAll();
 //                            .requestMatchers("/rest/*").hasAnyAuthority("USER", "ADMIN")
 //                            .requestMatchers("/rest/admin/**").hasAnyAuthority("ADMIN")
 //                            .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
