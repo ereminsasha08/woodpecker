@@ -4,11 +4,23 @@ services:
     image: prom/prometheus:v2.48.0
     container_name: prometheus
     ports:
-      - "9090:9090"
+      - "9092:9090"
     volumes:
-      - ../temp//prometheus.yml:/etc/prometheus/prometheus.yml
+      - ../temp/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     networks:
       - woodpecker_network
+  grafana:
+    image: grafana/grafana:10.0.10-ubuntu
+    ports:
+      - "3000:3000"
+    container_name: grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=user
+      - GF_SECURITY_ADMIN_PASSWORD=password
+      - GF_INSTALL_PLUGINS=4701-jvm-micrometer
+    networks:
+      - woodpecker_network
+    depends_on: [ prometheus ]
   zipkin:
     image: openzipkin/zipkin:2.25-amd64
     container_name: "zipkin"
@@ -148,9 +160,9 @@ services:
       - "8100:8080"
     networks:
       - woodpecker_network
-  woodpecker-store:
+  store:
     image: sashaeremin/woodpecker/store:0.0.1
-    container_name: "woodpecker-store"
+    container_name: "store"
     ports:
       - "9091:9091"
     networks:
