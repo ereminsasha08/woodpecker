@@ -10,7 +10,7 @@ java {
 }
 
 bootJar {
-    archivesBaseName = 'woodpecker'
+    archivesBaseName = 'orders'
     version = ''
 }
 
@@ -83,7 +83,7 @@ dependencies {
 
 tasks.named('bootBuildImage') {
     builder = 'paketobuildpacks/builder-jammy-base:0.4.260'
-    imageName = 'sashaeremin/woodpecker/backend:0.0.1'
+    imageName = 'sashaeremin/woodpecker/orders:0.0.1'
 }
 
 tasks.named('test') {
