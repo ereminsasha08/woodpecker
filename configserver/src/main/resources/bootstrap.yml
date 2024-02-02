@@ -13,7 +13,7 @@ spring:
           uri: https://github.com/ereminsasha08/woodpecker.git
           username: sashaeremin08051998@gmail.com
           password: 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
-          search-paths: configuration/backend, configuration/store, configuration/eurekaserver, configuration/gateway
+          search-paths: configuration/orders, configuration/store, configuration/eurekaserver, configuration/gateway
           skip-ssl-validation: true
 server:
   port: 8071
