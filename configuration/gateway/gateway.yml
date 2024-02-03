@@ -20,10 +20,11 @@ spring:
           predicates:
             - Path=/auth/**
       default-filters:
-        name: auth
-        args:
-          - RemoveRequestHeader = Cookie,Set-Cookie
-          - TokenRelay=
+        - TokenRelay=
+#        name: auth
+#        args:
+#          - RemoveRequestHeader = Cookie,Set-Cookie
+
 management:
   endpoints:
     web:
