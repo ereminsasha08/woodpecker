@@ -3,13 +3,17 @@ spring:
     name: gateway
   cloud:
     config:
-      uri: http://localhost:8100
+      uri: http://localhost:8071
+    gateway:
+      default-filters:
+          - TokenRelay=
+          - RemoveRequestHeader = Cookie,Set-Cookie
   security:
     oauth2:
       client:
         provider:
           keycloak:
-            issuer-uri: http://localhost:8083/auth/realms/woodpecker
+            issuer-uri: http://localhost:8100/auth/realms/woodpecker
         registration:
           quotes-client:
             provider: keycloak
