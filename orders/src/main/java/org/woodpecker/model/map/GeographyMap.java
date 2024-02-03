@@ -67,6 +67,4 @@ public class GeographyMap extends Product {
     @Column(name = "is_view", columnDefinition = "boolean default true")
     @JsonIgnore
     private boolean isView;
-
-
 }

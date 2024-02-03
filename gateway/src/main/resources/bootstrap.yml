@@ -3,7 +3,22 @@ spring:
     name: gateway
   cloud:
     config:
-      uri: http://localhost:8071
+      uri: http://localhost:8100
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8083/auth/realms/woodpecker
+        registration:
+          quotes-client:
+            provider: keycloak
+            client-id: gateway
+            client-secret: mKfDTqNu1sTO7YksFgJThqg46JVle9fV
+            scope:
+              - email
+              - profile
+              - roles
 logging:
   pattern:
     level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"

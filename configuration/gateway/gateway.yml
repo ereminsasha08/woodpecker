@@ -23,6 +23,7 @@ spring:
         name: auth
         args:
           - RemoveRequestHeader = Cookie,Set-Cookie
+          - TokenRelay=
 management:
   endpoints:
     web:

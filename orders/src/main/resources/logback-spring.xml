@@ -25,5 +25,4 @@
     </root>
     <logger name="org.springframework" level="WARN"/>
     <logger name="org.woodpecker" level="INFO"/>
-
 </configuration>

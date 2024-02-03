@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <destination>${LOGSTASH_URL:-localhost}:${LOGSTASH_PORT:-5000}</destination>
-        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+    <springProfile name="prod">
+        <appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+            <destination>${LOGSTASH_URL:-localhost}:${LOGSTASH_PORT:-5000}</destination>
+            <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+        </appender>
+        <include resource="org/springframework/boot/logging/logback/base.xml"/>
+        <springProperty scope="context" name="application_name"
+                        source="spring.application.name"/>
+        <root level="INFO">
+            <appender-ref ref="logstash"/>
+            <appender-ref ref="CONSOLE"/>
+        </root>
+        <logger name="org.springframework" level="INFO"/>
+        <logger name="org.woodpecker" level="INFO"/>
+    </springProfile>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
     </appender>
-    <include resource="org/springframework/boot/logging/logback/base.xml"/>
-    <springProperty scope="context" name="application_name"
-                    source="spring.application.name"/>
-    <root level="INFO">
-        <appender-ref ref="logstash"/>
-        <appender-ref ref="CONSOLE"/>
+    <root level="debug">
+        <appender-ref ref="STDOUT"/>
     </root>
-    <logger name="org.springframework" level="INFO"/>
-    <logger name="com.optimagrowth" level="DEBUG"/>
+    <logger name="org.springframework" level="WARN"/>
+    <logger name="org.woodpecker" level="INFO"/>
 </configuration>
