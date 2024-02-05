@@ -16,7 +16,7 @@ spring:
         lowerCaseServiceId: true
       routes:
         - id: auth
-          uri: http://keycloak:8100
+          uri: http://keycloak:8080
           predicates:
             - Path=/auth/**
       default-filters:
@@ -27,7 +27,7 @@ spring:
       client:
         provider:
           keycloak:
-            issuer-uri: http://keycloak:8100/auth/realms/woodpecker
+            issuer-uri: http://keycloak:8080/auth/realms/woodpecker
         registration:
           quotes-client:
             provider: keycloak

@@ -25,7 +25,7 @@ public class Goods {
 
     private LocalDateTime dateCreate;
 
-    private User userCreate;
+//    private User userCreate;
 
 
 

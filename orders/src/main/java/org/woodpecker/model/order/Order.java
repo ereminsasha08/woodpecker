@@ -38,9 +38,9 @@ public class Order extends RepresentationModel<Order> implements HasId {
     private Boolean marketPlace;
     @Column(name = "is_paid", columnDefinition = "boolean default false")
     private Boolean isPaid;
-    @OneToMany
-    @JoinColumn(name = "goods_id")
-    private List<OrderItems> goods;
+//    @OneToMany
+//    @JoinColumn(name = "goods_id")
+//    private List<OrderItems> goods;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     @Fetch(FetchMode.JOIN)
