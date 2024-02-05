@@ -39,12 +39,17 @@ public class Order extends RepresentationModel<Order> implements HasId {
     @Column(name = "is_paid", columnDefinition = "boolean default false")
     private Boolean isPaid;
     @OneToMany
-    @JoinColumn(name = "order_id")
-    private List<GeographyMap> geographyMap;
+    @JoinColumn(name = "goods_id")
+    private List<OrderItems> goods;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     @Fetch(FetchMode.JOIN)
     private User manager;
+//    @OneToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "client_id", nullable = false)
+//    @Fetch(FetchMode.JOIN)
+//    private Client client;
+
 
     public Order(LocalDateTime dateCreate, GeographyMap geographyMap, Boolean marketPlace, Stage stage) {
         this.isPaid = marketPlace;

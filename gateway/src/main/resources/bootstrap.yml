@@ -5,9 +5,17 @@ spring:
     config:
       uri: http://localhost:8071
     gateway:
+      discovery.locator:
+        enabled: true
+        lowerCaseServiceId: true
+      routes:
+        - id: auth
+          uri: http://localhost:8100
+          predicates:
+            - Path=/auth/**
       default-filters:
-          - TokenRelay=
-          - RemoveRequestHeader = Cookie,Set-Cookie
+        - TokenRelay=
+        - RemoveRequestHeader=Cookie,Set-Cookie
   security:
     oauth2:
       client:

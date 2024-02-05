@@ -22,7 +22,7 @@ public class EurekaClientConfig {
 
 
     @LoadBalanced
-    @Bean
+    @Bean(name = "innerRestTemplate")
     public RestTemplate getRestTemplate(RestTemplateBuilder builder) {
         RestTemplate restTemplate = builder.build();
         restTemplate.getInterceptors().add(interceptor());

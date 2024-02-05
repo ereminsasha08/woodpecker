@@ -60,10 +60,6 @@ public class GeographyMap extends Product {
     @JoinColumn(name = "geography_map_production_id", referencedColumnName = "geography_map_id")
     @JsonIgnoreProperties("geographyMap")
     private GeographyMapProduction geographyMapProduction;
-    @ManyToOne
-    @JoinColumn(name = "order_id", referencedColumnName = "id")
-    @JsonIgnore
-    private Order order;
     @Column(name = "is_view", columnDefinition = "boolean default true")
     @JsonIgnore
     private boolean isView;

@@ -2,11 +2,12 @@ package org.woodpecker.controller;
 
 import brave.ScopedSpan;
 import brave.Tracer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.woodpecker.repository.redis.StringWrapper;
 import org.woodpecker.repository.redis.StringWrapperRepository;
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -21,15 +22,19 @@ import static org.woodpecker.controller.HelloController.REST_URL;
 
 @RestController
 @RequestMapping(REST_URL)
-@RequiredArgsConstructor
 @Slf4j
 public class HelloController {
 
     public static final String REST_URL = "/rest/hello";
-
     private final RestTemplate restTemplate;
     private final StringWrapperRepository stringWrapperRepository;
     private final Tracer tracer;
+
+    public HelloController(@Qualifier("innerRestTemplate") RestTemplate restTemplate, StringWrapperRepository stringWrapperRepository, Tracer tracer) {
+        this.restTemplate = restTemplate;
+        this.stringWrapperRepository = stringWrapperRepository;
+        this.tracer = tracer;
+    }
 
     @GetMapping
     @CircuitBreaker(name = "hello", fallbackMethod = "noHello")
