@@ -22,21 +22,21 @@ spring:
       default-filters:
         - TokenRelay=
         - RemoveRequestHeader=Cookie,Set-Cookie
-      security:
-        oauth2:
-          client:
-            provider:
-              keycloak:
-                issuer-uri: http://localhost:8100/auth/realms/woodpecker
-            registration:
-              quotes-client:
-                provider: keycloak
-                client-id: gateway
-                client-secret: mKfDTqNu1sTO7YksFgJThqg46JVle9fV
-                scope:
-                  - email
-                  - profile
-                  - roles
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8100/auth/realms/woodpecker
+        registration:
+          quotes-client:
+            provider: keycloak
+            client-id: gateway
+            client-secret: mKfDTqNu1sTO7YksFgJThqg46JVle9fV
+            scope:
+              - email
+              - profile
+              - roles
 management:
   endpoints:
     web:
