@@ -32,7 +32,7 @@ spring:
               quotes-client:
                 provider: keycloak
                 client-id: gateway
-                client-secret: mKfDTqNu1sTO7YksFgJThqg46JVle9fV
+                client-secret: fibh5xrVNcs8JOH48iEDkk8I7Js5byaZ
                 scope:
                   - email
                   - profile

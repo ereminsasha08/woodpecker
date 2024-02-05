@@ -10,7 +10,7 @@ services:
     networks:
       - woodpecker_network
   grafana:
-    image: grafana/grafana:10.0.10-ubuntu
+    image: grafana/grafana:10.3.0
     ports:
       - "3000:3000"
     container_name: grafana
