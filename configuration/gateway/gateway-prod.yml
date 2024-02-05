@@ -16,13 +16,12 @@ spring:
         lowerCaseServiceId: true
       routes:
         - id: auth
-          uri: http://keycloak:8080
+          uri: http://keycloak:8100
           predicates:
             - Path=/auth/**
       default-filters:
-        name: auth
-        args:
-          - RemoveRequestHeader = Cookie,Set-Cookie
+        - TokenRelay=
+        - RemoveRequestHeader = Cookie,Set-Cookie
 management:
   endpoints:
     web:
