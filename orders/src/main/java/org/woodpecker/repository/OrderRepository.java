@@ -1,6 +1,6 @@
 package org.woodpecker.repository;
 
-import org.woodpecker.model.order.Order;
+import org.woodpecker.repository.model.order.Order;
 import org.springframework.data.jpa.repository.EntityGraph;
 
 import java.util.List;

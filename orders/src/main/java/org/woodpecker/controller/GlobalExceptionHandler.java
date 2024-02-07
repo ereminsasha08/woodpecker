@@ -1,7 +1,7 @@
 package org.woodpecker.controller;
 
-import org.woodpecker.error.AppException;
-import org.woodpecker.util.validation.ValidationUtil;
+import org.woodpecker.controller.error.AppException;
+import org.woodpecker.service.util.validation.ValidationUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.error.ErrorAttributeOptions;

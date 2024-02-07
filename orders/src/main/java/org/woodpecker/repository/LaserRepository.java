@@ -1,6 +1,6 @@
 package org.woodpecker.repository;
 
-import org.woodpecker.model.support.Laser;
+import org.woodpecker.repository.model.support.Laser;
 
 import java.util.Optional;
 

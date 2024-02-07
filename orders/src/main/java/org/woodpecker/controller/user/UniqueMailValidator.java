@@ -1,6 +1,6 @@
 package org.woodpecker.controller.user;
 
-import org.woodpecker.HasIdAndEmail;
+import org.woodpecker.repository.model.HasIdAndEmail;
 import org.woodpecker.repository.UserRepository;
 import org.woodpecker.controller.SecurityUtil;
 import lombok.AllArgsConstructor;

@@ -1,6 +1,6 @@
 package org.woodpecker.controller;
 
-import org.woodpecker.model.user.User;
+import org.woodpecker.repository.model.user.User;
 import lombok.experimental.UtilityClass;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

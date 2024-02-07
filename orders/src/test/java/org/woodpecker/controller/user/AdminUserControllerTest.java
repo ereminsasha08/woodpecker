@@ -1,7 +1,7 @@
 package org.woodpecker.controller.user;
 
-import org.woodpecker.model.user.Role;
-import org.woodpecker.model.user.User;
+import org.woodpecker.repository.model.user.Role;
+import org.woodpecker.repository.model.user.User;
 import org.woodpecker.repository.UserRepository;
 import org.woodpecker.controller.AbstractControllerTest;
 import org.junit.jupiter.api.Assertions;

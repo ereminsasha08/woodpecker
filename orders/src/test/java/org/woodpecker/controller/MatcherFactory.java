@@ -1,6 +1,6 @@
 package org.woodpecker.controller;
 
-import org.woodpecker.util.JsonUtil;
+import org.woodpecker.service.util.JsonUtil;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.ResultMatcher;

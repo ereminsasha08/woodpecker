@@ -1,6 +1,6 @@
 package org.woodpecker.controller;
 
-import org.woodpecker.model.user.User;
+import org.woodpecker.repository.model.user.User;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.lang.NonNull;

@@ -1,6 +1,6 @@
 package org.woodpecker.controller.order;
 
-import org.woodpecker.model.order.Order;
+import org.woodpecker.repository.model.order.Order;
 import org.woodpecker.service.order.OrderService;
 import org.woodpecker.controller.AuthUser;
 import jakarta.validation.constraints.NotNull;

@@ -1,6 +1,6 @@
 package org.woodpecker.service.order;
 
-import org.woodpecker.model.order.Order;
+import org.woodpecker.repository.model.order.Order;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Caching;

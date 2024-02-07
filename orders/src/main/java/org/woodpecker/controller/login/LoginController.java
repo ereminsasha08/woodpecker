@@ -1,6 +1,6 @@
 package org.woodpecker.controller.login;
 
-import org.woodpecker.model.user.User;
+import org.woodpecker.repository.model.user.User;
 import org.woodpecker.controller.AuthUser;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

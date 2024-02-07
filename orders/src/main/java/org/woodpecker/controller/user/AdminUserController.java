@@ -1,6 +1,6 @@
 package org.woodpecker.controller.user;
 
-import org.woodpecker.model.user.User;
+import org.woodpecker.repository.model.user.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;

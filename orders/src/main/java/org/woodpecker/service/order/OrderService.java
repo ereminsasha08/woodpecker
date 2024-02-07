@@ -1,12 +1,12 @@
 package org.woodpecker.service.order;
 
-import org.woodpecker.model.map.Stage;
-import org.woodpecker.model.order.Order;
+import org.woodpecker.repository.model.goods.map.Stage;
+import org.woodpecker.repository.model.order.Order;
 import org.woodpecker.repository.GeographyMapRepository;
 import org.woodpecker.repository.OrderRepository;
-import org.woodpecker.util.exception.ApplicationException;
-import org.woodpecker.util.exception.ErrorType;
-import org.woodpecker.model.map.GeographyMap;
+import org.woodpecker.service.util.exception.ApplicationException;
+import org.woodpecker.service.util.exception.ErrorType;
+import org.woodpecker.repository.model.goods.WorldMap;
 import org.woodpecker.controller.AuthUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
@@ -45,7 +45,7 @@ public class OrderService {
             @CacheEvict(value = "mapsByManager", allEntries = true)})
     public Order create(AuthUser authUser, Integer id, LocalDateTime orderTerm, boolean marketPlace) {
 
-        GeographyMap map = geographyMapRepository.getById(id);
+        WorldMap map = geographyMapRepository.getById(id);
 //        if (map.getManager().id() != authUser.id())
 //            throw new IllegalArgumentException("Начинать можно только свои заказы");
 

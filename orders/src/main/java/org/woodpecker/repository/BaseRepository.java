@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.woodpecker.util.validation.ValidationUtil.checkExisted;
-import static org.woodpecker.util.validation.ValidationUtil.checkModification;
+import static org.woodpecker.service.util.validation.ValidationUtil.checkExisted;
+import static org.woodpecker.service.util.validation.ValidationUtil.checkModification;
 
 // https://stackoverflow.com/questions/42781264/multiple-base-repositories-in-spring-data-jpa
 @NoRepositoryBean

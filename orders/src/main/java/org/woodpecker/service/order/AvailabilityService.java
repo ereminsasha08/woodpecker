@@ -1,10 +1,10 @@
 package org.woodpecker.service.order;
 
-import org.woodpecker.model.map.Stage;
-import org.woodpecker.model.order.Order;
+import org.woodpecker.repository.model.goods.map.Stage;
+import org.woodpecker.repository.model.order.Order;
 import org.woodpecker.repository.GeographyMapRepository;
 import org.woodpecker.repository.OrderRepository;
-import org.woodpecker.model.map.GeographyMap;
+import org.woodpecker.repository.model.goods.WorldMap;
 import org.woodpecker.controller.AuthUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
@@ -33,13 +33,13 @@ public class AvailabilityService {
     @Caching(evict = {
             @CacheEvict(value = "orders", allEntries = true),
             @CacheEvict(value = "mapsByManager", allEntries = true)})
-    public GeographyMap createAvailabilityMap(AuthUser authUser, GeographyMap geographyMap, Integer stage, Boolean isColorPlywood, String laser) {
-        Order order = new Order(LocalDateTime.now(), geographyMap, false, Stage.values()[stage]);
+    public WorldMap createAvailabilityMap(AuthUser authUser, WorldMap worldMap, Integer stage, Boolean isColorPlywood, String laser) {
+        Order order = new Order(LocalDateTime.now(), worldMap, false, Stage.values()[stage]);
         if (isColorPlywood && stage == Stage.WAITING_PAINT_AVAILABILITY.getOrdersOperation())
             throw new IllegalArgumentException("Карта из покрашенных досок не может быть на покраске");
-        if (geographyMap.isNew()) {
+        if (worldMap.isNew()) {
 //            geographyMap.setManager(authUser.getUser());
-            geographyMap.setDescription("Карта из наличия в момент создания была на стадии: " +
+            worldMap.setDescription("Карта из наличия в момент создания была на стадии: " +
                     Stage.values()[stage].name());
             order.setCompleted(true);
 //            order.setIsColorPlywood(false);
@@ -48,14 +48,14 @@ public class AvailabilityService {
 //            geographyMap.setOrder(order);
 
         } else {
-            GeographyMap byId = geographyMapRepository.findById(geographyMap.id()).get();
+            WorldMap byId = geographyMapRepository.findById(worldMap.id()).get();
 //            geographyMap.setManager(byId.getManager());
 //            order = byId.getOrder();
 //            geographyMap.setOrder(order);
         }
 //        order.setLaser(laser);
-        geographyMap.setIsColorPlywood(isColorPlywood);
-        GeographyMap save = geographyMapRepository.save(geographyMap);
+        worldMap.setIsColorPlywood(isColorPlywood);
+        WorldMap save = geographyMapRepository.save(worldMap);
         orderRepository.save(order);
         return save;
     }

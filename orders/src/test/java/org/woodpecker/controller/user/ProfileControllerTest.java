@@ -1,10 +1,10 @@
 package org.woodpecker.controller.user;
 
 import org.woodpecker.repository.UserRepository;
-import org.woodpecker.util.JsonUtil;
-import org.woodpecker.util.UserUtil;
-import org.woodpecker.model.user.User;
-import org.woodpecker.to.UserTo;
+import org.woodpecker.service.util.JsonUtil;
+import org.woodpecker.service.util.UserUtil;
+import org.woodpecker.repository.model.user.User;
+import org.woodpecker.controller.to.UserTo;
 import org.woodpecker.controller.AbstractControllerTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

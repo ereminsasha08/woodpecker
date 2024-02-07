@@ -1,4 +1,5 @@
--- create schema production;
+create schema production;
+create schema goods;
 --
 -- create table orders
 -- (

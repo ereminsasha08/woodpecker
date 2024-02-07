@@ -1,6 +1,6 @@
 package org.woodpecker.controller.map;
 
-import org.woodpecker.model.map.GeographyMap;
+import org.woodpecker.repository.model.goods.WorldMap;
 import org.woodpecker.service.map.GeographyMapService;
 import org.woodpecker.controller.AuthUser;
 import jakarta.validation.Valid;
@@ -25,20 +25,20 @@ public class GeographyMapRestController {
     private final GeographyMapService mapService;
 
     @GetMapping
-    public List<GeographyMap> userOrderMaps(@AuthenticationPrincipal AuthUser authUser) {
+    public List<WorldMap> userOrderMaps(@AuthenticationPrincipal AuthUser authUser) {
         return mapService.findByManager(authUser.getUser());
     }
 
 
     @GetMapping("/{id}")
-    public GeographyMap get(@PathVariable int id) {
+    public WorldMap get(@PathVariable int id) {
         return mapService.getById(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void create(@Valid GeographyMap geographyMap, @AuthenticationPrincipal AuthUser authUser) {
-        mapService.create(geographyMap, authUser);
+    public void create(@Valid WorldMap worldMap, @AuthenticationPrincipal AuthUser authUser) {
+        mapService.create(worldMap, authUser);
     }
 
     @DeleteMapping("/{id}")
@@ -48,11 +48,11 @@ public class GeographyMapRestController {
     }
 
     @GetMapping("/filter")
-    public List<GeographyMap> getFiltered(@AuthenticationPrincipal AuthUser authUser,
-                                          @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
-                                          @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
-                                          @RequestParam String nameManager,
-                                          @RequestParam boolean isPost) {
+    public List<WorldMap> getFiltered(@AuthenticationPrincipal AuthUser authUser,
+                                      @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+                                      @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
+                                      @RequestParam String nameManager,
+                                      @RequestParam boolean isPost) {
         return mapService.getByDateTimeBetween(authUser, startDate, endDate, nameManager, isPost);
     }
 

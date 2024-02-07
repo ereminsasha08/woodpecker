@@ -1,8 +1,8 @@
 package org.woodpecker.controller.order;
 
-import org.woodpecker.model.order.Order;
+import org.woodpecker.repository.model.order.Order;
 import org.woodpecker.service.order.AvailabilityService;
-import org.woodpecker.model.map.GeographyMap;
+import org.woodpecker.repository.model.goods.WorldMap;
 import org.woodpecker.controller.AuthUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -27,12 +27,12 @@ public class AvailabilityController {
     }
 
     @PostMapping
-    public GeographyMap createAvailabilityMap(@AuthenticationPrincipal AuthUser authUser,
-                                              @Valid GeographyMap geographyMap,
-                                              @RequestParam Boolean isColorPlywood,
-                                              @RequestParam String laser,
-                                              @RequestParam Integer stage) {
-        return availabilityService.createAvailabilityMap(authUser, geographyMap, stage, isColorPlywood, laser);
+    public WorldMap createAvailabilityMap(@AuthenticationPrincipal AuthUser authUser,
+                                          @Valid WorldMap worldMap,
+                                          @RequestParam Boolean isColorPlywood,
+                                          @RequestParam String laser,
+                                          @RequestParam Integer stage) {
+        return availabilityService.createAvailabilityMap(authUser, worldMap, stage, isColorPlywood, laser);
     }
 
 

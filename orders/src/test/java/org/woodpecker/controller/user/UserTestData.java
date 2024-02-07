@@ -1,9 +1,9 @@
 package org.woodpecker.controller.user;
 
 
-import org.woodpecker.model.user.Role;
-import org.woodpecker.model.user.User;
-import org.woodpecker.util.JsonUtil;
+import org.woodpecker.repository.model.user.Role;
+import org.woodpecker.repository.model.user.User;
+import org.woodpecker.service.util.JsonUtil;
 import org.woodpecker.controller.MatcherFactory;
 
 import java.util.Collections;

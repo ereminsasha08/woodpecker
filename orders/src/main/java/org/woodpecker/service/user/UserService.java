@@ -1,6 +1,6 @@
 package org.woodpecker.service.user;
 
-import org.woodpecker.model.user.User;
+import org.woodpecker.repository.model.user.User;
 import org.woodpecker.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;

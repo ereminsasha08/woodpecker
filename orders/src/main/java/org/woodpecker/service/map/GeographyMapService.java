@@ -1,11 +1,11 @@
 package org.woodpecker.service.map;
 
-import org.woodpecker.model.user.User;
+import org.woodpecker.repository.model.user.User;
 import org.woodpecker.repository.GeographyMapRepository;
 import org.woodpecker.service.order.CutService;
-import org.woodpecker.util.exception.ApplicationException;
-import org.woodpecker.util.exception.ErrorType;
-import org.woodpecker.model.map.GeographyMap;
+import org.woodpecker.service.util.exception.ApplicationException;
+import org.woodpecker.service.util.exception.ErrorType;
+import org.woodpecker.repository.model.goods.WorldMap;
 import org.woodpecker.controller.AuthUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
@@ -28,12 +28,12 @@ public class GeographyMapService {
     private final CutService cutService;
 
 
-    public GeographyMap getById(Integer id) {
+    public WorldMap getById(Integer id) {
         return geographyMapRepository.findById(id).orElseThrow(() -> new ApplicationException("Карты не существует", ErrorType.DATA_NOT_FOUND));
     }
 
     @Cacheable("mapsByManager")
-    public List<GeographyMap> findByManager(User user) {
+    public List<WorldMap> findByManager(User user) {
         return geographyMapRepository.findByIsView(true);
 //                .stream()
 //                .filter(
@@ -44,7 +44,7 @@ public class GeographyMapService {
 //                .toList();
     }
 
-    public List<GeographyMap> getByDateTimeBetween(AuthUser authUser, LocalDateTime startDate, LocalDateTime endDate, String nameManager, boolean isPost) {
+    public List<WorldMap> getByDateTimeBetween(AuthUser authUser, LocalDateTime startDate, LocalDateTime endDate, String nameManager, boolean isPost) {
         startDate = startDate != null ? startDate : LocalDateTime.of(2000, 1, 1, 0, 0);
         endDate = endDate != null ? startDate : LocalDateTime.of(2040, 1, 1, 0, 0);
 //        Stream<GeographyMap> byDateTimeBetween = geographyMapRepository.getByDateTimeBetweenAndIsView(startDate, endDate, true).stream();
@@ -81,21 +81,21 @@ public class GeographyMapService {
     @Caching(evict = {
             @CacheEvict(value = "orders", allEntries = true),
             @CacheEvict(value = "mapsByManager", allEntries = true)})
-    public void create(GeographyMap geographyMap, AuthUser authUser) {
-        if (geographyMap.isNew()) {
+    public void create(WorldMap worldMap, AuthUser authUser) {
+        if (worldMap.isNew()) {
 //            geographyMap.setManager(authUser.getUser());
         } else {
-            assert geographyMap.getId() != null;
-            GeographyMap byId = getById(geographyMap.id());
+            assert worldMap.getId() != null;
+            WorldMap byId = getById(worldMap.id());
 //            if (byId.getManager().id() != authUser.getUser().id())
 //                throw new IllegalArgumentException("Изменять можно только свои заказы");
 //            else {
 //            geographyMap.setManager(byId.getManager());
-            geographyMap.setIsColorPlywood(byId.getIsColorPlywood());
+            worldMap.setIsColorPlywood(byId.getIsColorPlywood());
 //            geographyMap.setOrder(byId.getOrder());
 //            }
         }
-        geographyMapRepository.save(geographyMap);
+        geographyMapRepository.save(worldMap);
     }
 
     @Transactional
