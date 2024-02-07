@@ -20,9 +20,23 @@ spring:
           predicates:
             - Path=/auth/**
       default-filters:
-        name: auth
-        args:
-          - RemoveRequestHeader = Cookie,Set-Cookie
+        - TokenRelay=
+        - RemoveRequestHeader=Cookie,Set-Cookie
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://keycloak:8080/auth/realms/woodpecker
+        registration:
+          quotes-client:
+            provider: keycloak
+            client-id: gateway
+            client-secret: fibh5xrVNcs8JOH48iEDkk8I7Js5byaZ
+            scope:
+              - email
+              - profile
+              - roles
 management:
   endpoints:
     web:
