@@ -1,10 +1,9 @@
 package org.woodpecker.service.util.validation;
 
-import org.jsoup.Jsoup;
-import org.jsoup.safety.Safelist;
-
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Safelist;
 
 public class NoHtmlValidator implements ConstraintValidator<NoHtml, String> {
     @Override

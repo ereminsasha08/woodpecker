@@ -1,0 +1,51 @@
+.p-10 {
+  padding: 10px;
+}
+
+.button-group {
+  font-size: small !important;
+}
+
+.by-filter fieldset,
+.by-filter fieldset legend {
+  background-color: #e6edf1 !important;
+}
+
+.by-filter fieldset,
+.by-filter fieldset legend,
+.by-filter fieldset .ng-select .ng-select-container,
+.by-filter fieldset .ui-chkbox .ui-chkbox-box {
+  border-color: #1c6ea4 !important;
+}
+
+.button-group .btn {
+  font-size: small !important;
+}
+
+fieldset.ui-fieldset.ui-widget.ui-widget-content.ui-corner-all {
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+legend.ui-fieldset-legend {
+  width: auto !important;
+  font-size: small !important;
+  margin-bottom: 0 !important;
+}
+
+.button-group p-toggleButton .ui-togglebutton.ui-button.ui-state-default,
+.button-group p-toggleButton .ui-selectbutton .ui-button.ui-state-default {
+  border: 1px solid #186ba0;
+  background: #fff;
+  font-weight: normal;
+  color: #186ba0;
+}
+
+.button-group p-toggleButton .ui-togglebutton.ui-button.ui-state-active,
+.button-group p-toggleButton .ui-selectbutton .ui-button.ui-state-active {
+  border: 1px solid #186ba0;
+  background: #186ba0;
+  font-weight: normal;
+  color: #fff;
+}

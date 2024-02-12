@@ -37,24 +37,24 @@ public class AvailabilityService {
         Order order = new Order(LocalDateTime.now(), worldMap, false, Stage.values()[stage]);
         if (isColorPlywood && stage == Stage.WAITING_PAINT_AVAILABILITY.getOrdersOperation())
             throw new IllegalArgumentException("Карта из покрашенных досок не может быть на покраске");
-        if (worldMap.isNew()) {
+//        if (worldMap.isNew()) {
 //            geographyMap.setManager(authUser.getUser());
-            worldMap.setDescription("Карта из наличия в момент создания была на стадии: " +
-                    Stage.values()[stage].name());
-            order.setCompleted(true);
+//            worldMap.setDescription("Карта из наличия в момент создания была на стадии: " +
+//                    Stage.values()[stage].name());
+//            order.setCompleted(true);
 //            order.setIsColorPlywood(false);
 //            order.setPlywoodList(List.of("Готов"));
             order.setAllTime();
 //            geographyMap.setOrder(order);
 
-        } else {
-            WorldMap byId = geographyMapRepository.findById(worldMap.id()).get();
+//        } else {
+//            WorldMap byId = geographyMapRepository.findById(worldMap.id()).get();
 //            geographyMap.setManager(byId.getManager());
 //            order = byId.getOrder();
 //            geographyMap.setOrder(order);
-        }
+//        }
 //        order.setLaser(laser);
-        worldMap.setIsColorPlywood(isColorPlywood);
+//        worldMap.setIsColorPlywood(isColorPlywood);
         WorldMap save = geographyMapRepository.save(worldMap);
         orderRepository.save(order);
         return save;

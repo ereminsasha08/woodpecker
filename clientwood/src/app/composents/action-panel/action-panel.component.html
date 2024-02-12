@@ -1,0 +1,32 @@
+<!--<p-fieldset legend="Действия">-->
+  <div class="row">
+    <div class="col-sm-12">
+      <div *ngIf="signEnabled == false">
+        <div class="row pl-2 pr-2">
+          <div class="col-sm-6 pl-2 pr-2">
+            <button
+              (click)="onCreateClick($event)"
+              [disabled]="isDisabledCreate"
+              class="btn btn-primary btn-default"
+              type="button"
+            >
+              Создать
+              <i class="fa fa-plus" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div class="col-sm-6 pl-2 pr-2">
+            <button
+              (click)="onDeleteClick($event)"
+              [disabled]="isDisabled"
+              class="btn btn-danger btn-default"
+              type="button"
+            >
+              Удалить
+              <i aria-hidden="true" class="fa fa-minus"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--</p-fieldset>-->

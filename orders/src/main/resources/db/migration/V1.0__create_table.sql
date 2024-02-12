@@ -1,5 +1,7 @@
-create schema production;
-create schema goods;
+-- drop schema if exists production CASCADE ;
+-- drop schema if exists good cascade ;
+-- create schema production;
+-- create schema good;
 --
 -- create table orders
 -- (

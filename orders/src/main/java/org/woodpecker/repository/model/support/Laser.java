@@ -23,13 +23,13 @@ public class Laser extends NamedEntity {
 
         Integer addedCapacity = coefficient;
 
-        if (worldMap.getIsState())
-            addedCapacity *= 2;
-        if (worldMap.getIsMultiLevel())
-            addedCapacity *= 4;
+//        if (worldMap.getIsState())
+//            addedCapacity *= 2;
+//        if (worldMap.getIsMultiLevel())
+//            addedCapacity *= 4;
 
-        int size = worldMap.getSize().getHeight() * worldMap.getSize().getLength() / 100;
-        addedCapacity *= size;
+//        int size = worldMap.getSize().getHeight() * worldMap.getSize().getLength() / 100;
+//        addedCapacity *= size;
         this.capacity += addedCapacity;
     }
 

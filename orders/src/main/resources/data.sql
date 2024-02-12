@@ -1,34 +1,58 @@
-insert into plywood_list (id)
-values (141),
-       (251);
+-- insert into plywood_list (id)
+-- values (141),
+--        (251);
 
-insert into lists(plywood_list_id, list)
-values (141, 1),
-       (141, 2),
-       (251, 1),
-       (251, 2);
+-- insert into lists(plywood_list_id, list)
+-- values (141, 1),
+--        (141, 2),
+--        (251, 1),
+--        (251, 2);
+--
+-- INSERT INTO users (id, name, email, password)
+-- VALUES (1,'Оля', 'olya@gmail.com', '{noop}password'),
+--        (2,'Вера', 'vera@gmail.com', 'admin'),
+--        (3,'Катя', 'katya@gmail.com', 'guest'),
+--        (4,'Неизвестно', 'unknown@gmail.com', 'admin'),
+--        (5,'user', 'user@gmail.com', '{noop}password');
+--
+-- INSERT INTO role(ROLE, USER_ID)
+-- VALUES ('USER', 1),
+--        ('ADMIN', 1),
+--        ('USER', 2),
+--        ('USER', 3),
+--        ('USER', 4);
+--
+-- INSERT INTO laser(id, name, capacity, max_size)
+-- VALUES (1, '1л', 0, 160),
+--        (2,'2л', 0, 160),
+--        (3,'3л', 0, 200),
+--        (4,'4л', 0, 200),
+--        (5,'5л', 0, 800),
+--        (6,'6л', 0, 800);
 
-INSERT INTO users (id, name, email, password)
-VALUES (1,'Оля', 'olya@gmail.com', '{noop}password'),
-       (2,'Вера', 'vera@gmail.com', 'admin'),
-       (3,'Катя', 'katya@gmail.com', 'guest'),
-       (4,'Неизвестно', 'unknown@gmail.com', 'admin'),
-       (5,'user', 'user@gmail.com', '{noop}password');
+INSERT INTO goods.good (height, is_view, length, price, weight, date_create, description, name, type_goods)
+VALUES
+    (10, true, 20, 100, 30, CURRENT_TIMESTAMP, 'Description 1', 'Item 1', 'MAP'),
+    (15, true, 25, 150, 35, CURRENT_TIMESTAMP, 'Description 2', 'Item 2', 'GOODS'),
+    (12, true, 22, 120, 32, CURRENT_TIMESTAMP, 'Description 3', 'Item 3', 'MAP'),
+    (18, true, 30, 200, 40, CURRENT_TIMESTAMP, 'Description 4', 'Item 4', 'GOODS'),
+    (11, true, 21, 110, 31, CURRENT_TIMESTAMP, 'Description 5', 'Item 5', 'MAP'),
+    (16, true, 26, 160, 36, CURRENT_TIMESTAMP, 'Description 6', 'Item 6', 'GOODS'),
+    (13, true, 23, 130, 33, CURRENT_TIMESTAMP, 'Description 7', 'Item 7', 'MAP'),
+    (17, true, 28, 170, 38, CURRENT_TIMESTAMP, 'Description 8', 'Item 8', 'GOODS'),
+    (14, true, 24, 140, 34, CURRENT_TIMESTAMP, 'Description 9', 'Item 9', 'MAP'),
+    (14, true, 24, 140, 34, CURRENT_TIMESTAMP, 'Description 9', 'Item 9', 'MAP'),
+    (14, true, 24, 140, 34, CURRENT_TIMESTAMP, 'Description 9', 'Item 9', 'MAP'),
+    (14, true, 24, 140, 34, CURRENT_TIMESTAMP, 'Description 9', 'Item 9', 'MAP'),
+    (14, true, 24, 140, 34, CURRENT_TIMESTAMP, 'Description 9', 'Item 9', 'MAP'),
+    (14, true, 24, 140, 34, CURRENT_TIMESTAMP, 'Description 9', 'Item 9', 'MAP'),
+    (14, true, 24, 140, 34, CURRENT_TIMESTAMP, 'Description 9', 'Item 9', 'MAP'),
+    (14, true, 24, 140, 34, CURRENT_TIMESTAMP, 'Description 9', 'Item 9', 'MAP'),
+    (14, true, 24, 140, 34, CURRENT_TIMESTAMP, 'Description 9', 'Item 9', 'MAP'),
+    (14, true, 24, 140, 34, CURRENT_TIMESTAMP, 'Description 9', 'Item 9', 'MAP'),
+    (14, true, 24, 140, 34, CURRENT_TIMESTAMP, 'Description 9', 'Item 9', 'MAP'),
+    (19, true, 32, 220, 42, CURRENT_TIMESTAMP, 'Description 10', 'Item 10', 'GOODS');
 
-INSERT INTO role(ROLE, USER_ID)
-VALUES ('USER', 1),
-       ('ADMIN', 1),
-       ('USER', 2),
-       ('USER', 3),
-       ('USER', 4);
-
-INSERT INTO laser(id, name, capacity, max_size)
-VALUES (1, '1л', 0, 160),
-       (2,'2л', 0, 160),
-       (3,'3л', 0, 200),
-       (4,'4л', 0, 200),
-       (5,'5л', 0, 800),
-       (6,'6л', 0, 800);
 
 -- INSERT INTO maps (USER_ID, ID, SIZE, PRICE, DATE_TIME, LANGUAGE_MAP, TYPE_MAP, IS_STATE, LIGHT, IS_MULTI_LEVEL, COLOR,
 --                   CONTACT, DESCRIPTION)

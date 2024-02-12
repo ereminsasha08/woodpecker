@@ -1,0 +1,13 @@
+<div class="container-xxl">
+  <p-tabView>
+    <p-tabPanel header="Производство">
+    </p-tabPanel>
+    <p-tabPanel  header="Заказы">
+      <router-outlet></router-outlet>
+    </p-tabPanel>
+    <p-tabPanel [selected]="true" header="Товары" >
+      <goods></goods>
+    </p-tabPanel>
+  </p-tabView>
+</div>
+

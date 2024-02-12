@@ -43,9 +43,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 
-    implementation 'org.springframework.cloud:spring-cloud-stream'
-    implementation 'org.springframework.boot:spring-boot-starter-amqp'
-    implementation 'org.springframework.cloud:spring-cloud-stream-binder-rabbit'
+//    implementation 'org.springframework.cloud:spring-cloud-stream'
+//    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+//    implementation 'org.springframework.cloud:spring-cloud-stream-binder-rabbit'
 
     implementation 'io.github.resilience4j:resilience4j-spring-boot3'
     implementation 'io.github.resilience4j:resilience4j-all:2.1.0'
@@ -59,18 +59,17 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-cache'
     implementation 'org.springframework.boot:spring-boot-starter-aop'
 
-    implementation 'org.flywaydb:flyway-core'
-    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
-    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5'
+//    implementation 'org.flywaydb:flyway-core'
+//    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5'
 
     implementation 'org.jsoup:jsoup:1.16.2'
-    implementation 'org.webjars:jquery:3.7.1'
-    implementation 'org.webjars:bootstrap:5.3.2'
-    implementation 'org.webjars:datatables:1.13.5'
-    implementation 'org.webjars:datetimepicker:2.5.20'
-    implementation 'org.webjars.bower:noty:3.1.4'
-    implementation 'javax.persistence:javax.persistence-api:2.2'
-    implementation 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
+//    implementation 'org.webjars:jquery:3.7.1'
+//    implementation 'org.webjars:bootstrap:5.3.2'
+//    implementation 'org.webjars:datatables:1.13.5'
+//    implementation 'org.webjars:datetimepicker:2.5.20'
+//    implementation 'org.webjars.bower:noty:3.1.4'
+//    implementation 'javax.persistence:javax.persistence-api:2.2'
+//    implementation 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
 
 
     compileOnly 'org.projectlombok:lombok'

@@ -82,20 +82,20 @@ public class GeographyMapService {
             @CacheEvict(value = "orders", allEntries = true),
             @CacheEvict(value = "mapsByManager", allEntries = true)})
     public void create(WorldMap worldMap, AuthUser authUser) {
-        if (worldMap.isNew()) {
+//        if (worldMap.isNew()) {
 //            geographyMap.setManager(authUser.getUser());
-        } else {
-            assert worldMap.getId() != null;
-            WorldMap byId = getById(worldMap.id());
+//        } else {
+//            assert worldMap.getId() != null;
+//            WorldMap byId = getById(worldMap.id());
 //            if (byId.getManager().id() != authUser.getUser().id())
 //                throw new IllegalArgumentException("Изменять можно только свои заказы");
 //            else {
 //            geographyMap.setManager(byId.getManager());
-            worldMap.setIsColorPlywood(byId.getIsColorPlywood());
+//            worldMap.setIsColorPlywood(byId.getIsColorPlywood());
 //            geographyMap.setOrder(byId.getOrder());
 //            }
-        }
-        geographyMapRepository.save(worldMap);
+//        }
+//        geographyMapRepository.save(worldMap);
     }
 
     @Transactional

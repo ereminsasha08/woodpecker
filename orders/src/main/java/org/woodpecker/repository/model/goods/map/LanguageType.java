@@ -2,7 +2,7 @@ package org.woodpecker.repository.model.goods.map;
 
 public enum LanguageType {
 
-    RUSSIAN("Русскиц"),
+    RUSSIAN("Русский"),
     ENGLISH("Английский"),
     ANOTHER("Другое");
 

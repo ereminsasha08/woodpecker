@@ -11,7 +11,6 @@ import jakarta.persistence.Embeddable;
 public class Size {
 
     private int height;
-
     private int length;
     private int weight;
 
